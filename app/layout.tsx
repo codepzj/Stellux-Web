@@ -8,6 +8,8 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
 
+// 百度统计
+import BaiduStatis from '@/components/BaiduStatis';
 
 // 布局组件
 export default async function RootLayout({
@@ -23,6 +25,8 @@ export default async function RootLayout({
                     rel="stylesheet"
                     href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
                 />
+                {/* 百度统计 */}
+                <BaiduStatis />
             </head>
             <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
                 <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
@@ -30,7 +34,7 @@ export default async function RootLayout({
                         <SidebarProvider style={{ "--sidebar-width": "272px" } as React.CSSProperties}>
                             <AppSidebar className="sticky top-0" />
                             <SidebarInset>
-                                <div className="flex flex-col gap-4 p-4 pt-0">
+                                <div className="flex flex-col gap-4 p-0 md:p-4 pt-0">
                                     {children}
                                 </div>
                             </SidebarInset>

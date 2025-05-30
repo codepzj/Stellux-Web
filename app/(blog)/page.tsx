@@ -24,7 +24,7 @@ export default async function Home() {
   };
 
   return (
-    listData.total_count === 0 ? <Empty info="暂无文章" /> : <div className="flex flex-col gap-4 px-4">
+    listData.total_count === 0 ? <Empty info="暂无文章" /> : <div className="flex flex-col gap-4 px-2 md:px-4">
       <PostTabs className="sticky top-0 z-50 pt-2 bg-white dark:bg-black" />
       {/* 左侧内容 */}
       <div className="w-full mb-20">
