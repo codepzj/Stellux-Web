@@ -22,10 +22,11 @@ export const DocumentCard = ({
             isHoverable
             isPressable
             className={cn(
-                "p-6 rounded-2xl bg-default-50/30 dark:bg-default-100/70 transition-all shadow-md hover:shadow-md overflow-hidden max-w-3xl",
+                "p-6 rounded-2xl bg-default-50/30 dark:bg-default-100/70 shadow-md hover:shadow-md overflow-hidden max-w-3xl",
                 className
             )}
             onPress={() => router.push(`/doc/${document.alias}/${document.id}`)}
+            disableAnimation
         >
             <div className="flex flex-wrap md:flex-nowrap gap-4">
                 <div className="flex-1 min-w-0">

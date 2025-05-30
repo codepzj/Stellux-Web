@@ -18,7 +18,7 @@ export default function PostHeader({
     updated_at: string
 }) {
     return (
-        <Card className="w-full px-2 mt-2 mb-4 pb-0 shadow-sm bg-default-100 dark:bg-default-100/70">
+        <Card className="w-full px-2 mt-2 mb-4 pb-0 shadow-sm bg-default-100 dark:bg-default-100/70" disableAnimation>
             <div className="px-3 pt-3">
                 <Breadcrumbs separator="/" className="w-full">
                     <BreadcrumbItem>
