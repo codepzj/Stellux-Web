@@ -21,6 +21,7 @@ export const LinkGroup = () => {
                 )}
             >
                 <PostIcon
+                    aria-label="文章"
                     size={28}
                     className={clsx("cursor-pointer", {
                         "text-[#1bcdfc]": isPost,
@@ -36,6 +37,7 @@ export const LinkGroup = () => {
                 )}
             >
                 <DocIcon
+                    aria-label="文档"
                     size={28}
                     className={clsx("cursor-pointer", {
                         "text-[#3dc550]": isDoc,

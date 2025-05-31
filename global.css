@@ -15,6 +15,13 @@ html {
   scrollbar-width: thin;
 }
 
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+    scrollbar-width: none;
+  }
+}
+
 body {
   position: relative;
   min-height: 100vh;

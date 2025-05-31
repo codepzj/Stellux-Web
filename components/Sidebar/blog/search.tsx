@@ -3,7 +3,7 @@ import { Input } from "@heroui/input";
 import { SearchLinearIcon } from "@/components/SvgIcon";
 import { Kbd } from "@heroui/kbd";
 import { useState, useEffect } from "react";
-import SearchModal from "./search-modal";
+import SearchModal from "@/components/SearchModal/blog";
 
 export const BlogSearch = () => {
     const [isSearchOpen, setSearchOpen] = useState(false);

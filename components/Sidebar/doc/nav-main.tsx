@@ -19,18 +19,42 @@ import {
     SidebarMenuItem,
     SidebarMenuSub,
 } from "@/components/ui/sidebar"
-import useDocStore from "@/store/doc"
+
+import { useState, useEffect } from "react"
+import { cn } from "@/lib/utils"
+
+// 判断当前 item 或其子孙是否匹配当前路径
+function itemMatchesPath(item: DocTreeItem, pathname: string): boolean {
+    if (item.url === pathname) return true
+    if (item.items) {
+        return item.items.some(child => itemMatchesPath(child, pathname))
+    }
+    return false
+}
 
 function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: number }) {
-    const hasChildren = item.items && item.items.length > 0;
     const pathname = usePathname()
+    const hasChildren = item.items && item.items.length > 0
 
-    // 没有子项时，使用 SidebarMenuItem 直接展示
+    const shouldBeOpen = itemMatchesPath(item, pathname)
+    const [open, setOpen] = useState(shouldBeOpen)
+
+    // 当路径变化时重新展开匹配项
+    useEffect(() => {
+        setOpen(shouldBeOpen)
+    }, [pathname, shouldBeOpen])
+
     if (!hasChildren) {
         return (
             <SidebarMenuItem className={`rounded-md ml-${depth * 2}`}>
                 <SidebarMenuButton asChild tooltip={item.title}>
-                    <Link href={item.url} className={`hover:!bg-primary/10 hover:dark:!bg-primary/20 ${pathname === item.url ? "bg-primary/10 dark:bg-primary/20" : ""}`}>
+                    <Link
+                        href={item.url}
+                        className={cn(
+                            "hover:!bg-primary/10 hover:dark:!bg-primary/20",
+                            pathname === item.url && "bg-primary/10 dark:bg-primary/20"
+                        )}
+                    >
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
                     </Link>
@@ -39,20 +63,19 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
         )
     }
 
-    // 有子项时，使用可折叠的结构
     return (
-        <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-        >
+        <Collapsible asChild open={open} onOpenChange={setOpen}>
             <SidebarMenuItem className={`ml-${depth * 2}`}>
                 <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip={item.title}>
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        <ChevronRight
+                            className={cn(
+                                "ml-auto transition-transform duration-200",
+                                open && "rotate-90"
+                            )}
+                        />
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -67,11 +90,23 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
     )
 }
 
-export function NavMain() {
-    const { doctree } = useDocStore()
+export function NavMain({ doctree, alias, document_id }: { doctree: DocTreeItem[], alias: string, document_id: string }) {
+    const pathname = usePathname()
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>文档</SidebarGroupLabel>
+            <SidebarGroupLabel>
+
+                <Link
+                    href={`/doc/${alias}/${document_id}`}
+                    className={cn(
+                        "flex items-center gap-2",
+                        pathname === `/doc/${alias}/${document_id}`
+                    )}
+                >
+                    <span>文档概览</span>
+                </Link>
+
+            </SidebarGroupLabel>
             <SidebarMenu>
                 {doctree.map((item) => (
                     <RecursiveMenuItem key={item.title} item={item} depth={0} />

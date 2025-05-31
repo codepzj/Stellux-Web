@@ -4,25 +4,27 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar"
-import { Avatar } from "@heroui/avatar"
 import { Spacer } from "@heroui/spacer"
 import { Card, CardBody } from "@heroui/card"
 import { BlogSearch } from "./search"
 import { LinkGroup } from "./link-group"
 import { getBlogConfigAPI } from "@/api/config"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
+import Image from "next/image"
 
 export async function BlogSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const blog_config = await getBlogConfigAPI().then(res => res.data);
   const { blog_avatar, blog_title, blog_subtitle, blog_welcome, blog_motto } = blog_config || {};
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="offcanvas" variant="sidebar" {...props}>
       <SidebarHeader className="p-4">
         <div className="w-full flex items-center justify-start gap-2">
-          <Avatar
+          <Image
             className="w-14 h-14 cursor-pointer border-0.5 border-default-500 hover:scale-95 transition-all duration-500"
             src={blog_avatar}
-            showFallback
+            alt="blog_avatar"
+            width={56}
+            height={56}
           />
           <div className="flex flex-col gap-1 h-full justify-end">
             <h1 className="text-2xl font-bold font-sans mt-0.5">{blog_title}</h1>

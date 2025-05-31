@@ -10,8 +10,9 @@ import { CategoryIcon } from "./icon/category";
 import { TagIcon } from "./icon/tag";
 import { SystemIcon } from "./icon/system"; 
 import { CalendarIcon } from "./icon/calendar";
+import { BackToTopIcon } from "./icon/back-to-top";
 
-export { GithubIcon, MoonIcon, SunIcon, TopIcon, SearchLinearIcon, DocIcon, WikiIcon, PostIcon, CategoryIcon, TagIcon, SystemIcon, CalendarIcon };
+export { GithubIcon, MoonIcon, SunIcon, TopIcon, SearchLinearIcon, DocIcon, WikiIcon, PostIcon, CategoryIcon, TagIcon, SystemIcon, CalendarIcon, BackToTopIcon };
 
 
 

@@ -12,7 +12,6 @@ export function PostList({ initialData }: { initialData: PageVO<PostVO> }) {
     const [totalPage, setTotalPage] = useState(initialData.total_page);
     const [posts, setPosts] = useState<PostVO[]>(initialData.list);
     const [loading, setLoading] = useState(false);
-
     useEffect(() => {
         const fetch = async () => {
             setLoading(true);

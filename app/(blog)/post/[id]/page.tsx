@@ -18,7 +18,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="relative w-full mx-auto text-default-600">
       <div className="w-full flex flex-col md:flex-row justify-center gap-2">
-        <div className="flex-1 md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-0 md:px-4 mx-auto md:mx-0">
+        <div className="flex-1 w-full md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4 mx-auto md:mx-0">
           <PostHeader
             category={post.data.category || ""}
             title={post.data.title || ""}
@@ -26,7 +26,7 @@ export default async function PostPage({ params }: Props) {
             updated_at={post.data.updated_at || ""}
           />
           <Spacer y={8} />
-          <Markdown className="pl-2 md:pl-4 break-words overflow-x-auto" content={post.data.content} />
+          <Markdown className="pl-2 break-words overflow-x-auto" content={post.data.content} />
         </div>
         <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
           <ScrollToc toc={toc} />
