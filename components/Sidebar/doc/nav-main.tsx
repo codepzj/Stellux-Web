@@ -19,6 +19,7 @@ import {
     SidebarMenuItem,
     SidebarMenuSub,
 } from "@/components/ui/sidebar"
+import useDocStore from "@/store/doc"
 
 function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: number }) {
     const hasChildren = item.items && item.items.length > 0;
@@ -66,12 +67,13 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
     )
 }
 
-export function NavMain({ items }: { items: DocTreeItem[] }) {
+export function NavMain() {
+    const { doctree } = useDocStore()
     return (
         <SidebarGroup>
             <SidebarGroupLabel>文档</SidebarGroupLabel>
             <SidebarMenu>
-                {items.map((item) => (
+                {doctree.map((item) => (
                     <RecursiveMenuItem key={item.title} item={item} depth={0} />
                 ))}
             </SidebarMenu>

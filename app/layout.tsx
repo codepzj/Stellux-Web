@@ -1,12 +1,9 @@
 import { getBasicConfigAPI, getSeoConfigAPI } from "@/api/config";
 import "@/global.css";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 import { Providers } from "./providers";
 import { Metadata } from "next";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Sidebar/app-sidebar";
-import { SidebarInset } from "@/components/ui/sidebar";
 
 // 百度统计
 import BaiduStatis from '@/components/BaiduStatis';
@@ -31,14 +28,7 @@ export default async function RootLayout({
             <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
                 <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
                     <div className="max-w-7xl mx-auto">
-                        <SidebarProvider style={{ "--sidebar-width": "272px" } as React.CSSProperties}>
-                            <AppSidebar className="sticky top-0" />
-                            <SidebarInset>
-                                <div className="flex flex-col gap-4 p-0 md:p-4 pt-0">
-                                    {children}
-                                </div>
-                            </SidebarInset>
-                        </SidebarProvider>
+                        {children}
                     </div>
                 </Providers>
             </body>

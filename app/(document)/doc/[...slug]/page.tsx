@@ -4,7 +4,8 @@ import { getTableOfContents, TableOfContents } from "@/lib/toc";
 import { Markdown } from "@/components/Md";
 import { ScrollToc } from "@/components/Toc";
 import { DocumentRootVO, DocumentVO } from "@/types/document";
-import SetDocHandler from "./setDocHandler";
+import SetDocHandler from "./handler";
+import { Metadata } from "next";
 
 
 interface DocPageProps {
@@ -59,4 +60,53 @@ export default async function DocPage({ params }: DocPageProps) {
             </div>
         </div>
     )
+}
+
+export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const [alias, document_id, leaf_id] = slug as string[] || [];
+    if (!leaf_id) {
+        const res = await getRootDocumentByID(document_id);
+        const rootDocument = res.data;
+        const url = `${process.env.NEXT_PUBLIC_SITE_URL}/doc/${alias}/${document_id}`;
+        return {
+            title: rootDocument.title,
+            description: rootDocument.description,
+            openGraph: {
+                title: rootDocument.title,
+                description: rootDocument.description,
+                url: url,
+                type: "article",
+                images: [{ url: rootDocument.thumbnail }],
+            },
+            twitter: {
+                card: "summary_large_image",
+                title: rootDocument.title,
+                description: rootDocument.description,
+                images: [{ url: rootDocument.thumbnail }],
+            },
+            metadataBase: new URL(url),
+        }
+    } else {
+        const res = await getDocumentByID(leaf_id);
+        const document = res.data;
+        const url = `${process.env.NEXT_PUBLIC_SITE_URL}/doc/${alias}/${document_id}/${leaf_id}`;
+        const description = document.content.slice(0, 150);
+        return {
+            title: document.title,
+            description: description,
+            openGraph: {
+                title: document.title,
+                description: description,
+                url: url,
+                type: "article",
+            },
+            twitter: {
+                card: "summary_large_image",
+                title: document.title,
+                description: description,
+            },
+            metadataBase: new URL(url),
+        }
+    }
 }

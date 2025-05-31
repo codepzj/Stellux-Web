@@ -7,7 +7,7 @@ import {
   SidebarInput,
 } from "@/components/ui/sidebar"
 
-export function SearchForm({ ...props }: React.ComponentProps<"form">) {
+export function DocSearchForm({ ...props }: React.ComponentProps<"form">) {
   return (
     <form {...props}>
       <SidebarGroup className="py-0">

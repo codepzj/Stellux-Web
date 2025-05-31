@@ -5,7 +5,7 @@ import { Kbd } from "@heroui/kbd";
 import { useState, useEffect } from "react";
 import SearchModal from "./search-modal";
 
-export const SidebarInput = () => {
+export const BlogSearch = () => {
     const [isSearchOpen, setSearchOpen] = useState(false);
 
     useEffect(() => {
