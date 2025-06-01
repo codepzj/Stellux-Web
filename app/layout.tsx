@@ -5,9 +5,6 @@ import { clsx } from "clsx";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 
-// 百度统计
-import BaiduStatis from '@/components/BaiduStatis';
-
 // 布局组件
 export default async function RootLayout({
     children,
@@ -22,8 +19,6 @@ export default async function RootLayout({
                     rel="stylesheet"
                     href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
                 />
-                {/* 百度统计 */}
-                <BaiduStatis />
             </head>
             <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
                 <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
