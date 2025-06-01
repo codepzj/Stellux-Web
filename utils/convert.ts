@@ -1,4 +1,4 @@
-import { DocumentTreeVO } from "@/types/document";
+import { DocumentTreeVO } from "@/types/doc";
 import { DocTreeItem } from "@/types/doctree";
 
 export function convertToTreeData(

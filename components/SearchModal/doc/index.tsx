@@ -4,17 +4,15 @@ import { Modal, ModalContent } from "@heroui/modal";
 import { Input } from "@heroui/input";
 import { SearchLinearIcon } from "@/components/SvgIcon";
 import { useEffect, useState } from "react";
-import { getPostByKeyWordAPI } from "@/api/post";
+import { getDocumentByKeyword } from "@/api/document";
 import NextLink from "next/link";
-import { PostSearchVO } from "@/types/post";
+import { DocumentVO } from "@/types/doc";
 import { Code } from "@heroui/code";
-import useConfigStore from "@/store/config";
 
-export default function SearchModal() {
+export default function DocSearchModal({ alias, id, docSearchOpen, onDocSearchClose }: { alias: string, id: string, docSearchOpen: boolean, onDocSearchClose: () => void }) {
     const [keyword, setKeyword] = useState("");
-    const [results, setResults] = useState<PostSearchVO[]>([]);
+    const [results, setResults] = useState<DocumentVO[]>([]);
     const [loading, setLoading] = useState(false);
-    const { blogSearchOpen, setBlogSearchOpen } = useConfigStore();
     useEffect(() => {
         const handler = setTimeout(async () => {
             if (!keyword.trim()) {
@@ -24,7 +22,7 @@ export default function SearchModal() {
             }
             setLoading(true);
             try {
-                const res = await getPostByKeyWordAPI(keyword);
+                const res = await getDocumentByKeyword({ keyword, document_id: id });
                 setResults(res.data || []);
             } finally {
                 setLoading(false);
@@ -47,11 +45,11 @@ export default function SearchModal() {
     const handleClose = () => {
         setKeyword("");
         setResults([]);
-        setBlogSearchOpen(false);
+        onDocSearchClose();
     };
 
     return (
-        <Modal className="cursor-pointer" isOpen={blogSearchOpen} onOpenChange={handleClose} size="xl" placement="top" shouldBlockScroll={false}>
+        <Modal className="cursor-pointer" isOpen={docSearchOpen} onOpenChange={handleClose} size="xl" placement="top" shouldBlockScroll={false}>
             <ModalContent>
                 <div className="px-4 pt-10 pb-4 space-y-6 bg-transparent rounded-xl">
                     <Code color="secondary" className="text-[10px] absolute top-2 left-2">
@@ -74,17 +72,12 @@ export default function SearchModal() {
                         {loading ? (
                             <div className="text-center text-default-500">加载中...</div>
                         ) : results.length > 0 ? (
-                            results.map(post => (
-                                <NextLink key={post.id} href={`/post/${post.id}`} onClick={handleClose}>
+                            results.map(doc => (
+                                <NextLink key={doc.id} href={`/doc/${alias}/${id}/${doc.id}`} onClick={handleClose}>
                                     <div className="p-3 mb-2 rounded-lg bg-default-100/70 dark:bg-default-500/10 hover:bg-default-200 dark:hover:bg-white/10 transition cursor-pointer border border-transparent hover:border-default-300 dark:hover:border-zinc-800">
                                         <div className="font-medium text-base text-foreground line-clamp-2">
-                                            {highlight(post.title, keyword)}
+                                            {highlight(doc.title, keyword)}
                                         </div>
-                                        {post.description && (
-                                            <div className="text-sm text-default-500 line-clamp-2 mt-1">
-                                                {highlight(post.description, keyword)}
-                                            </div>
-                                        )}
                                     </div>
                                 </NextLink>
                             ))

@@ -5,7 +5,6 @@ import {
   SidebarHeader,
 } from "@/components/ui/sidebar"
 import { Spacer } from "@heroui/spacer"
-import { Card, CardBody } from "@heroui/card"
 import { BlogSearch } from "./search"
 import { LinkGroup } from "./link-group"
 import { getBlogConfigAPI } from "@/api/config"
@@ -14,7 +13,7 @@ import Image from "next/image"
 
 export async function BlogSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const blog_config = await getBlogConfigAPI().then(res => res.data);
-  const { blog_avatar, blog_title, blog_subtitle, blog_welcome, blog_motto } = blog_config || {};
+  const { blog_avatar, blog_title, blog_subtitle } = blog_config || {};
   return (
     <Sidebar collapsible="offcanvas" variant="sidebar" {...props}>
       <SidebarHeader className="p-4">
@@ -36,27 +35,6 @@ export async function BlogSidebar({ ...props }: React.ComponentProps<typeof Side
         <BlogSearch />
         <Spacer y={2} />
         <LinkGroup />
-        <Spacer y={2} />
-
-        {blog_welcome && <div>
-          <span className="text-sm pl-3 py-2 text-default-600">欢迎，旅行者🙌</span>
-          <Spacer y={2} />
-          <Card isHoverable disableAnimation className="shadow-none bg-white dark:bg-default-100/70 rounded-xl">
-            <CardBody>
-              <p className="text-sm text-description">{blog_welcome}</p>
-            </CardBody>
-          </Card>
-        </div>}
-        <Spacer y={2} />
-        {blog_motto && <div>
-          <span className="text-sm pl-3 py-2 text-default-600">座右铭</span>
-          <Spacer y={2} />
-          <Card isHoverable disableAnimation className="shadow-none bg-white dark:bg-default-100/70 rounded-xl">
-            <CardBody>
-              <p className="text-sm text-description">{blog_motto}</p>
-            </CardBody>
-          </Card>
-        </div>}
       </SidebarContent>
       <SidebarFooter>
         <div className="flex justify-center items-center">

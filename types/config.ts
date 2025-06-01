@@ -23,6 +23,13 @@ export interface BlogConfigVO {
   blog_avatar: string;
   blog_title: string;
   blog_subtitle: string;
-  blog_welcome: string;
-  blog_motto: string;
+};
+
+export interface AboutConfigVO {
+  author: string;
+  avatar_url: string;
+  left_tags: string[];
+  right_tags: string[];
+  know_me: string;
+  github_username: string;
 };

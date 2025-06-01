@@ -37,3 +37,8 @@ export interface DocumentVO {
   parent_id: string;
   document_id: string;
 }
+
+export interface DocumentSearchDTO {
+  keyword: string;
+  document_id: string;
+}

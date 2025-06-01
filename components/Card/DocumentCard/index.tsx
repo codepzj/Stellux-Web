@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { WikiIcon } from "@/components/SvgIcon";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { DocumentRootVO } from "@/types/document";
+import { DocumentRootVO } from "@/types/doc";
 
 export const DocumentCard = ({
     document,

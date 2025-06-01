@@ -3,12 +3,13 @@ import { getTableOfContents, TableOfContents } from "@/lib/toc";
 
 import { Markdown } from "@/components/Md";
 import { ScrollToc } from "@/components/Toc";
-import { DocumentVO } from "@/types/document";
+import { DocumentVO } from "@/types/doc";
 import { Metadata } from "next";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DocSidebar } from "@/components/Sidebar/doc/sidebar";
 import { convertToTreeData } from "@/utils/convert";
-import Tool from "@/components/Tool/blog";
+import DocTool from "@/components/Tool/doc";
+import DocSearchModal from "@/components/SearchModal/doc";
 
 interface DocPageProps {
     params: Promise<{ slug: string[] }>;
@@ -36,7 +37,7 @@ export default async function DocPage({ params }: DocPageProps) {
     }
 
     return (
-        <SidebarProvider style={{ "--sidebar-width": "272px" } as React.CSSProperties}>
+        <SidebarProvider style={{ "--sidebar-width": "256px" } as React.CSSProperties}>
             <DocSidebar
                 docTitle={rootDocument?.title}
                 docThumbnail={rootDocument?.thumbnail}
@@ -65,9 +66,9 @@ export default async function DocPage({ params }: DocPageProps) {
                             )}
                         </div>
                     </div>
-                    {/* 博客工具栏 暂时替代文档工具栏 */}
-                    <Tool className="flex z-[999] fixed top-[70%] right-[2%]" />
                 </div>
+                {/* 文档工具栏 */}
+                <DocTool className="flex z-[999] fixed top-[70%] right-[2%]" alias={alias} id={document_id} />
             </SidebarInset>
         </SidebarProvider>
     );

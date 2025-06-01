@@ -24,6 +24,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     console.log("🎉 开源地址: https://github.com/StelluxWiki/Stellux")
     console.log("🏕 作者主页: https://gowiki.site")
     console.log("🌟 觉得好用的话记得点个 Star 哦 🙏")
+
     // 每次路径变化后滚动到顶部
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname])

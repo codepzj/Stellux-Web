@@ -11,8 +11,9 @@ import { TagIcon } from "./icon/tag";
 import { SystemIcon } from "./icon/system"; 
 import { CalendarIcon } from "./icon/calendar";
 import { BackToTopIcon } from "./icon/back-to-top";
+import { AboutIcon } from "./icon/about";
 
-export { GithubIcon, MoonIcon, SunIcon, TopIcon, SearchLinearIcon, DocIcon, WikiIcon, PostIcon, CategoryIcon, TagIcon, SystemIcon, CalendarIcon, BackToTopIcon };
+export { GithubIcon, MoonIcon, SunIcon, TopIcon, SearchLinearIcon, DocIcon, WikiIcon, PostIcon, CategoryIcon, TagIcon, SystemIcon, CalendarIcon, BackToTopIcon, AboutIcon };
 
 
 

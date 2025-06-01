@@ -20,10 +20,9 @@ export default async function PostPage({ params }: Props) {
       <div className="w-full flex flex-col md:flex-row justify-center gap-2">
         <div className="flex-1 w-full md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4 mx-auto md:mx-0">
           <PostHeader
-            category={post.data.category || ""}
             title={post.data.title || ""}
             created_at={post.data.created_at || ""}
-            updated_at={post.data.updated_at || ""}
+            updated_at={post.data.updated_at || post.data.created_at || ""}
           />
           <Spacer y={8} />
           <Markdown className="pl-2 break-words overflow-x-auto" content={post.data.content} />

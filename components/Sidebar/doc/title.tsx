@@ -2,7 +2,6 @@
 
 import { GalleryVerticalEnd } from "lucide-react"
 import Image from "next/image"
-import useDocStore from "@/store/doc"
 
 export function DocTitle({ docTitle, docThumbnail }: { docTitle: string, docThumbnail: string }) {
   return (

@@ -46,7 +46,7 @@ export async function DocSidebar({ docTitle, docThumbnail, doctree, className, a
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <DocSearchForm />
+                <DocSearchForm alias={alias} id={document_id} />
                 <NavMain doctree={doctree} alias={alias} document_id={document_id} />
             </SidebarContent>
             <SidebarFooter>

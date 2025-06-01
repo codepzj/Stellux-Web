@@ -7,12 +7,10 @@ import { Divider } from "@heroui/divider"
 import dayjs from "dayjs"
 
 export default function PostHeader({
-    category,
     title,
     created_at,
     updated_at,
 }: {
-    category: string | null
     title: string
     created_at: string
     updated_at: string
@@ -39,15 +37,6 @@ export default function PostHeader({
                             文章
                         </Link>
                     </BreadcrumbItem>
-                    <BreadcrumbItem>
-                        <Link
-                            className="text-sm text-default-700 font-semibold"
-                            color="foreground"
-                            href="/category"
-                        >
-                            {category}
-                        </Link>
-                    </BreadcrumbItem>
                 </Breadcrumbs>
 
 
@@ -59,7 +48,7 @@ export default function PostHeader({
                         {dayjs(created_at).format("YYYY-MM-DD")}
                     </span>
                 </span>
-                <Divider orientation="vertical" className="h-4 w-0.5 hidden group-hover:block" />  
+                <Divider orientation="vertical" className="h-4 w-0.5 hidden group-hover:block" />
                 <span className="hidden group-hover:block">
                     更新于&nbsp;
                     <span className="text-default-500">

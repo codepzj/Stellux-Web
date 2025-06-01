@@ -3,11 +3,12 @@
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
 import { PanelLeftIcon, SearchIcon, ArrowUp } from 'lucide-react';
-import useConfigStore from "@/store/config";
+import { useState } from "react";
+import DocSearchModal from "@/components/SearchModal/doc";
 
-export default ({ className }: { className?: string }) => {
+export default ({ className, alias, id }: { className?: string, alias: string, id: string }) => {
     const { toggleSidebar } = useSidebar();
-    const { setBlogSearchOpen } = useConfigStore();
+    const [docSearchOpen, setDocSearchOpen] = useState(false);
     const onReturnTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -24,7 +25,7 @@ export default ({ className }: { className?: string }) => {
             </span>
             <span key="search" aria-label="搜索" className="flex items-center justify-center !gap-0">
                 <button
-                    onClick={() => setBlogSearchOpen(true)}
+                    onClick={() => setDocSearchOpen(true)}
                     aria-label="搜索"
                     className="cursor-pointer !gap-0 !p-0 hover:outline-none"
                 >
@@ -40,6 +41,7 @@ export default ({ className }: { className?: string }) => {
                     <ArrowUp className='text-default-500' size={20} aria-label="返回顶部" />
                 </button>
             </span>
+            <DocSearchModal alias={alias} id={id} docSearchOpen={docSearchOpen} onDocSearchClose={() => setDocSearchOpen(false)} />
         </div>
     )
 }

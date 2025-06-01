@@ -1,5 +1,10 @@
 import request from "@/utils/request";
-import { DocumentRootVO, DocumentTreeVO, DocumentVO } from "@/types/document";
+import {
+  DocumentRootVO,
+  DocumentTreeVO,
+  DocumentVO,
+  DocumentSearchDTO,
+} from "@/types/doc";
 import { Response } from "@/types/dto";
 
 export const getAllPublicDocument: () => Promise<
@@ -15,10 +20,25 @@ export const getDocumentTreeByID: (
 };
 
 // 根据id获取文档
-export const getDocumentByID: (id: string) => Promise<Response<DocumentVO>> = (id: string) => {
+export const getDocumentByID: (id: string) => Promise<Response<DocumentVO>> = (
+  id: string
+) => {
   return request.get(`/document/${id}`);
 };
 
-export const getRootDocumentByID: (id: string) => Promise<Response<DocumentRootVO>> = (id: string) => {
+export const getRootDocumentByID: (
+  id: string
+) => Promise<Response<DocumentRootVO>> = (id: string) => {
   return request.get(`/document/root/${id}`);
+};
+
+export const getDocumentByKeyword: (
+  dto: DocumentSearchDTO
+) => Promise<Response<DocumentVO[]>> = (dto: DocumentSearchDTO) => {
+  return request.get(`/document/search`, {
+    params: {
+      keyword: dto.keyword,
+      document_id: dto.document_id,
+    },
+  });
 };
