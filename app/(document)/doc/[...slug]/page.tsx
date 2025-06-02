@@ -60,7 +60,7 @@ export default async function DocPage({ params }: DocPageProps) {
                                     content={leaf_id ? document?.content || "" : rootDocument.description || ""}
                                 />
                                 <Spacer y={32} />
-                                <DocComment />
+                                {leaf_id && <DocComment />}
 
                             </div>
                             {leaf_id && (
