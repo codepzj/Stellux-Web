@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 
 import { Providers } from "./providers";
 import { Metadata } from "next";
+import Handler from "@/components/Hander";
 
 // 布局组件
 export default async function RootLayout({
@@ -22,6 +23,7 @@ export default async function RootLayout({
             </head>
             <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
                 <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+                    <Handler />
                     <div className="max-w-7xl mx-auto">
                         {children}
                     </div>

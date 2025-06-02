@@ -6,6 +6,8 @@ import "aos/dist/aos.css";
 import Info from "./Info";
 import Calendar from "./Calendar";
 import { AboutConfigVO } from "@/types/config";
+import AboutComment from "./Comment";
+import { Spacer } from "@heroui/spacer";
 
 export default ({ data }: { data: AboutConfigVO }) => {
     useEffect(() => {
@@ -16,7 +18,9 @@ export default ({ data }: { data: AboutConfigVO }) => {
             <Info data={data} />
         </div>
         <div data-aos="zoom-in" className="flex justify-center mt-24 px-10">
-            <Calendar />
+            <Calendar data={data} />
         </div>
+        <Spacer y={32} />
+        <AboutComment />
     </>;
 };

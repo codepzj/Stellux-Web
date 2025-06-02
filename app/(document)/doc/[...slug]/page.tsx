@@ -9,7 +9,8 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DocSidebar } from "@/components/Sidebar/doc/sidebar";
 import { convertToTreeData } from "@/utils/convert";
 import DocTool from "@/components/Tool/doc";
-import DocSearchModal from "@/components/SearchModal/doc";
+import DocComment from "./comment";
+import { Spacer } from "@heroui/spacer";
 
 interface DocPageProps {
     params: Promise<{ slug: string[] }>;
@@ -58,6 +59,9 @@ export default async function DocPage({ params }: DocPageProps) {
                                     className="pl-2 break-words overflow-x-auto"
                                     content={leaf_id ? document?.content || "" : rootDocument.description || ""}
                                 />
+                                <Spacer y={32} />
+                                <DocComment />
+
                             </div>
                             {leaf_id && (
                                 <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">

@@ -3,7 +3,6 @@ import { BlogSidebar } from "@/components/Sidebar/blog/sidebar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import BlogSearchModal from "@/components/SearchModal/blog";
 import BlogTool from "@/components/Tool/blog";
-import Footer from "@/components/Footer";
 
 // 布局组件
 export default async function BlogLayout({
@@ -17,7 +16,6 @@ export default async function BlogLayout({
             <SidebarInset>
                 <div className="flex flex-col gap-4 p-0 md:p-2 pt-0 min-h-screen">
                     <div className="flex-1">{children}</div>
-                    <Footer />
                 </div>
                 {/* 博客搜索组件 */}
                 <BlogSearchModal />

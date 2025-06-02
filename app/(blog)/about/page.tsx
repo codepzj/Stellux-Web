@@ -1,14 +1,20 @@
 import About from "./component";
 import { getAboutConfigAPI } from "@/api/config";
+import Footer from "@/components/Footer";
 
 export default async () => {
   const res = await getAboutConfigAPI()
   const aboutConfig = res.data
 
   return (
-    <>
-      <About data={aboutConfig} />
-    </>
+    <div className="max-w-4xl mx-auto flex flex-col min-h-screen">
+      <div className="flex-1">
+        <About data={aboutConfig} />
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </div>
   )
 }
 

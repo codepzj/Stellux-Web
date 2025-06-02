@@ -5,6 +5,7 @@ import { Spacer } from "@heroui/spacer";
 import { Metadata } from "next";
 import PostHeader from "./header";
 import { ScrollToc } from "@/components/Toc";
+import BlogComment from "./comment";
 
 type Props = {
   params: Promise<{ id: string }>
@@ -26,6 +27,8 @@ export default async function PostPage({ params }: Props) {
           />
           <Spacer y={8} />
           <Markdown className="pl-2 break-words overflow-x-auto" content={post.data.content} />
+          <Spacer y={32} />
+          <BlogComment />
         </div>
         <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
           <ScrollToc toc={toc} />

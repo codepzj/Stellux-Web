@@ -1,5 +1,5 @@
 import  request  from "@/utils/request";
-import { AboutConfigVO, BasicConfigVO, BlogConfigVO, SeoConfigVO } from "@/types/config";
+import { AboutConfigVO, BasicConfigVO, BlogConfigVO, CommentSettingVO, SeoConfigVO } from "@/types/config";
 
 export const getBasicConfigAPI = () => {
   return request.get<BasicConfigVO>("/setting/basic");
@@ -15,4 +15,8 @@ export const getBlogConfigAPI = () => {
 
 export const getAboutConfigAPI = () => {
   return request.get<AboutConfigVO>("/setting/about");
+};
+
+export const getCommentSettingAPI = () => {
+  return request.get<CommentSettingVO>("/setting/comment");
 };

@@ -33,3 +33,9 @@ export interface AboutConfigVO {
   know_me: string;
   github_username: string;
 };
+
+type CommentType = "forbidden" | "post" | "doc" | "all";
+export interface CommentSettingVO {
+  env_id: string;
+  allow_comment_type: CommentType;
+};
