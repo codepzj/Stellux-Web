@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/document`,
+      url: `${baseUrl}/doc`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.8,
@@ -30,23 +30,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const postSitemap = postRes.data.map((item) => ({
-    url: item.loc,
-    lastModified: new Date(item.lastmod),
-    changeFrequency: item.changefreq,
-    priority: item.priority,
-  }));
+  const combinedSitemap = [...postRes.data, ...documentRes.data]
+    .map((item) => ({
+      url: item.loc,
+      lastModified: new Date(item.lastmod),
+      changeFrequency: item.changefreq,
+      priority: item.priority,
+    }))
+    .sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime());
 
-  const documentSitemap = documentRes.data.map((item) => ({
-    url: item.loc,
-    lastModified: new Date(item.lastmod),
-    changeFrequency: item.changefreq,
-    priority: item.priority,
-  }));
-
-  return [
-    ...staticPages,
-    ...postSitemap.sort((a, b) => a.lastModified.getTime() - b.lastModified.getTime()),
-    ...documentSitemap.sort((a, b) => a.lastModified.getTime() - b.lastModified.getTime()),
-  ];
+  return [...staticPages, ...combinedSitemap];
 }
