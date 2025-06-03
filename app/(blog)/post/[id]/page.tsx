@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import PostHeader from "./header";
 import { ScrollToc } from "@/components/Toc";
 import BlogComment from "./comment";
+import { getSeoConfigAPI } from "@/api/config";
 
 type Props = {
   params: Promise<{ id: string }>
@@ -47,7 +48,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = data.description;
   const image = data.thumbnail;
   const keywords = [data.category, ...(data.tags || [])].filter(Boolean);
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/post/${id}`;
+  const seoConfig = await getSeoConfigAPI();
+  const baseUrl = seoConfig.data.site_url;
+  const url = `${baseUrl}/post/${id}`;
 
   return {
     title,

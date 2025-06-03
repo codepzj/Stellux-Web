@@ -1,13 +1,15 @@
 import type { MetadataRoute } from "next";
+import { getSeoConfigAPI } from "@/api/config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const seoConfig = await getSeoConfigAPI();
+  const baseUrl = seoConfig.data.site_url;
 
-export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

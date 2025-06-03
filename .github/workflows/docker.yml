@@ -16,7 +16,6 @@ jobs:
       - name: Generate .env.production
         run: |
           echo "NEXT_PUBLIC_PROJECT_API=${{ secrets.NEXT_PUBLIC_PROJECT_API }}" > .env.production
-          echo "NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}" >> .env.production
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

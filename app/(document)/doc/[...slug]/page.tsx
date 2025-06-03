@@ -11,6 +11,7 @@ import { convertToTreeData } from "@/utils/convert";
 import DocTool from "@/components/Tool/doc";
 import DocComment from "./comment";
 import { Spacer } from "@heroui/spacer";
+import { getSeoConfigAPI } from "@/api/config";
 
 interface DocPageProps {
     params: Promise<{ slug: string[] }>;
@@ -84,7 +85,9 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
 
     if (!leaf_id) {
         const { data: rootDocument } = await getRootDocumentByID(document_id);
-        const url = `${process.env.NEXT_PUBLIC_SITE_URL}/doc/${alias}/${document_id}`;
+        const seoConfig = await getSeoConfigAPI();
+        const baseUrl = seoConfig.data.site_url;
+        const url = `${baseUrl}/doc/${alias}/${document_id}`;
         return {
             title: rootDocument.title,
             description: rootDocument.description,
@@ -105,7 +108,9 @@ export async function generateMetadata({ params }: DocPageProps): Promise<Metada
         };
     } else {
         const { data: document } = await getDocumentByID(leaf_id);
-        const url = `${process.env.NEXT_PUBLIC_SITE_URL}/doc/${alias}/${document_id}/${leaf_id}`;
+        const seoConfig = await getSeoConfigAPI();
+        const baseUrl = seoConfig.data.site_url;
+        const url = `${baseUrl}/doc/${alias}/${document_id}/${leaf_id}`;
         const description = document.content.slice(0, 150);
         return {
             title: document.title,
