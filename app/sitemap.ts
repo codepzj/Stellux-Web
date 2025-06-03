@@ -1,26 +1,52 @@
 import type { MetadataRoute } from "next";
-import { getSiteMapAPI } from "@/api/post";
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+import { getPostSiteMapAPI } from "@/api/post";
+import { getSeoConfigAPI } from "@/api/config";
+import { getDocumentSiteMapAPI } from "@/api/document";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const res = await getSiteMapAPI();
+  const postRes = await getPostSiteMapAPI();
+  const documentRes = await getDocumentSiteMapAPI();
+  const seoConfig = await getSeoConfigAPI();
+  const baseUrl = seoConfig.data.site_url;
 
   const staticPages: MetadataRoute.Sitemap = [
     {
-      url: `${BASE_URL}/`,
+      url: `${baseUrl}/`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "daily",
       priority: 1.0,
-    }
+    },
+    {
+      url: `${baseUrl}/document`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
   ];
 
-  const dynamicPages: MetadataRoute.Sitemap = res.data.map((item) => ({
-    url: `${BASE_URL}/post/${item.id}`,
-    lastModified: new Date(item.updated_at),
-    changeFrequency: "weekly",
-    priority: 0.8,
+  const postSitemap = postRes.data.map((item) => ({
+    url: item.loc,
+    lastModified: new Date(item.lastmod),
+    changeFrequency: item.changefreq,
+    priority: item.priority,
   }));
 
-  return [...staticPages, ...dynamicPages];
+  const documentSitemap = documentRes.data.map((item) => ({
+    url: item.loc,
+    lastModified: new Date(item.lastmod),
+    changeFrequency: item.changefreq,
+    priority: item.priority,
+  }));
+
+  return [
+    ...staticPages,
+    ...postSitemap.sort((a, b) => a.lastModified.getTime() - b.lastModified.getTime()),
+    ...documentSitemap.sort((a, b) => a.lastModified.getTime() - b.lastModified.getTime()),
+  ];
 }

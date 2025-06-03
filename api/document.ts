@@ -6,6 +6,7 @@ import {
   DocumentSearchDTO,
 } from "@/types/doc";
 import { Response } from "@/types/dto";
+import { SiteMapVO } from "@/types/sitemap";
 
 export const getAllPublicDocument: () => Promise<
   Response<DocumentRootVO[]>
@@ -41,4 +42,8 @@ export const getDocumentByKeyword: (
       document_id: dto.document_id,
     },
   });
+};
+
+export const getDocumentSiteMapAPI = () => {
+  return request.get<SiteMapVO[]>(`/document/sitemap`);
 };

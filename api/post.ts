@@ -1,5 +1,6 @@
 import { PageVO, Page } from "@/types/page";
-import { PostVO, PostSearchVO, SiteMapVO } from "@/types/post";
+import { PostVO, PostSearchVO } from "@/types/post";
+import { SiteMapVO } from "@/types/sitemap";
 import request from "@/utils/request";
 
 // 获取首页文章列表
@@ -18,6 +19,6 @@ export const getPostByKeyWordAPI = (keyword: string) => {
 };
 
 // 获取站点地图
-export const getSiteMapAPI = () => {
+export const getPostSiteMapAPI = () => {
   return request.get<SiteMapVO[]>(`/post/sitemap`);
 };
