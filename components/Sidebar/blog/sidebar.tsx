@@ -10,6 +10,7 @@ import { LinkGroup } from "./link-group"
 import { getBlogConfigAPI } from "@/api/config"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import Image from "next/image"
+import Footer from "./footer"
 
 export async function BlogSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const blog_config = await getBlogConfigAPI().then(res => res.data);
@@ -37,8 +38,9 @@ export async function BlogSidebar({ ...props }: React.ComponentProps<typeof Side
         <LinkGroup />
       </SidebarContent>
       <SidebarFooter>
-        <div className="flex justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-3">
           <ThemeSwitcher />
+          <Footer />
         </div>
       </SidebarFooter>
     </Sidebar>

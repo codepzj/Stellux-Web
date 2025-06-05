@@ -13,6 +13,11 @@ export const getPostDetailAPI = (id: string) => {
   return request.get<PostVO>(`/post/detail/${id}`);
 };
 
+// 获取所有发布文章
+export const getAllPublishPostAPI = () => {
+  return request.get<PostVO[]>(`/post/all`);
+};
+
 // 搜索框获取文章列表
 export const getPostByKeyWordAPI = (keyword: string) => {
   return request.get<PostSearchVO[]>(`/post/search?keyword=${keyword}`);
