@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Code } from "@heroui/code";
 import { Link } from "@heroui/link";
 import CopyButton from "./copy";
+import MdImage from "./image";
 
 export default function Md({ content, className }: { content: string, className?: string }) {
   let index = 1;
@@ -44,6 +45,9 @@ export default function Md({ content, className }: { content: string, className?
             >
               {children}
             </Link>
+          ),
+          img: ({ src, alt }) => (
+            <MdImage src={src as string} alt={alt as string} />
           ),
           ul: ({ children }) => (
             <ul className="list-disc !ml-0 !pl-4 text-content">{children}</ul>

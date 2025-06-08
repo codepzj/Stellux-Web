@@ -66,6 +66,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-github-calendar": "^4.5.7",
+    "react-image-lightbox": "^5.1.4",
     "react-markdown": "^10.1.0",
     "rehype-highlight": "^7.0.2",
     "rehype-raw": "^7.0.0",
