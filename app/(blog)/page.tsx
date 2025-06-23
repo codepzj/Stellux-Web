@@ -1,52 +1,64 @@
+"use client"
+
 import { getPostDetailListAPI } from "@/api/post";
 import type { PageVO, Page } from "@/types/page";
 import type { PostVO } from "@/types/post";
 import Empty from "@/components/Empty";
 import { PostCard } from "@/components/Card/PostCard";
-import Header from "@/components/Header";
-import { Pagination, PaginationItem, PaginationLink } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Loading } from "@/components/Loading";
 
-interface Props {
-  searchParams: Promise<{ page_no: number,page_size: number }>
-}
-// SSR 获取首屏数据
-export default async function Home({ searchParams }: Props) {
-  const { page_no, page_size } = await searchParams;
-  console.log(page_no, page_size);
+export default function Home() {
+  const searchParams = useSearchParams()
+  const page_no = searchParams.get("page_no") || 1
+  const page_size = searchParams.get("page_size") || 10
   const page: Page = {
-    page_no: page_no || 1,
-    page_size: page_size || 10,
+    page_no: Number(page_no),
+    page_size: Number(page_size),
   };
+  const [postList, setPostList] = useState<PageVO<PostVO>>();
 
-  const res = await getPostDetailListAPI(page);
-  const listData: PageVO<PostVO> = res?.data || {
-    list: [],
-    page_no: 1,
-    size: 10,
-    total_count: 0,
-    total_page: 1,
-    field: "",
-    order: "DESC",
-  };
+  const fetchPostList = async () => {
+    const res = await getPostDetailListAPI(page);
+    setPostList(res.data)
+  }
 
-  return listData.total_count === 0 ? (
+  useEffect(() => {
+    fetchPostList();
+  }, [page_no, page_size]);
+  
+  if (!postList) {
+    return <Loading />
+  }
+
+  return postList?.total_count === 0 ? (
     <Empty info="暂无文章" />
   ) : (
     <div className="flex flex-col justify-center items-center gap-4 px-4 w-full  ">
-      {listData.list.map((item) => (
+      {postList?.list.map((item) => (
         <PostCard key={item.id} post={item} />
       ))}
-      <Pagination>
-        <PaginationItem>
-          <PaginationLink href="/?page_no=1&page_size=10">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="/?page_no=2&page_size=10">2</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="/?page_no=3&page_size=10">3</PaginationLink>
-        </PaginationItem>
-      </Pagination>
+      {postList?.total_page > 1 && <Pagination className="justify-end">
+        <PaginationContent>
+          {
+            Array.from({ length: postList?.total_page || 0 }, (_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink href={`/?page_no=${index + 1}`} isActive={index + 1 === Number(page_no)}>{index + 1}</PaginationLink>
+              </PaginationItem>
+            ))
+          }
+        </PaginationContent>
+      </Pagination>}
     </div>
   );
 }

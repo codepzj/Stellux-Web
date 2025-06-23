@@ -7,6 +7,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --transition: 0.3s ease-in-out;
+
 }
 
 @media (max-width: 768px) {
