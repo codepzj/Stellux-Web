@@ -1,11 +1,18 @@
 "use client";
 
 import { IPostCard } from "@/types/post";
-import { Card, CardBody, CardHeader, CardFooter } from "@heroui/card";
-import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardFooter,
+  CardDescription,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Image } from "@heroui/image";
 import { TopIcon, CategoryIcon, TagIcon } from "@/components/SvgIcon";
+import Link from "next/link";
+import { ArrowRightIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function PostCard({
   post,
@@ -14,82 +21,82 @@ export function PostCard({
   post: IPostCard;
   className?: string;
 }) {
-  const router = useRouter();
   const tags = post.tags?.join(", ");
 
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full flex justify-center"
+    >
     <Card
       key={post.id}
       className={cn(
-        "p-6 rounded-2xl bg-default-100/30 dark:bg-default-100/70 transition-all shadow-md hover:shadow-md overflow-hidden max-w-3xl transition-none",
+        "post-card p-6 rounded-2xl overflow-hidden shadow-none border-none transition-none w-full md:w-4/5 dark:bg-[#0A0A0A] dark:text-white hover:bg-[#F5F5F5] dark:hover:bg-[#1A1A1A] transition-all duration-300",
         className
       )}
-
-      onPress={() => router.push(`/post/${post.id}`)}
-      isHoverable
-      isPressable
     >
-      <div className="flex flex-wrap md:flex-nowrap gap-4">
+      <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-1 min-w-0">
-          <CardHeader className="p-0 mb-4">
-            <span
-              className="text-base md:text-lg font-semibold truncate px-2 max-w-full text-title"
+          <CardHeader className="p-0 mb-3 flex items-center gap-2">
+            <div
+              className="text-lg md:text-xl text-default-600 truncate max-w-full flex items-center gap-2"
               title={post.title}
             >
-              {post.title}
-            </span>
-
+              <Link
+                href={`/post/${post.id}`}
+                className="font-medium text-default-600 hover:text-default-800"
+              >
+                {post.title}
+              </Link>{" "}
+              {post.is_top && (
+                <span className="text-red-500">
+                  <TopIcon size={24} />
+                </span>
+              )}
+            </div>
           </CardHeader>
-          <CardBody className="p-0 mb-4 md:min-h-8">
-            <p
-              className="text-sm text-description leading-relaxed px-2 max-w-full line-clamp-2 overflow-hidden text-ellipsis"
+          <CardContent className="p-0 mb-4">
+            <CardDescription
+              className="text-sm leading-relaxed line-clamp-1 max-w-[70%] overflow-hidden text-ellipsis"
               title={post.description}
             >
               {post.description}
-            </p>
-          </CardBody>
-
-          <CardFooter className="hidden md:flex flex-wrap gap-2 p-0 text-sm text-description">
+            </CardDescription>
+          </CardContent>
+          <CardFooter className="flex flex-wrap gap-3 p-0 text-sm">
             {post.category && (
               <span
-                className="flex items-center gap-1.5 px-2 py-0.5 truncate"
-                title={`分类：${post.category}`}
+                className="flex items-center rounded-full text-default-500"
+                title={`Category: ${post.category}`}
               >
-                <CategoryIcon className="text-default-500" size={16} />
+                <CategoryIcon size={16} />{" "}
                 <span className="text-sm">{post.category}</span>
               </span>
             )}
             {tags && (
               <span
-                className="flex items-center gap-1 px-2 py-0.5 truncate"
-                title={`标签：${tags}`}
+                className="flex items-center rounded-full text-default-500"
+                title={`Tags: ${tags}`}
               >
-                <TagIcon className="text-default-500" size={17} />
-                <span className="text-sm">{tags}</span>
+                <TagIcon size={16} />{" "}
+                <span className="text-sm truncate max-w-[150px]">{tags}</span>
               </span>
             )}
-            {post.is_top && (
-              <TopIcon className="text-red-500 flex-shrink-0" size={24} />
-            )}
+            <Link
+              href={`/post/${post.id}`}
+              className="ml-auto flex items-center gap-1.5 rounded-full hover:font-medium text-default-600"
+            >
+              <span className="text-sm">前往阅读</span>
+              <ArrowRightIcon size={16} />
+            </Link>
           </CardFooter>
+          </div>
         </div>
-
-        {/* Right side: Image */}
-        <div className="hidden md:flex justify-center items-center w-48 h-auto flex-shrink-0">
-          {post.thumbnail && (
-            <Image
-              src={post.thumbnail}
-              alt={post.title}
-              width={180}
-              height={120}
-              shadow="none"
-              loading="lazy"
-              isZoomed
-              className="object-cover"
-            />
-          )}
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </motion.div>
   );
 }

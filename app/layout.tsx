@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import Handler from "@/components/Hander";
+import { Toaster } from "@/components/ui/sonner"; // 全局消息组件
 
 // 布局组件
 export default async function RootLayout({
@@ -24,9 +25,10 @@ export default async function RootLayout({
             <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
                 <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
                     <Handler />
-                    <div className="max-w-7xl mx-auto">
+                    <div className="mx-auto px-4">
                         {children}
                     </div>
+                    <Toaster position="top-right" richColors duration={1500} />
                 </Providers>
             </body>
         </html>

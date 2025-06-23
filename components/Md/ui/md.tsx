@@ -71,11 +71,8 @@ export default function Md({ content, className }: { content: string, className?
               // 多行代码块
               return (
                 <div className="not-prose relative rounded-md">
-                  <div className="flex h-10 items-center justify-between pl-4 pr-2 bg-zinc-100/50 dark:bg-zinc-900 rounded-t-md">
-                    <span className="text-sm text-zinc-500">{match?.[1] || "plaintext"}</span>
-                    <CopyButton id={id} />
-                  </div>
-                  <div className="overflow-x-auto p-4 bg-zinc-100 dark:bg-zinc-900/50 rounded-b-md" id={id}>
+                  <div className="overflow-x-auto p-4 bg-zinc-100 dark:bg-zinc-900/50 rounded-b-md relative" id={id}>
+                    <CopyButton className="absolute top-1.5 right-1.5" id={id} />
                     {children}
                   </div>
                 </div>

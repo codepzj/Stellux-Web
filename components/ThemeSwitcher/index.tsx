@@ -1,9 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Tabs, Tab } from "@heroui/tabs";
+import { SunIcon, MoonIcon } from "lucide-react";
+import { Button } from "@heroui/button";
 import { useEffect, useState } from "react";
-import { SystemIcon, SunIcon, MoonIcon } from "@/components/SvgIcon";
 
 export const ThemeSwitcher = () => {
   const { setTheme, theme } = useTheme();
@@ -17,21 +17,15 @@ export const ThemeSwitcher = () => {
     setTheme(newTheme);
   };
 
-  return (
-    <Tabs
-      defaultSelectedKey="system"
-      size="sm"
-      isDisabled={!mounted}
-      selectedKey={mounted ? theme : undefined}
-      aria-label="主题切换"
-      variant="solid"
-      radius="full"
-      onSelectionChange={(key) => handleThemeChange(key as string)}
+  return mounted ? (
+    <Button
+      variant="secondary"
+      size="icon"
+      onClick={() => handleThemeChange(theme === "dark" ? "light" : "dark")}
+      className="rounded-lg cursor-pointer bg-muted/80 hover:shadow"
     >
-      <Tab key="light" title={<SunIcon size={16} />} aria-label="浅色模式" />
-      <Tab key="dark" title={<MoonIcon size={16} />} aria-label="深色模式" />
-      <Tab key="system" title={<SystemIcon size={16} />} aria-label="跟随系统模式" />
-    </Tabs>
-  );
+      {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
+    </Button>
+  ) : null;
 };
 

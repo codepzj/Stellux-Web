@@ -1,40 +1,28 @@
 import { getPostDetailAPI } from "@/api/post";
 import { Markdown } from "@/components/Md";
-import { getTableOfContents } from "@/lib/toc";
 import { Spacer } from "@heroui/spacer";
 import { Metadata } from "next";
-import PostHeader from "./header";
-import { ScrollToc } from "@/components/Toc";
 import BlogComment from "./comment";
 import { getSeoConfigAPI } from "@/api/config";
 
 type Props = {
-  params: Promise<{ id: string }>
-}
+  params: Promise<{ id: string }>;
+};
 
 export default async function PostPage({ params }: Props) {
   const { id } = await params;
   const post = await getPostDetailAPI(id);
-  const toc = await getTableOfContents(post.data.content)
 
   return (
-    <div className="relative w-full mx-auto text-default-600">
-      <div className="w-full flex flex-col md:flex-row justify-center gap-2">
-        <div className="flex-1 w-full md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4 mx-auto md:mx-0">
-          <PostHeader
-            title={post.data.title || ""}
-            created_at={post.data.created_at || ""}
-            updated_at={post.data.updated_at || post.data.created_at || ""}
-          />
-          <Spacer y={8} />
-          <Markdown className="pl-2 break-words overflow-x-auto" content={post.data.content} />
-          <Spacer y={32} />
-          <BlogComment />
-        </div>
-        <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
-          <ScrollToc toc={toc} />
-        </div>
-      </div>
+    <div className="relative md:w-4/5 mx-auto text-default-600">
+        <h1 className="text-3xl text-default-900 font-medium text-center">{post.data.title}</h1>
+        <Spacer y={16} />
+        <Markdown
+          className="break-words overflow-x-auto"
+          content={post.data.content}
+        />
+        <Spacer y={32} />
+        <BlogComment />
     </div>
   );
 }

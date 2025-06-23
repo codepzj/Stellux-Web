@@ -9,17 +9,17 @@
   --transition: 0.3s ease-in-out;
 }
 
-html {
-  scrollbar-gutter: stable;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-}
-
 @media (max-width: 768px) {
   html {
     font-size: 14px;
     scrollbar-width: none;
   }
+}
+
+html {
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+  scrollbar-width: thin;
 }
 
 body {

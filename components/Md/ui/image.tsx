@@ -1,15 +1,49 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import ImageLightbox from "@/components/ImageLightBox";
+import { useEffect, useRef } from "react"
+import "@fancyapps/ui/dist/fancybox/fancybox.css"
+import Image from "next/image"
+import { Fancybox } from "@fancyapps/ui"
 
-export default function MdImage({ src, alt }: { src: string, alt: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+interface FancyboxImageProps {
+  src: string
+  alt: string
+  width?: number
+  height?: number
+  group?: string
+}
+
+export default function FancyboxImage({
+  src,
+  alt,
+  width = 600,
+  height = 400,
+  group = "gallery",
+}: FancyboxImageProps) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    Fancybox.bind("[data-fancybox]", {
+      groupAll: true, 
+    })
+
+    return () => {
+      Fancybox.unbind("[data-fancybox]")
+      Fancybox.close()
+    }
+  }, [])
 
   return (
-    <>
-      <img src={src} alt={alt} onClick={() => setIsOpen(true)} className="cursor-pointer" />
-      <ImageLightbox isOpen={isOpen} image={src} onClose={() => setIsOpen(false)} />
-    </>
-  );
+    <span ref={ref}>
+      <a data-fancybox={group} href={src}>
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          style={{ cursor: "zoom-in", borderRadius: 8 }}
+        />
+      </a>
+    </span>
+  )
 }
