@@ -12,7 +12,7 @@ const defaultText = "加载中...";
 export const Loading: React.FC<LoadingProps> = ({ className = "" }) => {
   return (
     <div
-      className={`h-[calc(100vh-16rem)] w-full flex flex-col items-center justify-center p-4 ${className}`}
+      className={`h-[calc(100vh-12rem)] w-full flex flex-col items-center justify-center p-4 ${className}`}
     >
       <div className="flex space-x-1.5 h-5">
         <span

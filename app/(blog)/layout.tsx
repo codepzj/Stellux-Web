@@ -1,6 +1,5 @@
-import BlogSearchModal from "@/components/SearchModal/blog";
-import BlogTool from "@/components/Tool/blog";
-import Header from "@/components/Header";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 // 布局组件
 export default async function BlogLayout({
@@ -11,7 +10,10 @@ export default async function BlogLayout({
   return (
     <div className="flex flex-col gap-4 p-0 md:p-2 md:w-7/10 mx-auto pt-0 min-h-screen">
       <Header />
-      {children}
+      <div className="flex-1">
+        {children}
+      </div>
+      <Footer />
     </div>
   );
 }

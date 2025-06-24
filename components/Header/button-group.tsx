@@ -6,13 +6,12 @@ import {
   CommandInput,
   CommandList,
 } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
 import { SearchIcon, Contrast } from "lucide-react";
 import { PostSearchVO } from "@/types/post";
 import { getPostByKeyWordAPI } from "@/api/post";
 import { useRouter } from "next/navigation";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { useTheme } from "next-themes";
+import { IconButton } from "../Button/icon";
 // 高亮关键词
 function highlight(text: string, key: string) {
   if (!key.trim()) return text;
@@ -28,7 +27,7 @@ function highlight(text: string, key: string) {
   );
 }
 
-export function CommandMenu() {
+export function ButtonGroup() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<PostSearchVO[]>([]);
@@ -63,22 +62,18 @@ export function CommandMenu() {
 
   return (
     <div className="flex items-center space-x-2">
-      <Button
-        variant="ghost"
-        size="icon"
+      <IconButton
+        icon={SearchIcon}
         onClick={() => setOpen(true)}
-        className="rounded-lg cursor-pointer bg-muted/80 transition-none hover:shadow"
+        hoverText="搜索"
       >
-        <SearchIcon />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon"
+      </IconButton>
+      <IconButton
+        icon={Contrast}
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        className="rounded-lg cursor-pointer bg-muted/80 transition-none hover:shadow"
+        hoverText="切换主题"
       >
-        <Contrast size={16} />
-      </Button>
+      </IconButton>
 
       <CommandDialog
         className="top-6 translate-y-0"

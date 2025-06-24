@@ -44,21 +44,24 @@ export default function Home() {
   return postList?.total_count === 0 ? (
     <Empty info="暂无文章" />
   ) : (
-    <div className="flex flex-col justify-center items-center gap-4 px-4 w-full  ">
-      {postList?.list.map((item) => (
-        <PostCard key={item.id} post={item} />
-      ))}
-      {postList?.total_page > 1 && <Pagination className="justify-end">
-        <PaginationContent>
-          {
-            Array.from({ length: postList?.total_page || 0 }, (_, index) => (
+    <div className="flex w-full flex-col gap-10 my-4 md:gap-8">
+      {postList?.list.map((item) => <PostCard key={item.id} post={item} />)}
+      {postList?.total_page > 1 && (
+        <Pagination className="justify-end">
+          <PaginationContent>
+            {Array.from({ length: postList?.total_page || 0 }, (_, index) => (
               <PaginationItem key={index}>
-                <PaginationLink href={`/?page_no=${index + 1}`} isActive={index + 1 === Number(page_no)}>{index + 1}</PaginationLink>
+                <PaginationLink
+                  href={`/?page_no=${index + 1}`}
+                  isActive={index + 1 === Number(page_no)}
+                >
+                  {index + 1}
+                </PaginationLink>
               </PaginationItem>
-            ))
-          }
-        </PaginationContent>
-      </Pagination>}
+            ))}
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }
