@@ -1,25 +1,35 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import NotFoundSvg from '@/assets/svg/not-found.svg'
-import { Button } from "@heroui/react"
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { AlertCircle } from "lucide-react";
 
 export default function NotFound() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <>
-      <div className='w-full h-full flex flex-col items-center justify-center' suppressHydrationWarning>
-        <div className='flex flex-col items-center justify-center mt-20'>
-          <Image src={NotFoundSvg} alt="404" className='w-2/3 xl:w-[20rem] lg:w-[16rem] md:w-[12rem]' />
-          <h2 className='text-3xl sm:text-3xl font-bold my-4'>页面不存在</h2>
-          <p className='text-sm text-default-600 mb-4'>页面不存在或已删除，请返回首页</p>
-          <Button className='mt-6 cursor-pointer' color="primary" variant="solid" onPress={() => router.push("/")}>返回首页</Button>
+    <section
+      className="h-screen flex items-center justify-center bg-background px-4 py-12"
+      aria-labelledby="error-title"
+    >
+      <div className="max-w-4xl mx-auto flex flex-col items-center justify-center gap-8 text-center lg:flex-row lg:items-start lg:gap-16">
+        <div className="flex flex-col items-center gap-4 text-primary">
+          <AlertCircle className="w-16 h-16 text-destructive" />
+          <h1 id="error-title" className="text-3xl font-bold lg:text-5xl">
+            页面不存在
+          </h1>
+          <p className="text-muted-foreground text-base lg:text-lg max-w-md">
+            很抱歉，您访问的页面不存在。请检查网址是否正确，或点击下方按钮返回首页。
+          </p>
+          <Button
+            size="lg"
+            className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            返回首页
+          </Button>
         </div>
-
       </div>
-
-    </>
+    </section>
   );
 }

@@ -1,182 +1,331 @@
 "use client";
 
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
+import {
+  ChevronDown,
+  Menu,
+  Zap,
+  Search,
+  X,
+  EllipsisVertical,
+} from "lucide-react";
+import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
-interface Author {
-  name: string;
-  role: string;
-  avatar: string;
-}
+export default function AppShell1() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-interface BlogPost {
-  id: number;
-  title: string;
-  date: string;
-  category: string;
-  description: string;
-  image: string;
-  author: Author;
-}
-
-const BLOG_POSTS: BlogPost[] = [
-  {
-    id: 1,
-    title: "How can shadcn/ui kit for Figma improve your workflow?",
-    date: "Mar 15, 2024",
-    category: "Articles",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus interdum hendrerit ex vitae sodales. Donec id leo ipsum. Phasellus volutpat aliquet mauris.",
-    image: "https://ui.shadcn.com/placeholder.svg",
-    author: {
-      name: "Lando Norris",
-      role: "Product Designer",
-      avatar: "https://github.com/shadcn.png",
-    },
-  },
-  {
-    id: 2,
-    title: "Building Dark Mode with Next.js and Tailwind CSS",
-    date: "Mar 12, 2024",
-    category: "Development",
-    description:
-      "Learn how to implement a seamless dark mode toggle in your Next.js application using Tailwind CSS and system preferences.",
-    image: "https://ui.shadcn.com/placeholder.svg",
-    author: {
-      name: "Charles Leclerc",
-      role: "Frontend Developer",
-      avatar: "https://github.com/shadcn.png",
-    },
-  },
-  {
-    id: 3,
-    title: "Mastering React Server Components",
-    date: "Mar 8, 2024",
-    category: "Advanced",
-    description:
-      "Deep dive into React Server Components and learn how they can improve your application's performance and user experience.",
-    image: "https://ui.shadcn.com/placeholder.svg",
-    author: {
-      name: "Lewis Hamilton",
-      role: "Tech Lead",
-      avatar: "https://github.com/shadcn.png",
-    },
-  },
-  {
-    id: 4,
-    title: "The Future of Web Development in 2024",
-    date: "Mar 5, 2024",
-    category: "Insights",
-    description:
-      "Explore the latest trends and technologies shaping the future of web development this year and beyond.",
-    image: "https://ui.shadcn.com/placeholder.svg",
-    author: {
-      name: "Max Verstappen",
-      role: "Software Architect",
-      avatar: "https://github.com/shadcn.png",
-    },
-  },
-];
-
-export default function TestPage() {
-  return (
-    <section
-      className="bg-background section-padding-y"
-      aria-labelledby="blog-section-heading"
+  // Mobile top bar component
+  const MobileTopBar = () => (
+    <div
+      className={`bg-background flex h-14 items-center justify-between px-4 ${
+        !isMenuOpen ? "border-border border-b" : ""
+      }`}
     >
-      <div className="mx-auto max-w-2xl px-6">
-        <div className="flex flex-col items-start gap-10 md:gap-12">
-          {/* Section Title */}
-          <div className="section-title-gap-lg flex flex-col">
-            {/* Tagline */}
-            <h2 className="text-2xl font-bold">Blog Section</h2>
-            {/* Main Heading */}
-            <h1 id="blog-section-heading" className="heading-lg">
-              Short and clear engaging headline for a blog
-            </h1>
-            {/* Description */}
-            <p className="text-muted-foreground">
-              Add a concise value statement that captures reader interest and
-              previews content value. Focus on benefits while keeping it under
-              two lines. Align with your blog categories.
-            </p>
+      <Button
+        variant="ghost"
+        onClick={toggleMenu}
+        className="relative -ml-2 flex h-9 w-9 items-center justify-center [&_svg]:size-5"
+      >
+        <span
+          className={`absolute transition-all duration-300 ${
+            isMenuOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+          }`}
+        >
+          <Menu />
+        </span>
+        <span
+          className={`absolute transition-all duration-300 ${
+            isMenuOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
+          }`}
+        >
+          <X />
+        </span>
+      </Button>
+
+      <div className="absolute right-4 flex items-center gap-3">
+        <Button variant="ghost" className="h-9 w-9 p-0 [&_svg]:size-5">
+          <Search className="text-muted-foreground" />
+        </Button>
+        <Button className="h-9 w-9 p-0 [&_svg]:size-5">
+          <Zap />
+        </Button>
+      </div>
+    </div>
+  );
+
+  // Navigation items component
+  const NavItems = ({ isMobile = false }) => {
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const toggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
+
+    const linkClasses = `font-medium ${isMobile ? "text-base" : "text-sm"} ${
+      isMobile
+        ? "text-muted-foreground"
+        : "text-muted-foreground hover:bg-primary/5"
+    } px-3 py-2 rounded-md`;
+
+    return (
+      <>
+        <Link
+          href="#"
+          className={`${linkClasses} ${isMobile ? "text-primary" : "text-primary"}`}
+        >
+          Dashboard
+        </Link>
+        <Link href="#" className={`${linkClasses} flex gap-2`}>
+          Orders
+          <Badge className="flex h-5 w-5 items-center justify-center p-0 text-xs">
+            2
+          </Badge>
+        </Link>
+        <Link href="#" className={linkClasses}>
+          Products
+        </Link>
+        <Link href="#" className={linkClasses}>
+          Customers
+        </Link>
+        {isMobile ? (
+          <div>
+            <button
+              onClick={toggleSettings}
+              className={`w-full text-left ${linkClasses} flex items-center justify-between`}
+            >
+              Settings
+              <ChevronDown
+                className={`h-5 w-5 transition-transform ${
+                  isSettingsOpen ? "rotate-180 transform" : ""
+                }`}
+              />
+            </button>
+            {isSettingsOpen && (
+              <div className="mt-1 ml-3 space-y-1">
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-3 py-2 text-base font-medium"
+                >
+                  General
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-3 py-2 text-base font-medium"
+                >
+                  Security
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-3 py-2 text-base font-medium"
+                >
+                  API
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-3 py-2 text-base font-medium"
+                >
+                  Advanced
+                </Link>
+              </div>
+            )}
           </div>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`flex items-center ${linkClasses}`}>
+              Settings <ChevronDown className="ml-1 h-4 w-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>General</DropdownMenuItem>
+              <DropdownMenuItem>Security</DropdownMenuItem>
+              <DropdownMenuItem>API</DropdownMenuItem>
+              <DropdownMenuItem>Advanced</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </>
+    );
+  };
 
-          {/* Blog List */}
-          <div className="flex w-full flex-col gap-10 md:gap-8" role="list">
-            {BLOG_POSTS.map((post) => (
-              <div
-                key={post.id}
-                className="group flex cursor-pointer flex-col gap-6 p-0 md:flex-row"
-                role="listitem"
-              >
-                {/* Image Container */}
-                <div className="w-full md:w-[200px]">
-                  <AspectRatio
-                    ratio={16 / 9}
-                    className="overflow-hidden rounded-xl"
-                  >
-                    <Image
-                      src={post.image}
-                      alt={`${post.title} thumbnail`}
-                      fill
-                      className="object-cover transition-transform duration-200 group-hover:scale-105"
-                    />
-                  </AspectRatio>
-                </div>
+  return (
+    <div className="bg-background">
+      {/* Desktop Navbar */}
+      <nav className="border-border bg-background hidden h-16 border-b shadow-sm lg:block">
+        <div className="container mx-auto flex h-full items-center justify-between px-6">
+          <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-1">
+              <NavItems />
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" size="icon">
+              <Search className="text-muted-foreground h-5 w-5" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>My Profile</DropdownMenuItem>
+                <DropdownMenuItem>Account</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <Separator className="my-1" />
+                <DropdownMenuItem>Sign Out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button>
+              <Zap className="h-4 w-4" /> Upgrade
+            </Button>
+          </div>
+        </div>
+      </nav>
 
-                {/* Post Content */}
-                <div className="flex flex-1 flex-col justify-between p-0">
-                  {/* Post Info */}
-                  <div className="flex flex-col gap-3">
-                    {/* Post Meta */}
-                    <div className="flex items-center gap-2">
-                      <p className="text-muted-foreground text-sm">
-                        {post.date}
-                      </p>
-                      <span className="text-muted-foreground text-sm">·</span>
-                      <p className="text-muted-foreground text-sm">
-                        {post.category}
-                      </p>
-                    </div>
+      {/* Mobile Navbar */}
+      <nav className="lg:hidden">
+        <MobileTopBar />
+      </nav>
 
-                    {/* Post Title */}
-                    <h3 className="text-foreground text-base font-semibold hover:underline">
-                      {post.title}
-                    </h3>
-
-                    {/* Post Description */}
-                    <p className="text-muted-foreground line-clamp-2 text-sm">
-                      {post.description}
-                    </p>
-                  </div>
-
-                  {/* Author Info */}
-                  <div className="mt-6 flex items-center gap-4 md:mt-0">
-                    {/* Author Avatar */}
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage
-                        src={post.author.avatar}
-                        alt={post.author.name}
-                      />
-                    </Avatar>
-                    {/* Author Details */}
-                    <div className="flex flex-col">
-                      <p className="text-foreground text-sm font-medium">
-                        {post.author.name}
-                      </p>
-                      <p className="text-muted-foreground text-sm">
-                        {post.author.role}
-                      </p>
-                    </div>
-                  </div>
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="border-border bg-background border-b lg:hidden">
+          <div className="flex flex-col">
+            <div className="flex-grow overflow-y-auto p-2">
+              <div className="flex flex-col">
+                <NavItems isMobile={true} />
+              </div>
+            </div>
+            <Separator />
+            <div className="p-2">
+              <div className="flex items-center space-x-3 p-2">
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium">John Doe</p>
+                  <p className="text-muted-foreground text-sm">
+                    hi@shadcndesign.com
+                  </p>
                 </div>
               </div>
-            ))}
+              <div>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-2 py-2 font-medium"
+                >
+                  My profile
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-2 py-2 font-medium"
+                >
+                  Account settings
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-2 py-2 font-medium"
+                >
+                  Billing
+                </Link>
+                <Link
+                  href="#"
+                  className="text-muted-foreground block rounded-md px-2 py-2 font-medium"
+                >
+                  Sign out
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Page Header */}
+      <div className="border-border bg-background border-b py-4 md:py-6">
+        <div className="container mx-auto flex flex-col gap-6 px-4 lg:px-6">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/docs/components">
+                  Projects
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Project alpha</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+                Project alpha
+              </h1>
+              <p className="text-muted-foreground text-sm lg:text-base">
+                Manage your project's details such as name, image, description
+                and settings.
+              </p>
+            </div>
+            <div className="flex flex-row-reverse justify-end gap-2 md:flex-row">
+              <div className="lg:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <EllipsisVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Share</DropdownMenuItem>
+                    <DropdownMenuItem>View</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <Button variant="outline" className="hidden lg:inline-flex">
+                Share
+              </Button>
+              <Button variant="outline" className="hidden lg:inline-flex">
+                View
+              </Button>
+              <Button variant="outline">Edit</Button>
+              <Button>Publish</Button>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <div className="container mx-auto flex flex-col gap-6 px-4 py-6 lg:px-6">
+        <div className="border-border bg-muted text-muted-foreground w-full rounded-md border border-dashed p-6 text-center">
+          Replace this div with your content
+        </div>
+      </div>
+    </div>
   );
 }

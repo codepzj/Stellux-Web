@@ -1,70 +1,72 @@
-"use client"
+"use client";
 
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { cn } from "@/lib/utils";
-import { WikiIcon } from "@/components/SvgIcon";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { WikiIcon } from "@/components/SvgIcon";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { DocumentRootVO } from "@/types/doc";
 
 export const DocumentCard = ({
-    document,
-    className,
+  document,
+  className,
 }: {
-    document: DocumentRootVO;
-    className?: string;
+  document: DocumentRootVO;
+  className?: string;
 }) => {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <Card
-            key={document.id}
-            isHoverable
-            isPressable
-            className={cn(
-                "p-6 rounded-2xl bg-default-50/30 dark:bg-default-100/70 shadow-md hover:shadow-md overflow-hidden max-w-3xl",
-                className
-            )}
-            onPress={() => router.push(`/doc/${document.alias}/${document.id}`)}
-            disableAnimation
-        >
-            <div className="flex flex-wrap md:flex-nowrap gap-4">
-                <div className="flex-1 min-w-0">
-                    <CardHeader className="p-0 mb-4 flex items-center gap-2">
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      whileHover={{ y: -4, scale: 1.01 }}
+      transition={{ duration: 0.1 }}
+      className={cn(
+        "w-full max-w-4xl mx-auto overflow-hidden rounded-xl bg-background shadow-sm hover:shadow-lg hover:shadow-primary/10 cursor-pointer",
+        className
+      )}
+      onClick={() => router.push(`/doc/${document.alias}/${document.id}`)}
+    >
+      <div className="group relative flex flex-col md:flex-row gap-4 p-6">
+        {/* 左侧内容区 */}
+        <div className="flex flex-col justify-center flex-1 gap-2 text-foreground">
+          <div className="flex items-center gap-2">
+            <WikiIcon className="w-5 h-5 text-primary" />
+            <h3
+              className="text-base md:text-lg font-semibold truncate"
+              title={document.title}
+            >
+              {document.title}
+            </h3>
+          </div>
 
-                        <WikiIcon className="w-5 h-5 text-primary" />
-                        <span
-                            className="text-base md:text-lg font-semibold truncate px-2 max-w-full text-title"
-                            title={document.title}
-                        >
-                            {document.title}
-                        </span>
-                    </CardHeader>
+          {document.description && (
+            <p
+              className="text-sm text-muted-foreground leading-relaxed line-clamp-2"
+              title={document.description}
+            >
+              {document.description}
+            </p>
+          )}
+        </div>
 
-                    <CardBody className="p-0 mb-4 md:min-h-8">
-                        <p
-                            className="text-sm text-description leading-relaxed px-2 max-w-full line-clamp-2 overflow-hidden text-ellipsis"
-                            title={document.description}
-                        >
-                            {document.description}
-                        </p>
-                    </CardBody>
-                </div>
-
-                {/* Right side: Image */}
-                <div className="hidden md:flex justify-center items-center flex-shrink-0">
-                    {document.thumbnail && (
-                        <Image
-                            src={document.thumbnail}
-                            alt={document.title}
-                            width={96}
-                            height={96}
-                            loading="lazy"
-                            className="max-h-24 object-contain"
-                        />
-                    )}
-                </div>
+        {/* 大屏右侧缩略图 */}
+        {document.thumbnail && (
+          <div className="hidden md:flex md:w-[96px] items-center justify-center">
+            <div className="rounded-lg overflow-hidden w-full">
+              <Image
+                src={document.thumbnail}
+                alt={document.title}
+                width={96}
+                height={96}
+                loading="lazy"
+                className="object-contain max-h-24"
+              />
             </div>
-        </Card>
-    )
-}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};

@@ -14,7 +14,7 @@ import { Skeleton } from "../ui/skeleton";
 
 const navItems = [
   { label: "首页", icon: Home, path: "/" },
-  { label: "文章", icon: FileText, path: "/blog" },
+  { label: "文章", icon: FileText, path: "/post" },
   { label: "文档", icon: Book, path: "/doc" },
   { label: "关于", icon: User, path: "/about" },
 ];

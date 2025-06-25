@@ -1,10 +1,9 @@
 import { getPostDetailAPI } from "@/api/post";
 import { Markdown } from "@/components/Md";
-import { Spacer } from "@heroui/spacer";
 import { Metadata } from "next";
 import BlogComment from "./comment";
 import { getSeoConfigAPI } from "@/api/config";
-
+import { Spacer } from "@/components/Spacer";
 type Props = {
   params: Promise<{ id: string }>;
 };
@@ -15,14 +14,16 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="relative md:w-4/5 mx-auto text-default-600">
-        <h1 className="text-3xl text-default-900 font-medium text-center">{post.data.title}</h1>
-        <Spacer y={16} />
-        <Markdown
-          className="break-words overflow-x-auto"
-          content={post.data.content}
-        />
-        <Spacer y={32} />
-        <BlogComment />
+      <h1 className="text-3xl text-default-900 font-medium text-center">
+        {post.data.title}
+      </h1>
+      <Spacer y={16} />
+      <Markdown
+        className="break-words overflow-x-auto"
+        content={post.data.content}
+      />
+      <Spacer y={16} />
+      <BlogComment />
     </div>
   );
 }

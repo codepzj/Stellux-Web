@@ -3,44 +3,8 @@
 @plugin "./hero.ts";
 @source "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
 @custom-variant dark (&:is(.dark *));
-@theme {
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --transition: 0.3s ease-in-out;
-
-}
-
-html {
-  scrollbar-gutter: stable;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-}
-
-body {
-  position: relative;
-  min-height: 100vh;
-  margin: 0;
-}
-
-:root {
-  --font-main: "MiSans VF", "MiSans", "PingFang SC", system-ui, sans-serif; /* 正文字体 */
-  --font-sans: "Inter", sans-serif;
-
-  font-synthesis: style; /* 禁用字体抗锯齿 */
-  -webkit-font-smoothing: antialiased; /* 禁用字体抗锯齿 */
-  -moz-osx-font-smoothing: grayscale; /* 禁用字体抗锯齿 */
-  word-wrap: break-word; /* 自动换行 */
-  hyphens: auto; /* 自动断字 */
-}
-
-@theme {
-  --font-main: var(--font-main);
-  --font-sans: var(--font-sans);
-  --color-title: var(--color-title);
-  --color-content: var(--color-content);
-  --color-description: var(--color-description);
-}
-
+@import "./styles/index.css";
+  
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -80,9 +44,6 @@ body {
 }
 
 :root {
-  --color-title: #000000;
-  --color-content: #333333;
-  --color-description: #666666;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -118,9 +79,6 @@ body {
 }
 
 .dark {
-  --color-title: #ffffff;
-  --color-content: #e6e6e6;
-  --color-description: #b3b3b3;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

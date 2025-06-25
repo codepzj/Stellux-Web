@@ -10,7 +10,7 @@ import { DocSidebar } from "@/components/Sidebar/doc/sidebar";
 import { convertToTreeData } from "@/utils/convert";
 import DocTool from "@/components/Tool/doc";
 import DocComment from "./comment";
-import { Spacer } from "@heroui/spacer";
+import { Spacer } from "@/components/Spacer";
 import { getSeoConfigAPI } from "@/api/config";
 
 interface DocPageProps {

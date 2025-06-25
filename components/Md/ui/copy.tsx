@@ -1,9 +1,8 @@
 "use client";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import classNames from "classnames";
 import { toast } from "sonner";
 
 const CopyButton = ({ id, className }: { id: string, className?: string }) => {
@@ -26,12 +25,10 @@ const CopyButton = ({ id, className }: { id: string, className?: string }) => {
 
   return (
     <Button
-      onPress={onCopy}
-      isIconOnly
+      onClick={onCopy}
       aria-label="Copy"
-      variant="light"
+      variant="ghost"
       className={cn("p-0 w-8 h-8 min-w-8 min-h-8 rounded-md cursor-pointer hover:bg-default-100 dark:hover:bg-default-500/10", className)}
-      disableAnimation
     >
       {copied ? <Check className="transition-transform duration-300 text-green-500" size={16} /> : <Copy className="transition-transform duration-300" size={16} />}
     </Button>
