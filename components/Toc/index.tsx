@@ -5,7 +5,6 @@ import * as React from "react";
 import { useEffect, useState, useMemo } from "react";
 import type { TableOfContents } from "@/lib/toc";
 import { cn } from "@/lib/utils";
-import { ScrollShadow } from "@heroui/scroll-shadow";
 import { Icon } from "@iconify/react";
 
 interface TocProps {
@@ -15,9 +14,9 @@ interface TocProps {
 
 export const ScrollToc = ({ toc, className }: TocProps) => {
   return (
-    <ScrollShadow className="w-48" size={0} hideScrollBar>
+    <div className="w-48">
       <Toc toc={toc} className={className} />
-    </ScrollShadow>
+    </div>
   );
 };
 

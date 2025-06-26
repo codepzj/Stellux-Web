@@ -2,8 +2,7 @@
 
 import type { ThemeProviderProps } from "next-themes"
 import * as React from "react"
-import { HeroUIProvider } from "@heroui/system"
-import { useRouter, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 
 export interface ProvidersProps {
@@ -12,7 +11,6 @@ export interface ProvidersProps {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
-  const router = useRouter()
   const pathname = usePathname()
 
   React.useEffect(() => {
@@ -30,8 +28,6 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   }, [pathname])
 
   return (
-    <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-    </HeroUIProvider>
+    <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
   )
 }

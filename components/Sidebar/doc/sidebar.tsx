@@ -4,7 +4,6 @@ import {
     SidebarFooter,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 
 import { DocSearchForm } from "./search-form"
 import { NavMain } from "./nav-main"
@@ -49,11 +48,6 @@ export async function DocSidebar({ docTitle, docThumbnail, doctree, className, a
                 <DocSearchForm alias={alias} id={document_id} />
                 <NavMain doctree={doctree} alias={alias} document_id={document_id} />
             </SidebarContent>
-            <SidebarFooter>
-                <div className="flex justify-center items-center">
-                    <ThemeSwitcher />
-                </div>
-            </SidebarFooter>
         </Sidebar>
     )
 }

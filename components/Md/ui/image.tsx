@@ -16,8 +16,8 @@ interface FancyboxImageProps {
 export default function FancyboxImage({
   src,
   alt,
-  width = 600,
-  height = 400,
+  width = 800,
+  height = 450,
   group = "gallery",
 }: FancyboxImageProps) {
   const ref = useRef<HTMLDivElement>(null)

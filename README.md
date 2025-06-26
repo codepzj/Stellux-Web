@@ -24,7 +24,7 @@ Stellux - 于留白中沉淀，于极简中思索
 
 ## 技术栈
 
-* 前端：React、Next.js、TailwindCSS、TypeScript、Zustand、React Hooks、HeroUI、ShadcnUI、Vercel、Docker
+* 前端：React、Next.js、TailwindCSS、TypeScript、Zustand、React Hooks、ShadcnUI、Vercel、Docker
 * 后端：Gin、MongoDB、Go-Mongox、Viper、Casbin、Slog、Wire、Go-Template
 * 控制台：Vue、TailwindCSS、Ant Design Vue、Pinia
 

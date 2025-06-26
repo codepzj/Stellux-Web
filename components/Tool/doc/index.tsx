@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/ui/sidebar";
 import { PanelLeftIcon, SearchIcon, ArrowUp } from 'lucide-react';
 import { useState } from "react";
-import DocSearchModal from "@/components/SearchModal/doc";
 
 export default ({ className, alias, id }: { className?: string, alias: string, id: string }) => {
     const { toggleSidebar } = useSidebar();
@@ -41,7 +40,6 @@ export default ({ className, alias, id }: { className?: string, alias: string, i
                     <ArrowUp className='text-default-500' size={20} aria-label="返回顶部" />
                 </button>
             </span>
-            <DocSearchModal alias={alias} id={id} docSearchOpen={docSearchOpen} onDocSearchClose={() => setDocSearchOpen(false)} />
         </div>
     )
 }

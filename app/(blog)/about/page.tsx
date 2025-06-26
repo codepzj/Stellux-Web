@@ -1,12 +1,12 @@
 import About from "./component";
 import { getAboutConfigAPI } from "@/api/config";
-import { Footer } from "@/components/Footer";
 
 export default async () => {
   const res = await getAboutConfigAPI();
   const aboutConfig = res.data;
 
   return (
+    
     <div className="max-w-4xl mx-auto">
         <About data={aboutConfig} />
     </div>
