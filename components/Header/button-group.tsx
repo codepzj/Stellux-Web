@@ -65,13 +65,11 @@ export function ButtonGroup() {
       <IconButton
         icon={SearchIcon}
         onClick={() => setOpen(true)}
-        hoverText="搜索"
       >
       </IconButton>
       <IconButton
         icon={Contrast}
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        hoverText="切换主题"
       >
       </IconButton>
 

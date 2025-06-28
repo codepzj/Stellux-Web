@@ -23,7 +23,7 @@ export const DocumentCard = ({
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ duration: 0.1 }}
       className={cn(
-        "w-full max-w-4xl mx-auto overflow-hidden rounded-xl bg-background shadow-sm hover:shadow-lg hover:shadow-primary/10 cursor-pointer",
+        "w-full max-w-3xl mx-auto overflow-hidden rounded-xl bg-background shadow-sm hover:shadow-lg hover:shadow-primary/10 cursor-pointer",
         className
       )}
       onClick={() => router.push(`/doc/${document.alias}/${document.id}`)}
