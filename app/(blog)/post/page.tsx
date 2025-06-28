@@ -4,7 +4,7 @@ import { getPostDetailListAPI } from "@/api/post";
 import type { PageVO, Page } from "@/types/page";
 import type { PostVO } from "@/types/post";
 import Empty from "@/components/Empty";
-import { PostCard } from "@/components/Card/PostCard";
+import { PostCard } from "@/components/Card/post";
 import {
   Pagination,
   PaginationContent,

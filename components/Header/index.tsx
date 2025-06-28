@@ -1,9 +1,8 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { IconButton } from "@/components/Button/icon";
-import { Separator } from "@/components/ui/separator";
-import { Book, FileText, Home, Menu, User, X } from "lucide-react";
+import { Book, FileText, Home, Menu, User, X, Link as Friend } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getBlogConfigAPI } from "@/api/config";
@@ -16,6 +15,7 @@ const navItems = [
   { label: "首页", icon: Home, path: "/" },
   { label: "文章", icon: FileText, path: "/post" },
   { label: "文档", icon: Book, path: "/doc" },
+  { label: "友链", icon: Friend, path: "/friend" },
   { label: "关于", icon: User, path: "/about" },
 ];
 

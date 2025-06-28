@@ -1,5 +1,5 @@
 import { getAllPublicDocument } from "@/api/document";
-import { DocumentCard } from "@/components/Card/DocumentCard";
+import { DocumentCard } from "@/components/Card/document";
 import Empty from "@/components/Empty";
 
 export default async function Document() {
