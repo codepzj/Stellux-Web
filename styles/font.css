@@ -2,9 +2,6 @@
   --font-main:
     "MiSans VF", "MiSans", "PingFang SC", system-ui, sans-serif; /* 正文字体 */
   --font-sans: "Inter", sans-serif;
-  --color-title: #000000;
-  --color-content: #333333;
-  --color-description: #666666;
 
   font-synthesis: style; /* 禁用字体抗锯齿 */
   -webkit-font-smoothing: antialiased; /* 禁用字体抗锯齿 */
@@ -13,18 +10,9 @@
   hyphens: auto; /* 自动断字 */
 }
 
-.dark {
-  --color-title: #ffffff;
-  --color-content: #e6e6e6;
-  --color-description: #b3b3b3;
-}
-
 @theme {
   --font-main: var(--font-main);
   --font-sans: var(--font-sans);
-  --color-title: var(--color-title);
-  --color-content: var(--color-content);
-  --color-description: var(--color-description);
 }
 
 

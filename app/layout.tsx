@@ -1,6 +1,6 @@
 import "@/global.css";
 
-import { getBasicConfigAPI, getSeoConfigAPI } from "@/api/config";
+import { getSiteConfigAPI } from "@/api/config";
 
 import { Providers } from "./providers";
 import { Metadata } from "next";
@@ -36,37 +36,31 @@ export default async function RootLayout({
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [basicConfig, seoConfig] = await Promise.all([
-    getBasicConfigAPI().then((res) => res.data),
-    getSeoConfigAPI().then((res) => res.data),
-  ]);
+  const basicConfig = await getSiteConfigAPI().then((res) => res.data);
   return {
-    title: `${basicConfig.site_title} - ${basicConfig.site_subtitle}`,
-    description: seoConfig.site_description,
-    keywords: seoConfig.site_keywords,
-    authors: [{ name: seoConfig.site_author }],
-    robots: seoConfig.robots,
+    title: `${basicConfig.siteTitle} - ${basicConfig.siteSubtitle}`,
+    description: basicConfig.siteSubtitle,
+    keywords: basicConfig.siteKeywords,
     openGraph: {
-      title: `${basicConfig.site_title} - ${basicConfig.site_subtitle}`,
-      description: seoConfig.site_description,
-      url: seoConfig.site_url,
-      siteName: basicConfig.site_title,
+      title: `${basicConfig.siteTitle} - ${basicConfig.siteSubtitle}`,
+      description: basicConfig.siteSubtitle,
+      url: "https://www.hyperos.com",
+      siteName: basicConfig.siteTitle,
       images: [
         {
-          url: seoConfig.og_image,
+          url: basicConfig.siteAvatar,
           width: 800,
           height: 600,
-          alt: basicConfig.site_title,
+          alt: basicConfig.siteTitle,
         },
       ],
       locale: "zh-CN",
-      type: seoConfig?.og_type || "website",
+      type:"website",
     },
     twitter: {
-      card: seoConfig?.twitter_card || "summary_large_image",
-      title: basicConfig.site_title,
-      description: seoConfig.site_description,
-      images: [seoConfig.og_image],
+      card:  "summary_large_image",
+      title: basicConfig.siteTitle,
+      description: basicConfig.siteSubtitle,
     },
   };
 }

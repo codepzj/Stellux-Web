@@ -12,7 +12,9 @@ class Request {
   private async request<T, D>(
     url: string,
     method: RequestMethod,
-    data?: T
+    data?: T,
+    isCache?: boolean,
+    cacheTime?: number
   ): Promise<Response<D>> {
     // 请求配置项
     const options: RequestInit = {
@@ -21,7 +23,7 @@ class Request {
         "Content-Type": "application/json",
       },
       body: data ? JSON.stringify(data) : undefined, // body携带参数
-      next: { revalidate: 300 },
+      next: { revalidate: isCache ? cacheTime : 0 },
     };
 
     try {

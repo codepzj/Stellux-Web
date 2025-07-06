@@ -1,22 +1,31 @@
 import  request  from "@/utils/request";
-import { AboutConfigVO, BasicConfigVO, BlogConfigVO, CommentSettingVO, SeoConfigVO } from "@/types/config";
 
-export const getBasicConfigAPI = () => {
-  return request.get<BasicConfigVO>("/setting/basic");
+export interface SiteConfigVO {
+  siteTitle: string; // 网站名称
+  siteSubtitle: string; // 网站描述
+  siteUrl: string; // 网站url
+  siteKeywords: string; // 网站关键词
+  siteFavicon: string; // 网站favicon
+  siteAvatar: string; // 网站头像
+  siteCopyright: string; // 网站版权
+  siteIcp: string; // 网站备案号
+  siteIcpLink: string; // 网站备案号链接 
+  githubUsername: string; // github用户名
 };
 
-export const getSeoConfigAPI = () => {
-  return request.get<SeoConfigVO>("/setting/seo");
-};
+export interface SiteConfigDTO {
+  siteTitle: string; // 网站名称
+  siteSubtitle: string; // 网站描述
+  siteUrl: string; // 网站url
+  siteKeywords: string; // 网站关键词
+  siteFavicon: string; // 网站favicon
+  siteAvatar: string; // 网站头像
+  siteCopyright: string; // 网站版权
+  siteIcp: string; // 网站备案号
+  siteIcpLink: string; // 网站备案号链接
+  githubUsername: string; // github用户名
+}
 
-export const getBlogConfigAPI = () => {
-  return request.get<BlogConfigVO>("/setting/blog");
-};
-
-export const getAboutConfigAPI = () => {
-  return request.get<AboutConfigVO>("/setting/about");
-};
-
-export const getCommentSettingAPI = () => {
-  return request.get<CommentSettingVO>("/setting/comment");
+export const getSiteConfigAPI = () => {
+  return request.get<SiteConfigVO>("/setting/site_config");
 };

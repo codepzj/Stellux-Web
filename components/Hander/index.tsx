@@ -1,14 +1,13 @@
 'use client'
 
-import { useEffect } from "react";
-import { getCommentSettingAPI } from "@/api/config";
-import useConfigStore from "@/store/config";
+import { useEffect, useState } from "react";
+import { getSiteConfigAPI, SiteConfigVO } from "@/api/config";
 
 export default function Handler() {
-    const { setCommentSetting } = useConfigStore()
+    const [siteConfig, setSiteConfig] = useState<SiteConfigVO | null>(null);
     useEffect(() => {
-        getCommentSettingAPI().then((res) => {
-            setCommentSetting(res.data)
+        getSiteConfigAPI().then((res) => {
+            setSiteConfig(res.data);
         })
     }, [])
     return null
