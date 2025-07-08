@@ -5,7 +5,7 @@ import * as React from "react";
 import { useEffect, useState, useMemo } from "react";
 import type { TableOfContents } from "@/lib/toc";
 import { cn } from "@/lib/utils";
-import { Icon } from "@iconify/react";
+import { ChevronDown } from "lucide-react";
 
 interface TocProps {
   toc: TableOfContents;
@@ -25,9 +25,10 @@ export function Toc({ toc, className }: TocProps) {
     () =>
       toc
         ? toc?.flatMap((item) => [
-          item.url?.replace(/^#/, ""),
-          ...(item.items?.map((subItem) => subItem.url?.replace(/^#/, "")) || []),
-        ])
+            item.url?.replace(/^#/, ""),
+            ...(item.items?.map((subItem) => subItem.url?.replace(/^#/, "")) ||
+              []),
+          ])
         : [],
     [toc]
   );
@@ -47,17 +48,21 @@ export function Toc({ toc, className }: TocProps) {
 
   return (
     <nav className={cn("text-sm transition-all duration-300 z-50", className)}>
-      <div className="flex justify-between items-center mb-3 px-2">
-        <div className="text-default-500 font-medium tracking-wide sticky top-0 right-0">目录</div>
+      <div
+        onClick={() => setCollapsed(!collapsed)}
+        className="flex justify-between items-center mb-3 px-2 cursor-pointer select-none"
+      >
+        <div className="text-muted-foreground dark:text-zinc-400 font-medium tracking-wide sticky top-0 right-0">
+          目录
+        </div>
         <button
-          className="transition-transform duration-300 text-default-500 hover:text-foreground"
+          className="transition-transform duration-300 text-muted-foreground hover:text-foreground"
           onClick={() => setCollapsed(!collapsed)}
         >
-          <Icon
-            icon="mdi:chevron-down"
+          <ChevronDown
             className={cn(
               "w-5 h-5 transform transition-transform",
-              collapsed ? "rotate-[-90deg]" : "rotate-0"
+              collapsed ? "-rotate-90" : "rotate-0"
             )}
           />
         </button>
@@ -126,8 +131,9 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
               href={item.url}
               data-toc-id={itemId}
               className={cn(
-                "block text-[12px] px-1.5 py-[3px] rounded-sm transition-all duration-200",
-                "hover:bg-accent/40 hover:text-foreground",
+                "block px-1.5 py-[3px] rounded-sm transition-all duration-200 transform-gpu",
+                "hover:bg-accent/30 hover:text-foreground hover:scale-[1.01]",
+                "dark:hover:bg-white/10 dark:text-zinc-400 dark:hover:text-white",
                 isActive
                   ? "bg-primary/10 text-primary font-medium scale-[1.02] pl-3"
                   : "text-muted-foreground"
@@ -135,13 +141,24 @@ function Tree({ tree, level = 1, activeItem }: TreeProps) {
               style={{ transformOrigin: "left center" }}
             >
               {isActive && (
-                <span className="absolute left-1 top-1/2 -translate-y-1/2 w-[3px] h-[12px] bg-primary rounded-sm" />
+                <span className="absolute left-1 top-1/2 -translate-y-1/2 w-[4px] h-[14px] bg-primary rounded-full shadow-sm" />
               )}
-              {item.title}
+              <span
+                className={cn(
+                  level === 1 ? "font-medium text-[13px]" : "text-[12px]",
+                  isActive && "text-primary"
+                )}
+              >
+                {item.title}
+              </span>
             </a>
             {item.items?.length > 0 && (
               <div className="pl-2">
-                <Tree tree={item.items} level={level + 1} activeItem={activeItem} />
+                <Tree
+                  tree={item.items}
+                  level={level + 1}
+                  activeItem={activeItem}
+                />
               </div>
             )}
           </li>

@@ -4,7 +4,7 @@ import { getPostDetailListAPI } from "@/api/post";
 import type { PageVO, Page } from "@/types/page";
 import type { PostVO } from "@/types/post";
 import Empty from "@/components/basic/empty";
-import { PostCard } from "@/components/basic/card/post";
+import { PostCard } from "@/components/business/card/post";
 import {
   Pagination,
   PaginationContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Loading } from "@/components/Loading";
+import { Loading } from "@/components/basic/loading";
 
 export default function Home() {
   const searchParams = useSearchParams();

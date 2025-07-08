@@ -1,16 +1,11 @@
-
-
 import { getPostDetailAPI } from "@/api/post";
-import { Markdown } from "@/components/basic/md";
+import { Markdown } from "@/components/business/md";
 import { Metadata } from "next";
 import BlogComment from "./comment";
 import { getSiteConfigAPI } from "@/api/setting";
-import { Spacer } from "@/components/Spacer";
-import { Header } from "@/layout/header";
-import { TopNav } from "@/layout/top-nav";
-import { Search } from "@/components/search";
-import { ThemeSwitch } from "@/components/theme-switcher";
-import { topNav } from "@/constrant/topnav-data";
+import { Spacer } from "@/components/basic/Spacer";
+import { Toc } from "@/components/business/toc";
+import { getTableOfContents } from "@/lib/toc";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -19,21 +14,26 @@ type Props = {
 export default async function PostPage({ params }: Props) {
   const { id } = await params;
   const post = await getPostDetailAPI(id);
+  const toc = await getTableOfContents(post.data.content);
 
   return (
     <>
-      <div className="relative md:w-4/5 mx-auto text-default-600">
-        <h1 className="text-3xl text-default-900 font-medium text-center">
-          {post.data.title}
-        </h1>
-        <Spacer y={16} />
-        <Markdown
-          className="break-words overflow-x-auto"
-          content={post.data.content}
-        />
-        <Spacer y={16} />
-        <BlogComment />
+      <div className="relative text-default-600 flex flex-col gap-4 md:flex-row p-4">
+        <div className="md:w-4/5">
+          <h1 className="text-3xl text-default-900 font-medium text-center">
+            {post.data.title}
+          </h1>
+          <Spacer y={16} />
+          <Markdown
+            className="break-words overflow-x-auto"
+            content={post.data.content}
+          />
+        </div>
+        <div className="hidden relative md:block md:w-1/5">
+          <Toc className="sticky top-20" toc={toc} />
+        </div>
       </div>
+      <BlogComment />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { getSiteConfigAPI } from "@/api/setting";
 
 import { Providers } from "./providers";
 import { Metadata } from "next";
-import Handler from "@/components/Hander";
+import Handler from "@/components/core/handler";
 import { Toaster } from "@/components/ui/sonner"; // 全局消息组件
 
 // 布局组件

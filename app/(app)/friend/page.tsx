@@ -1,5 +1,5 @@
 import { getFriendList } from "@/api/friend";
-import FriendCard from "@/components/basic/card/friend";
+import FriendCard from "@/components/business/card/friend";
 
 const websiteTypeMap = {
   0: "大佬",

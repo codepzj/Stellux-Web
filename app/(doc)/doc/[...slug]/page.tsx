@@ -5,16 +5,16 @@ import {
 } from "@/api/document";
 import { getTableOfContents, TableOfContents } from "@/lib/toc";
 
-import { Markdown } from "@/components/basic/md";
-import { ScrollToc } from "@/components/Toc";
+import { Markdown } from "@/components/business/md";
+import { ScrollToc } from "@/components/business/toc";
 import { DocumentVO } from "@/types/doc";
 import { Metadata } from "next";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DocSidebar } from "@/components/Sidebar/doc/sidebar";
+import { DocSidebar } from "@/components/basic/sidebar/doc/sidebar";
 import { convertToTreeData } from "@/utils/convert";
-import DocTool from "@/components/Tool/doc";
+import DocTool from "@/components/core/tool/doc";
 import DocComment from "./comment";
-import { Spacer } from "@/components/Spacer";
+import { Spacer } from "@/components/basic/Spacer";
 import { getSiteConfigAPI } from "@/api/setting";
 
 interface DocPageProps {

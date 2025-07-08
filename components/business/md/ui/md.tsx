@@ -24,23 +24,19 @@ export default function Md({
         remarkPlugins={[remarkGfm]}
         components={{
           h2: ({ children }) => (
-            <h2 id={`header-${index++}`} className="font-sans">
-              {children}
-            </h2>
+            <h2 id={`header-${index++}`}>{children}</h2>
           ),
           h3: ({ children }) => (
-            <h3 id={`header-${index++}`} className="!border-none font-sans">
-              {children}
-            </h3>
+            <h3 id={`header-${index++}`}>{children}</h3>
           ),
           h4: ({ children }) => (
-            <h4 className="!border-none font-sans">{children}</h4>
+            <h4>{children}</h4>
           ),
           h5: ({ children }) => (
-            <h5 className="!border-none font-sans">{children}</h5>
+            <h5>{children}</h5>
           ),
           h6: ({ children }) => (
-            <h6 className="!border-none font-sans">{children}</h6>
+            <h6>{children}</h6>
           ),
           p: ({ children }) => (
             <p className="leading-7 text-foreground">{children}</p>
@@ -58,11 +54,8 @@ export default function Md({
           img: ({ src, alt }) => (
             <MdImage src={src as string} alt={alt as string} />
           ),
-          ul: ({ children }) => (
-            <ul className="list-disc !ml-0 !pl-4 text-foreground">{children}</ul>
-          ),
           pre: ({ children }) => (
-            <pre className="rounded-md bg-zinc-100 dark:bg-zinc-900 !p-0">
+            <pre className="rounded-md bg-zinc-100 dark:bg-zinc-900/99 !p-0">
               {children}
             </pre>
           ),
@@ -82,7 +75,7 @@ export default function Md({
               return (
                 <div className="not-prose relative rounded-md">
                   <div
-                    className="overflow-x-auto p-4 bg-zinc-100 dark:bg-zinc-900/50 rounded-b-md relative"
+                    className="overflow-x-auto p-4 bg-zinc-100 dark:bg-zinc-900/99 rounded-b-md relative"
                     id={id}
                   >
                     <CopyButton
