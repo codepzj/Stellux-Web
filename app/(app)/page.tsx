@@ -16,33 +16,21 @@ import { Badge } from "@/components/ui/badge";
 import { ResumeCard } from "@/components/resume-card";
 import { HackathonCard } from "@/components/hackathon-card";
 import Link from "next/link";
+import { getSiteConfigAPI } from "@/api/setting";
+import { useState } from "react";
+import { useEffect } from "react";
+import { SiteConfigVO } from "@/api/setting";
+import { topNav } from "@/constrant/topnav-data";
 
 const BLUR_FADE_DELAY = 0.04;
 
-const topNav = [
-  {
-    title: "Overview",
-    href: "dashboard/overview",
-    isActive: true,
-  },
-  {
-    title: "Customers",
-    href: "dashboard/customers",
-    isActive: false,
-  },
-  {
-    title: "Products",
-    href: "dashboard/products",
-    isActive: false,
-  },
-  {
-    title: "Settings",
-    href: "dashboard/settings",
-    isActive: false,
-  },
-];
-
 export default function HomePage() {
+  const [siteConfig, setSiteConfig] = useState<SiteConfigVO | null>(null);
+  useEffect(() => {
+    getSiteConfigAPI().then((res) => {
+      setSiteConfig(res.data);
+    });
+  }, []);
   return (
     <>
       <Header>
@@ -53,7 +41,7 @@ export default function HomePage() {
         </div>
       </Header>
 
-      <main className="flex flex-col space-y-10 py-10 flex-1">
+      <main className="flex flex-col space-y-10 my-20 flex-1">
         <section id="hero">
           <div className="mx-auto w-full max-w-2xl space-y-8">
             <div className="gap-2 flex justify-between">
@@ -61,18 +49,21 @@ export default function HomePage() {
                 <BlurFadeText
                   delay={BLUR_FADE_DELAY}
                   className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
-                  text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
+                  text={`嗨, 我是 ${siteConfig?.siteAuthor} 👋`}
                 />
                 <BlurFadeText
                   className="max-w-[600px] md:text-xl"
                   delay={BLUR_FADE_DELAY}
-                  text={DATA.description}
+                  text={siteConfig?.siteAnimateText}
                 />
               </div>
               <BlurFade delay={BLUR_FADE_DELAY}>
                 <Avatar className="size-28 border">
-                  <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                  <AvatarFallback>{DATA.initials}</AvatarFallback>
+                  <AvatarImage
+                    alt={siteConfig?.siteAuthor}
+                    src={siteConfig?.siteAvatar}
+                  />
+                  <AvatarFallback>{siteConfig?.siteAuthor}</AvatarFallback>
                 </Avatar>
               </BlurFade>
             </div>
@@ -83,9 +74,7 @@ export default function HomePage() {
             <h2 className="text-xl font-bold">About</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <Markdown>
-              {DATA.summary}
-            </Markdown>
+            <Markdown>{siteConfig?.siteAnimateText}</Markdown>
           </BlurFade>
         </section>
         <section id="work">

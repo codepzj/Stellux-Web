@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getSiteConfigAPI } from "@/api/config";
+import { getSiteConfigAPI } from "@/api/setting";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const siteConfig = await getSiteConfigAPI();

@@ -1,5 +1,5 @@
 import { getFriendList } from "@/api/friend";
-import FriendCard from "@/components/Card/friend";
+import FriendCard from "@/components/basic/card/friend";
 
 const websiteTypeMap = {
   0: "大佬",
@@ -39,9 +39,7 @@ export default async function Friend() {
         if (!friends || friends.length === 0) return null;
 
         return (
-          <div
-            key={type}
-          >
+          <div key={type}>
             <h2 className="relative text-3xl font-extrabold text-gray-900 dark:text-white mb-8 after:absolute after:-bottom-1 after:left-0 after:w-20 after:h-1 after:rounded-full after:bg-gradient-to-r after:from-indigo-500 after:to-purple-600">
               {title}
             </h2>

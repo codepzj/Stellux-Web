@@ -2,7 +2,7 @@
 
 import Info from "./Info";
 import Calendar from "./Calendar";
-import { SiteConfigVO } from "@/api/config";
+import { SiteConfigVO } from "@/api/setting";
 import AboutComment from "./Comment";
 import { Spacer } from "@/components/Spacer";
 

@@ -3,8 +3,8 @@
 import { getPostDetailListAPI } from "@/api/post";
 import type { PageVO, Page } from "@/types/page";
 import type { PostVO } from "@/types/post";
-import Empty from "@/components/Empty";
-import { PostCard } from "@/components/Card/post";
+import Empty from "@/components/basic/empty";
+import { PostCard } from "@/components/basic/card/post";
 import {
   Pagination,
   PaginationContent,

@@ -1,6 +1,6 @@
 import RSS from "rss";
 import { getAllPublishPostAPI } from "@/api/post";
-import { getBasicConfigAPI, getSeoConfigAPI } from "@/api/config";
+import { getBasicConfigAPI, getSeoConfigAPI } from "@/api/setting";
 
 export async function GET() {
   const seoConfig = await getSeoConfigAPI();

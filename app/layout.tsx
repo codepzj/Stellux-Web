@@ -1,6 +1,6 @@
 import "@/global.css";
 
-import { getSiteConfigAPI } from "@/api/config";
+import { getSiteConfigAPI } from "@/api/setting";
 
 import { Providers } from "./providers";
 import { Metadata } from "next";
@@ -22,9 +22,7 @@ export default async function RootLayout({
           href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
         />
       </head>
-      <body
-        className="min-h-screen bg-background antialiased w-full font-main"
-      >
+      <body className="min-h-screen bg-background antialiased w-full font-main">
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <Handler />
           <div className="mx-auto px-4">{children}</div>
@@ -55,10 +53,10 @@ export async function generateMetadata(): Promise<Metadata> {
         },
       ],
       locale: "zh-CN",
-      type:"website",
+      type: "website",
     },
     twitter: {
-      card:  "summary_large_image",
+      card: "summary_large_image",
       title: basicConfig.siteTitle,
       description: basicConfig.siteSubtitle,
     },

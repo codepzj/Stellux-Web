@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPostSiteMapAPI } from "@/api/post";
-import { getSeoConfigAPI } from "@/api/config";
+import { getSeoConfigAPI } from "@/api/setting";
 import { getDocumentSiteMapAPI } from "@/api/document";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

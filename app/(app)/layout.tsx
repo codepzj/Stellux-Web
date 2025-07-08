@@ -26,9 +26,7 @@ export default function Layout({
             "has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh"
           )}
         >
-          <div className="flex flex-col min-h-[100dvh] max-w-4xl 2xl:max-w-5xl mx-auto">
-            {children}
-          </div>
+          {children}
         </div>
       </SidebarProvider>
     </SearchProvider>
