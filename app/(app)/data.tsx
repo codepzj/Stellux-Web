@@ -1,4 +1,12 @@
-import { HomeIcon, NotebookIcon, GithubIcon, LinkedinIcon, XIcon, YoutubeIcon, MailIcon } from "lucide-react";
+import {
+  HomeIcon,
+  NotebookIcon,
+  GithubIcon,
+  LinkedinIcon,
+  XIcon,
+  YoutubeIcon,
+  MailIcon,
+} from "lucide-react";
 import { GlobeIcon } from "lucide-react";
 
 export const DATA = {
@@ -203,7 +211,7 @@ export const DATA = {
           icon: <GlobeIcon className="size-3" />,
         },
       ],
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
     },
     {
       title: "Magic UI",
@@ -234,7 +242,7 @@ export const DATA = {
           icon: <GithubIcon className="size-3" />,
         },
       ],
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
     },
     {
       title: "llm.report",
@@ -266,7 +274,7 @@ export const DATA = {
           icon: <GithubIcon className="size-3" />,
         },
       ],
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
     },
     {
       title: "Automatic Chat",
@@ -293,7 +301,7 @@ export const DATA = {
           icon: <GlobeIcon className="size-3" />,
         },
       ],
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
     },
   ],
   hackathons: [
@@ -483,7 +491,7 @@ export const DATA = {
       location: "Montreal, Quebec",
       description:
         "Developed realtime facial microexpression analyzer using AI",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [],
     },
     {
@@ -492,7 +500,7 @@ export const DATA = {
       location: "Toronto, Ontario",
       description:
         "Developed a custom admin interface for food waste startup <a href='http://genecis.co/'>Genecis</a> to manage their data and provide analytics.",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       win: "1st Place Winner",
       links: [
         {
@@ -507,7 +515,7 @@ export const DATA = {
       dates: "May 19th - 21st, 2017",
       location: "International",
       description: "Improved PocketDoc and submitted to online competition",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       win: "Top 10 Finalist | Honourable Mention",
       links: [
         {
@@ -537,7 +545,7 @@ export const DATA = {
       dates: "May 12th - 14th, 2017",
       location: "Toronto, Ontario",
       description: "Developed neural network to optimize a mining process",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [],
     },
     {
@@ -546,7 +554,7 @@ export const DATA = {
       location: "Waterloo, Ontario",
       description:
         "Developed Pocketdoc, an app in which you take a picture of a physical wound, and the app returns common solutions or cures to the injuries or diseases.",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [
         {
           title: "Devpost",
@@ -571,7 +579,7 @@ export const DATA = {
       location: "Waterloo, Ontario",
       description:
         "Developed Earthwatch, a web application which allows users in a plane to virtually see important points of interest about the world below them. They can even choose to fly away from their route and then fly back if they choose. Special thanks to CesiumJS for providing open source world and plane models.",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [
         {
           title: "Source",
@@ -586,7 +594,7 @@ export const DATA = {
       location: "Ann Arbor, Michigan",
       description:
         "Developed Super Graphic Air Traffic, a VR website made to introduce people to the world of air traffic controlling. This project was built completely using THREE.js as well as a node backend server.",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
       links: [
         {
@@ -602,7 +610,7 @@ export const DATA = {
       location: "Waterloo, Ontario",
       description:
         "Developed at StartHacks 2017, Recipic is a mobile app which allows you to take pictures of ingredients around your house, and it will recognize those ingredients using ClarifAI image recognition API and return possible recipes to make. Recipic recieved 1st place at the hackathon for best pitch and hack.",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       win: "1st Place Winner",
       mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
       links: [
@@ -624,7 +632,7 @@ export const DATA = {
       location: "Kingston, Ontario",
       description:
         "Developed a mobile game which enables city-wide manhunt with random lobbies",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
       links: [
         {
@@ -645,7 +653,7 @@ export const DATA = {
       location: "Waterloo, Ontario",
       description:
         "Developed a mock of Windows 11 with interesting notifications and functionality",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [
         {
           title: "Source",
@@ -660,7 +668,7 @@ export const DATA = {
       location: "Kingston, Ontario",
       description:
         "Developed an internal widget for uploading assignments using Waterloo's portal app",
-      image: "https://image.codepzj.cn/image/202412161421755.png",
+      image: "https://cdn.codepzj.cn/image/202412161421755.png",
       links: [
         {
           title: "Source",
