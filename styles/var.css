@@ -1,0 +1,3 @@
+:root {
+  --stellux-header-height: calc(var(--spacing) * 16);
+}

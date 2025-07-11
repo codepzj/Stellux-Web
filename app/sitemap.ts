@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
 import { getPostSiteMapAPI } from "@/api/post";
-import { getSeoConfigAPI } from "@/api/setting";
+import { getSiteConfigAPI } from "@/api/setting";
 import { getDocumentSiteMapAPI } from "@/api/document";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const postRes = await getPostSiteMapAPI();
   const documentRes = await getDocumentSiteMapAPI();
-  const seoConfig = await getSeoConfigAPI();
-  const baseUrl = seoConfig.data.site_url;
+  const siteConfig = await getSiteConfigAPI();
+  const baseUrl = siteConfig.data.siteUrl;
 
   const staticPages: MetadataRoute.Sitemap = [
     {

@@ -1,5 +1,5 @@
-import { Loading } from "@/components/basic/loading";
+import { LoadingWithHeader } from "@/components/basic/loading";
 
 export default function PostLoading() {
-  return <Loading />;
+  return <LoadingWithHeader />;
 }

@@ -1,15 +1,11 @@
 "use client";
 
-import { Header } from "@/layout/header";
-import { TopNav } from "@/layout/top-nav";
-import { Search } from "@/components/search";
-import { ThemeSwitch } from "@/components/theme-switcher";
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@/components/ui/avatar";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { BlurFadeText } from "@/components/magicui/blur-fade-text";
-import { DATA } from "./data";
+import { DATA } from "./(app)/data";
 import Markdown from "react-markdown";
 import { ProjectCard } from "@/components/project-card";
 import { Badge } from "@/components/ui/badge";
@@ -20,12 +16,14 @@ import { getSiteConfigAPI } from "@/api/setting";
 import { useState } from "react";
 import { useEffect } from "react";
 import { SiteConfigVO } from "@/api/setting";
-import { topNav } from "@/constrant/topnav-data";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function HomePage() {
   const [siteConfig, setSiteConfig] = useState<SiteConfigVO | null>(null);
+  const router = useRouter();
   useEffect(() => {
     getSiteConfigAPI().then((res) => {
       setSiteConfig(res.data);
@@ -33,15 +31,7 @@ export default function HomePage() {
   }, []);
   return (
     <>
-      <Header>
-        <TopNav links={topNav} />
-        <div className="ml-auto flex items-center space-x-4">
-          <Search />
-          <ThemeSwitch />
-        </div>
-      </Header>
-
-      <main className="flex flex-col space-y-10 my-20 flex-1">
+      <main className="flex flex-col space-y-10 my-20 flex-1 max-w-4xl mx-auto">
         <section id="hero">
           <div className="mx-auto w-full max-w-2xl space-y-8">
             <div className="gap-2 flex justify-between">
@@ -57,6 +47,7 @@ export default function HomePage() {
                   text={siteConfig?.siteAnimateText}
                 />
               </div>
+
               <BlurFade delay={BLUR_FADE_DELAY}>
                 <Avatar className="size-28 border">
                   <AvatarImage
@@ -67,6 +58,16 @@ export default function HomePage() {
                 </Avatar>
               </BlurFade>
             </div>
+          </div>
+        </section>
+        <section id="actions">
+          <div className="flex gap-2 justify-center">
+            <Button color="primary">
+              <span onClick={() => router.push("/post")}>进入博客</span>
+            </Button>
+            <Button color="secondary">
+              <span onClick={() => router.push("/wiki")}>进入文档</span>
+            </Button>
           </div>
         </section>
         <section id="about">

@@ -1,7 +1,5 @@
 'use client'
 
-import { AlertTriangle } from "lucide-react";
-
 interface Props {
     error: Error & { digest?: string }
 }

@@ -2,8 +2,6 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   fixed?: boolean;
@@ -33,15 +31,13 @@ export const Header = ({
   return (
     <header
       className={cn(
-        "bg-background flex h-16 items-center gap-3 py-4 sm:gap-4",
+        "bg-background flex h-[var(--stellux-header-height)] items-center gap-3 py-4 sm:gap-4",
         fixed && "header-fixed peer/header fixed z-50 w-[inherit] rounded-md",
         offset > 10 && fixed ? "shadow-sm" : "shadow-none",
         className
       )}
       {...props}
     >
-      <SidebarTrigger variant="outline" className="scale-125 sm:scale-100" />
-      <Separator orientation="vertical" className="h-6" />
       {children}
     </header>
   );

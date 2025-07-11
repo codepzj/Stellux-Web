@@ -71,7 +71,7 @@ export const sidebarData: SidebarData = {
         },
         {
           title: "文档",
-          url: "/doc",
+          url: "/wiki",
           icon: BookOpen,
         },
         {

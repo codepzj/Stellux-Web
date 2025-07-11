@@ -14,7 +14,6 @@ interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
     title: string;
     href: string;
     isActive: boolean;
-    disabled?: boolean;
   }[];
 }
 
@@ -54,7 +53,7 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
           <Link
             key={`${title}-${href}`}
             href={href}
-            className={`hover:text-primary text-sm font-medium transition-colors ${isActive ? "" : "text-muted-foreground"}`}
+            className={`hover:text-primary font-medium transition-colors ${isActive ? "" : "text-muted-foreground"}`}
           >
             {title}
           </Link>

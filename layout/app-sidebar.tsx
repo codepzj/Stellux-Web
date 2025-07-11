@@ -5,18 +5,28 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavGroup } from "./nav-group";
 import { NavUser } from "./nav-user";
-import { TeamSwitcher } from "./team-switcher";
-import { sidebarData } from "./data/sidebar-data";
+import { sidebarData } from "./data";
+import { useAppConfig } from "@/context/app-provider";
+import dynamic from "next/dynamic";
+import { AvatarLinkSkeleton } from "@/components/business/avatar/avatar-link";
+
+const AvatarLink = dynamic(
+  () => import("@/components/business/avatar/avatar-link"),
+  {
+    ssr: false,
+    loading: () => <AvatarLinkSkeleton />,
+  }
+);
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const config = useAppConfig();
   return (
     <Sidebar collapsible="icon" variant="floating" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={sidebarData.teams} />
+        <AvatarLink avatar={config?.siteAvatar || ""} author={config?.siteAuthor || ""} />
       </SidebarHeader>
       <SidebarContent>
         {sidebarData.navGroups.map((props) => (

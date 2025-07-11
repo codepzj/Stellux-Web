@@ -1,34 +1,54 @@
-"use client";
-
 import React from "react";
 import "./index.css";
 
-interface LoadingProps {
-  className?: string;
-}
+export const Loading = ({
+  size = "normal",
+  dark = false,
+  text,
+}: {
+  size?: "sm" | "normal" | "2x" | "3x";
+  dark?: boolean;
+  text?: string;
+}) => {
+  const classNames = ["loading"];
+  if (dark) classNames.push("la-dark");
+  if (size === "sm") classNames.push("la-sm");
+  else if (size === "2x") classNames.push("la-2x");
+  else if (size === "3x") classNames.push("la-3x");
 
-const defaultText = "别着急，马上就好";
-
-export const Loading: React.FC<LoadingProps> = ({ className = "" }) => {
   return (
-    <div
-      className={`h-[calc(100vh-12rem)] w-full flex flex-col items-center justify-center p-4 ${className}`}
-    >
-      <div className="flex space-x-1.5 h-5" suppressHydrationWarning>
-        <span
-          className="w-2 h-2 bg-foreground rounded-full loading-bounce"
-          style={{ animationDelay: "0s" }}
-        />
-        <span
-          className="w-2 h-2 bg-foreground rounded-full loading-bounce"
-          style={{ animationDelay: "0.05s" }}
-        />
-        <span
-          className="w-2 h-2 bg-foreground rounded-full loading-bounce"
-          style={{ animationDelay: "0.1s" }}
-        />
+    <div className="flex flex-col items-center gap-2">
+      <div className={classNames.join(" ")}>
+        <div></div>
+        <div></div>
       </div>
-      <div className="text-sm text-foreground mt-2">{defaultText}</div>
+      {text && <div className="mt-2 text-sm">{text}</div>}
+    </div>
+  );
+};
+
+/**
+ * 带头部加载
+ */
+export const LoadingWithHeader = () => {
+  return (
+    <div className="flex h-[calc(100dvh-var(--stellux-header-height))] w-full items-start justify-center">
+      <div className="mt-[calc(40dvh-var(--stellux-header-height))]">
+        <Loading text="加载中..." />
+      </div>
+    </div>
+  );
+};
+
+/**
+ * 全屏加载
+ */
+export const LoadingScreen = () => {
+  return (
+    <div className="flex h-screen w-full items-start justify-center">
+      <div className="mt-[40vh]">
+        <Loading text="加载中..." />
+      </div>
     </div>
   );
 };
