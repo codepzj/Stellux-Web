@@ -1,13 +1,24 @@
-import { queryAllByTypeAPI } from "@/api/label";
+"use client";
 
-export default async function CategoryPage() {
-  const res = await queryAllByTypeAPI("category");
-  const categoryList = res.data || [];
-  console.log(categoryList);
+import { queryCategoryLabelWithCountAPI } from "@/api/label";
+import { LabelWithCountVO } from "@/types/label";
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+
+export default function CategoryPage() {
+  const [categoryList, setCategoryList] = useState<LabelWithCountVO[]>([]);
+  useEffect(() => {
+    queryCategoryLabelWithCountAPI().then((res) => {
+      setCategoryList(res.data || []);
+    });
+  }, []);
+
   return (
     <div className="flex w-full flex-col gap-10 my-4 md:gap-8">
       {categoryList.map((item) => (
-        <div key={item.id}>{item.name}</div>
+        <Badge key={item.id} variant="outline" className="cursor-pointer">
+          #{item.name} ({item.count})
+        </Badge>
       ))}
     </div>
   );
