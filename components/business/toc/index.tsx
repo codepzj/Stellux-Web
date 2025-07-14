@@ -3,24 +3,33 @@
 
 import * as React from "react";
 import { useEffect, useState, useMemo } from "react";
-import type { TableOfContents } from "@/lib/toc";
+import { getTableOfContents, TableOfContents } from "./content";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 interface TocProps {
-  toc: TableOfContents;
+  content: string;
   className?: string;
 }
 
-export const ScrollToc = ({ toc, className }: TocProps) => {
+export const ScrollToc = ({ content, className }: TocProps) => {
   return (
     <div className="w-48">
-      <Toc toc={toc} className={className} />
+      <Toc content={content} className={className} />
     </div>
   );
 };
 
-export function Toc({ toc, className }: TocProps) {
+export function Toc({ content, className }: TocProps) {
+  const [toc, setToc] = useState<TableOfContents | null>(null);
+  useEffect(() => {
+    const fetchToc = async () => {
+      const toc = await getTableOfContents(content);
+      setToc(toc);
+    };
+    fetchToc();
+  }, [content]);
+
   const itemIds = useMemo(
     () =>
       toc

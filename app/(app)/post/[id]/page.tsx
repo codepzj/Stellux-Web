@@ -5,7 +5,6 @@ import BlogComment from "./comment";
 import { getSiteConfigAPI } from "@/api/setting";
 import { Spacer } from "@/components/basic/Spacer";
 import { Toc } from "@/components/business/toc";
-import { getTableOfContents } from "@/lib/toc";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,7 +13,6 @@ type Props = {
 export default async function PostPage({ params }: Props) {
   const { id } = await params;
   const post = await getPostDetailAPI(id);
-  const toc = await getTableOfContents(post.data.content);
 
   return (
     <>
@@ -30,7 +28,7 @@ export default async function PostPage({ params }: Props) {
           />
         </div>
         <div className="hidden relative md:block md:w-1/5">
-          <Toc className="sticky top-20" toc={toc} />
+          <Toc className="sticky top-20" content={post.data.content} />
         </div>
       </div>
       <BlogComment />

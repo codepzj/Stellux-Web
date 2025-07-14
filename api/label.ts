@@ -10,7 +10,14 @@ export const queryAllByTypeAPI: (
   return request.get("/label/all", { params: { label_type } });
 };
 
+export const queryCategoryLabelWithCountAPI: () => Promise<
+  Response<LabelWithCountVO[]>
+> = () => {
+  return request.get("/label/categories/count");
+};
 
-export const queryCategoryLabelWithCountAPI: () => Promise<Response<LabelWithCountVO[]>> = () => {
-  return request.get("/label/allWithCount");
+export const queryTagLabelWithCountAPI: () => Promise<
+  Response<LabelWithCountVO[]>
+> = () => {
+  return request.get("/label/tags/count");
 };

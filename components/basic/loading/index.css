@@ -22,8 +22,8 @@
 }
 
 .loading {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 
 .loading > div:nth-child(1),

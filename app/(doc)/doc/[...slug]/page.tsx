@@ -3,7 +3,6 @@ import {
   getDocumentTreeByID,
   getRootDocumentByID,
 } from "@/api/document";
-import { getTableOfContents, TableOfContents } from "@/lib/toc";
 
 import { Markdown } from "@/components/business/md";
 import { ScrollToc } from "@/components/business/toc";
@@ -34,12 +33,10 @@ export default async function DocPage({ params }: DocPageProps) {
   const treeItems = convertToTreeData(treeRes.data, alias);
 
   let document: DocumentVO | null = null;
-  let toc: TableOfContents = { items: [] };
 
   if (leaf_id) {
     const res = await getDocumentByID(leaf_id);
     document = res.data;
-    toc = await getTableOfContents(document.content);
   }
 
   return (
@@ -75,7 +72,7 @@ export default async function DocPage({ params }: DocPageProps) {
               </div>
               {leaf_id && (
                 <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
-                  <ScrollToc toc={toc} />
+                  <ScrollToc content={document?.content || ""} />
                 </div>
               )}
             </div>

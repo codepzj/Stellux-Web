@@ -1,3 +1,5 @@
+"use client";
+
 import { toc } from "mdast-util-toc";
 import { remark } from "remark";
 import { visit } from "unist-util-visit";
