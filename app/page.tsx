@@ -66,7 +66,7 @@ export default function HomePage() {
               <span onClick={() => router.push("/post")}>进入博客</span>
             </Button>
             <Button color="secondary">
-              <span onClick={() => router.push("/wiki")}>进入文档</span>
+              <span onClick={() => router.push("/doc")}>进入文档</span>
             </Button>
           </div>
         </section>

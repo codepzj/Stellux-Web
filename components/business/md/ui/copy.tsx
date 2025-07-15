@@ -1,11 +1,12 @@
 "use client";
-import { Copy, Check } from "lucide-react";
+
+import { IconCopy, IconCheck } from "@tabler/icons-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-const CopyButton = ({ id, className }: { id: string, className?: string }) => {
+const CopyButton = ({ id, className }: { id: string; className?: string }) => {
   const [copied, setCopited] = useState(false);
 
   const onCopy = async () => {
@@ -28,9 +29,19 @@ const CopyButton = ({ id, className }: { id: string, className?: string }) => {
       onClick={onCopy}
       aria-label="Copy"
       variant="ghost"
-      className={cn("p-0 w-8 h-8 min-w-8 min-h-8 rounded-md cursor-pointer hover:bg-default-100 dark:hover:bg-default-500/10", className)}
+      className={cn(
+        "p-0 w-8 h-8 min-w-8 min-h-8 rounded-md cursor-pointer hover:bg-default-100 dark:hover:bg-default-500/10",
+        className
+      )}
     >
-      {copied ? <Check className="transition-transform duration-300 text-green-500" size={16} /> : <Copy className="transition-transform duration-300" size={16} />}
+      {copied ? (
+        <IconCheck
+          className="transition-transform duration-300 text-green-500"
+          size={16}
+        />
+      ) : (
+        <IconCopy className="transition-transform duration-300" size={16} />
+      )}
     </Button>
   );
 };

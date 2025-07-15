@@ -4,12 +4,16 @@ import { queryCategoryLabelWithCountAPI } from "@/api/label";
 import { LabelWithCountVO } from "@/types/label";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { useLoading } from "@/context/loading-provider";
 
 export default function CategoryPage() {
   const [categoryList, setCategoryList] = useState<LabelWithCountVO[]>([]);
+  const { setLoading } = useLoading();
   useEffect(() => {
+    setLoading(true);
     queryCategoryLabelWithCountAPI().then((res) => {
       setCategoryList(res.data || []);
+      setLoading(false);
     });
   }, []);
 

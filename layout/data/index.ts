@@ -38,23 +38,6 @@ export const sidebarData: SidebarData = {
     email: "satnaingdev@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  teams: [
-    {
-      name: "Shadcn Admin",
-      logo: Command,
-      plan: "Vite + ShadcnUI",
-    },
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-  ],
   navGroups: [
     {
       title: "General",
@@ -71,7 +54,7 @@ export const sidebarData: SidebarData = {
         },
         {
           title: "文档",
-          url: "/wiki",
+          url: "/doc",
           icon: BookOpen,
         },
         {
@@ -95,125 +78,9 @@ export const sidebarData: SidebarData = {
           icon: Info,
         },
         {
-          title: "Secured by Clerk",
-          icon: UserCog,
-          items: [
-            {
-              title: "Sign In",
-              url: "/clerk/sign-in",
-            },
-            {
-              title: "Sign Up",
-              url: "/clerk/sign-up",
-            },
-            {
-              title: "User Management",
-              url: "/clerk/user-management",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Pages",
-      items: [
-        {
-          title: "Auth",
-          icon: ShieldCheck,
-          items: [
-            {
-              title: "Sign In",
-              url: "/sign-in",
-            },
-            {
-              title: "Sign In (2 Col)",
-              url: "/sign-in-2",
-            },
-            {
-              title: "Sign Up",
-              url: "/sign-up",
-            },
-            {
-              title: "Forgot Password",
-              url: "/forgot-password",
-            },
-            {
-              title: "OTP",
-              url: "/otp",
-            },
-          ],
-        },
-        {
-          title: "Errors",
+          title: "测试",
+          url: "/test",
           icon: Bug,
-          items: [
-            {
-              title: "Unauthorized",
-              url: "/401",
-              icon: Lock,
-            },
-            {
-              title: "Forbidden",
-              url: "/403",
-              icon: UserRoundX,
-            },
-            {
-              title: "Not Found",
-              url: "/404",
-              icon: AlertOctagon,
-            },
-            {
-              title: "Internal Server Error",
-              url: "/500",
-              icon: ServerCrash,
-            },
-            {
-              title: "Maintenance Error",
-              url: "/503",
-              icon: Ban,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Other",
-      items: [
-        {
-          title: "Settings",
-          icon: Settings,
-          items: [
-            {
-              title: "Profile",
-              url: "/settings",
-              icon: UserCog,
-            },
-            {
-              title: "Account",
-              url: "/settings/account",
-              icon: Wrench,
-            },
-            {
-              title: "Appearance",
-              url: "/settings/appearance",
-              icon: Palette,
-            },
-            {
-              title: "Notifications",
-              url: "/settings/notifications",
-              icon: Bell,
-            },
-            {
-              title: "Display",
-              url: "/settings/display",
-              icon: MonitorCheck,
-            },
-          ],
-        },
-        {
-          title: "Help Center",
-          url: "/help-center",
-          icon: HelpCircle,
         },
       ],
     },

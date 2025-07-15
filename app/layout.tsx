@@ -24,9 +24,9 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen bg-background antialiased w-full font-main">
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <Handler />
-          <div className="mx-auto px-4">{children}</div>
-          <Toaster position="top-right" richColors duration={1500} />
+            <Handler />
+            <div className="mx-auto px-4">{children}</div>
+            <Toaster position="top-right" richColors duration={1500} />
         </Providers>
       </body>
     </html>

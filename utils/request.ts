@@ -1,5 +1,4 @@
 import { Response } from "@/types/dto";
-import qs from "qs";
 
 type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -36,7 +35,9 @@ class Request {
   }
 
   public get<D>(url: string, data?: { params?: object }): Promise<Response<D>> {
-    const queryString = data?.params ? `?${qs.stringify(data.params)}` : "";
+    const queryString = data?.params
+      ? `?${new URLSearchParams(data.params as Record<string, string>).toString()}`
+      : "";
     return this.request<unknown, D>(`${url}${queryString}`, "GET");
   }
 

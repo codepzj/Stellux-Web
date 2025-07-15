@@ -17,6 +17,5 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useAppConfig = () => {
   const config = useContext(AppContext);
-  console.log(config);
   return config;
 };
