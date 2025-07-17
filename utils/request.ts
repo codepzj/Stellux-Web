@@ -12,6 +12,7 @@ class Request {
     url: string,
     method: RequestMethod,
     data?: T,
+    headers?: Record<string, string>,
     isCache?: boolean,
     cacheTime?: number
   ): Promise<Response<D>> {
@@ -20,6 +21,7 @@ class Request {
       method,
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
       body: data ? JSON.stringify(data) : undefined, // body携带参数
       next: { revalidate: isCache ? cacheTime : 0 },
@@ -28,9 +30,9 @@ class Request {
     try {
       const res = await fetch(`${this.baseUrl}${url}`, options);
       return await res?.json();
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.error("捕获到异常：", err, "请检查后端服务是否正常");
-      return null as unknown as Response<D>;
+      return {} as Response<D>;
     }
   }
 
@@ -38,7 +40,7 @@ class Request {
     const queryString = data?.params
       ? `?${new URLSearchParams(data.params as Record<string, string>).toString()}`
       : "";
-    return this.request<unknown, D>(`${url}${queryString}`, "GET");
+    return this.request<any, D>(`${url}${queryString}`, "GET");
   }
 
   public async post<T, D>(url: string, data: T): Promise<Response<D>> {
@@ -56,5 +58,4 @@ class Request {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string;
-const request = new Request(baseUrl);
-export default request;
+export const request = new Request(baseUrl);

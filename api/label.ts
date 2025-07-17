@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import { request } from "@/utils/request";
 import { Response } from "@/types/dto";
 import { LabelVO, LabelWithCountVO } from "@/types/label";
 

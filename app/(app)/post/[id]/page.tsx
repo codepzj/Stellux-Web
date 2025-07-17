@@ -1,4 +1,4 @@
-import { getPostDetailAPI } from "@/api/post";
+import { getPostByIdAPI } from "@/api/post";
 import { Markdown } from "@/components/business/md";
 import { Metadata } from "next";
 import BlogComment from "./comment";
@@ -12,12 +12,12 @@ type Props = {
 
 export default async function PostPage({ params }: Props) {
   const { id } = await params;
-  const post = await getPostDetailAPI(id);
+  const post = await getPostByIdAPI(id);
 
   return (
     <>
-      <div className="relative text-default-600 flex flex-col gap-4 md:flex-row p-4">
-        <div className="md:w-4/5">
+      <div className="relative text-default-600 flex flex-col gap-4 lg:flex-row p-2 lg:p-4">
+        <div className="w-full lg:w-4/5">
           <h1 className="text-3xl text-default-900 font-medium text-center">
             {post.data.title}
           </h1>
@@ -26,19 +26,19 @@ export default async function PostPage({ params }: Props) {
             className="break-words overflow-x-auto"
             content={post.data.content}
           />
+          <BlogComment />
         </div>
-        <div className="hidden relative md:block md:w-1/5">
+        <div className="hidden relative lg:block lg:w-1/5">
           <Toc className="sticky top-20" content={post.data.content} />
         </div>
       </div>
-      <BlogComment />
     </>
   );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const post = await getPostDetailAPI(id);
+  const post = await getPostByIdAPI(id);
   const data = post.data;
 
   const title = data.title;

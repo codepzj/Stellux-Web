@@ -11,6 +11,7 @@ import Link from "next/link";
 import "./md.css";
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";
+import { Alert } from "@heroui/react";
 
 export default function Md({
   content,
@@ -51,10 +52,11 @@ export default function Md({
           p: ({ children }) => <p className="mt-4 leading-7">{children}</p>,
           blockquote: ({ children }) => {
             return (
-              <div className="my-6 flex items-start gap-3 rounded-md border border-blue-200 bg-blue-50 dark:border-blue-400/20 dark:bg-blue-400/10 p-4 text-sm [&>p]:!mt-[-0.1em] [&>p]:!m-0 [&>p]:!p-0">
-                <Info className="mt-0.5 h-5 w-5 shrink-0 text-blue-400" />
-                {children}
-              </div>
+              <Alert
+                className="blockquote"
+                color="primary"
+                title={children}
+              />
             );
           },
 
@@ -75,10 +77,14 @@ export default function Md({
             </td>
           ),
           ul: ({ children }) => (
-            <ul className="mt-4 list-disc [&>li]:mt-2 [&>li]:ml-0">{children}</ul>
+            <ul className="mt-4 list-disc [&>li]:mt-2 [&>li]:ml-0">
+              {children}
+            </ul>
           ),
           ol: ({ children }) => (
-            <ol className="mt-4 list-decimal [&>li]:mt-2 [&>li]:ml-0">{children}</ol>
+            <ol className="mt-4 list-decimal [&>li]:mt-2 [&>li]:ml-0">
+              {children}
+            </ol>
           ),
           img: ({ src, alt }) => (
             <ZoomImage
@@ -119,7 +125,7 @@ export default function Md({
                   >
                     <CopyButton
                       className="absolute top-1.5 right-1.5"
-                      id={id}
+                      copyId={id}
                     />
                     {children}
                   </div>

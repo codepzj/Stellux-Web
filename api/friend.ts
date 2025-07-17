@@ -1,5 +1,5 @@
 // 获取友链列表
-import request from "@/utils/request";
+import { request } from "@/utils/request";
 import { FriendShowVO } from "@/types/friend";
 
 export const getFriendList = async (): Promise<FriendShowVO[]> => {

@@ -28,7 +28,8 @@ export default function WikiLayout({
             "flex h-svh flex-col",
             "group-data-[scroll-locked=1]/body:h-full",
             "has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh",
-            "w-full max-w-6xl mx-auto"
+            "w-full max-w-4xl",
+            "2xl:mx-auto 2xl:max-w-6xl"
           )}
         >
           <Header>

@@ -3,17 +3,13 @@
 import { queryTagLabelWithCountAPI } from "@/api/label";
 import { useEffect, useState } from "react";
 import { LabelWithCountVO } from "@/types/label";
-import { Badge } from "@/components/ui/badge";
-import { useLoading } from "@/context/loading-provider";
+import { Badge } from "@heroui/react";
 
 export default function TagPage() {
   const [tagList, setTagList] = useState<LabelWithCountVO[]>([]);
-  const { setLoading } = useLoading();
   useEffect(() => {
-    setLoading(true);
     queryTagLabelWithCountAPI().then((res) => {
       setTagList(res.data);
-      setLoading(false);
     });
   }, []);
   return (

@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import { request } from "@/utils/request";
 
 export interface SiteConfigVO {
   siteTitle: string; // 网站名称

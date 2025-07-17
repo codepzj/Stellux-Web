@@ -149,3 +149,11 @@
   max-width: 100%;
   box-sizing: content-box;
 }
+
+.blockquote {
+  margin-bottom: 1rem;
+  & > div:nth-child(2) > div > p {
+    margin: 0;
+    padding: 0;
+  }
+}

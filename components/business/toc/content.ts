@@ -51,7 +51,7 @@ function getItems(
     if (level >= 3) return current;
     const list = node as List;
     current.items = list.children.map(
-      (i) => getItems(i, { title: "", url: "" }, level + 1) as Item
+      (i: any) => getItems(i, { title: "", url: "" }, level + 1) as Item
     );
     return current;
   }

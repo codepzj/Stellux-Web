@@ -1,183 +1,66 @@
 "use client";
 
-import { ReactNode } from "react";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { NavCollapsible, NavItem, NavLink, type NavGroup } from "./types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { PostIcon, DocIcon, AboutIcon } from "@/components/basic/svg-icon";
+import { LayoutDashboard, Book } from "lucide-react";
+import { Button } from "@heroui/button";
+import { useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@heroui/react";
 
-export function NavGroup({ title, items }: NavGroup) {
-  const { state, isMobile } = useSidebar();
-  const href = usePathname();
-  return (
-    <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
-      <SidebarMenu>
-        {items.map((item) => {
-          const key = `${item.title}-${item.url}`;
+const navItems = [
+  {
+    label: "首页",
+    icon: LayoutDashboard,
+    path: "/",
+  },
+  {
+    label: "文章",
+    icon: PostIcon,
+    path: "/post", // 首页或 /post/** 都认为是文章
+  },
+  {
+    label: "文档",
+    icon: DocIcon,
+    path: "/doc",
+  },
+  {
+    label: "关于",
+    icon: AboutIcon,
+    path: "/about",
+  },
+];
 
-          if (!item.items)
-            return <SidebarMenuLink key={key} item={item} href={href} />;
-
-          if (state === "collapsed" && !isMobile)
-            return (
-              <SidebarMenuCollapsedDropdown key={key} item={item} href={href} />
-            );
-
-          return <SidebarMenuCollapsible key={key} item={item} href={href} />;
-        })}
-      </SidebarMenu>
-    </SidebarGroup>
-  );
-}
-
-const NavBadge = ({ children }: { children: ReactNode }) => (
-  <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>
-);
-
-const SidebarMenuLink = ({ item, href }: { item: NavLink; href: string }) => {
+export const LinkGroup = () => {
   const { setOpenMobile } = useSidebar();
-  return (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        asChild
-        isActive={checkIsActive(href, item)}
-        tooltip={item.title}
-      >
-        <Link href={item.url} onClick={() => setOpenMobile(false)}>
-          {item.icon && <item.icon />}
-          <span>{item.title}</span>
-          {item.badge && <NavBadge>{item.badge}</NavBadge>}
-        </Link>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
-};
+  const router = useRouter();
+  const pathname = usePathname();
 
-const SidebarMenuCollapsible = ({
-  item,
-  href,
-}: {
-  item: NavCollapsible;
-  href: string;
-}) => {
-  const { setOpenMobile } = useSidebar();
   return (
-    <Collapsible
-      asChild
-      defaultOpen={checkIsActive(href, item, true)}
-      className="group/collapsible"
-    >
-      <SidebarMenuItem>
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton tooltip={item.title}>
-            {item.icon && <item.icon />}
-            <span>{item.title}</span>
-            {item.badge && <NavBadge>{item.badge}</NavBadge>}
-            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-          </SidebarMenuButton>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="CollapsibleContent">
-          <SidebarMenuSub>
-            {item.items.map((subItem) => (
-              <SidebarMenuSubItem key={subItem.title}>
-                <SidebarMenuSubButton
-                  asChild
-                  isActive={checkIsActive(href, subItem)}
-                >
-                  <Link href={subItem.url} onClick={() => setOpenMobile(false)}>
-                    {subItem.icon && <subItem.icon />}
-                    <span>{subItem.title}</span>
-                    {subItem.badge && <NavBadge>{subItem.badge}</NavBadge>}
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            ))}
-          </SidebarMenuSub>
-        </CollapsibleContent>
-      </SidebarMenuItem>
-    </Collapsible>
-  );
-};
+    <div className="flex flex-col gap-2">
+      {navItems.map(({ label, icon: Icon, path }) => {
+        // 首页需要特殊处理
+        const isActive =
+          path === pathname;
 
-const SidebarMenuCollapsedDropdown = ({
-  item,
-  href,
-}: {
-  item: NavCollapsible;
-  href: string;
-}) => {
-  return (
-    <SidebarMenuItem>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuButton
-            tooltip={item.title}
-            isActive={checkIsActive(href, item)}
+        return (
+          <Button
+            key={label}
+            variant="light"
+            className={cn(
+              "flex items-center gap-2 justify-start cursor-pointer rounded-xl",
+              { "bg-default-500/20": isActive }
+            )
+          }
+            onPress={() => {
+              router.push(path);
+              setOpenMobile(false);
+            }}
           >
-            {item.icon && <item.icon />}
-            <span>{item.title}</span>
-            {item.badge && <NavBadge>{item.badge}</NavBadge>}
-            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-          </SidebarMenuButton>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" align="start" sideOffset={4}>
-          <DropdownMenuLabel>
-            {item.title} {item.badge ? `(${item.badge})` : ""}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {item.items.map((sub) => (
-            <DropdownMenuItem key={`${sub.title}-${sub.url}`} asChild>
-              <Link
-                href={sub.url}
-                className={`${checkIsActive(href, sub) ? "bg-secondary" : ""}`}
-              >
-                {sub.icon && <sub.icon />}
-                <span className="max-w-52 text-wrap">{sub.title}</span>
-                {sub.badge && (
-                  <span className="ml-auto text-xs">{sub.badge}</span>
-                )}
-              </Link>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </SidebarMenuItem>
+            <Icon aria-label={label} className="text-default-500" />
+            <span>{label}</span>
+          </Button>
+        );
+      })}
+    </div>
   );
 };
-
-function checkIsActive(href: string, item: NavItem, mainNav = false) {
-  return (
-    href === item.url || // /endpint?search=param
-    href.split("?")[0] === item.url || // endpoint
-    !!item?.items?.filter((i) => i.url === href).length || // if child nav is active
-    (mainNav &&
-      href.split("/")[1] !== "" &&
-      href.split("/")[1] === item?.url?.split("/")[1])
-  );
-}

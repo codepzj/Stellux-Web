@@ -1,16 +1,16 @@
 import { PageVO, Page } from "@/types/page";
 import { PostVO, PostSearchVO } from "@/types/post";
 import { SiteMapVO } from "@/types/sitemap";
-import request from "@/utils/request";
+import { request } from "@/utils/request";
 
 // 获取首页文章列表
-export const getPostDetailListAPI = (page: Page) => {
-  return request.get<PageVO<PostVO>>("/post/detail/list", { params: page });
+export const getPostListAPI = (page: Page) => {
+  return request.get<PageVO<PostVO>>("/post/list", { params: page });
 };
 
 // 获取文章详情
-export const getPostDetailAPI = (id: string) => {
-  return request.get<PostVO>(`/post/detail/${id}`);
+export const getPostByIdAPI = (id: string) => {
+  return request.get<PostVO>(`/post/${id}`);
 };
 
 // 获取所有发布文章

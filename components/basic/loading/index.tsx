@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 
-export const Loading = ({
+export const LoadingComponent = ({
   size = "normal",
   dark = false,
   text,
@@ -30,25 +30,10 @@ export const Loading = ({
 /**
  * 带头部加载
  */
-export const LoadingWithHeader = () => {
+export const Loading = () => {
   return (
-    <div className="flex h-[calc(100dvh-var(--stellux-header-height))] w-full items-start justify-center">
-      <div className="mt-[calc(40dvh-var(--stellux-header-height))]">
-        <Loading text="加载中..." />
-      </div>
-    </div>
-  );
-};
-
-/**
- * 全屏加载
- */
-export const LoadingScreen = () => {
-  return (
-    <div className="flex h-screen w-full items-start justify-center">
-      <div className="mt-[40vh]">
-        <Loading text="加载中..." />
-      </div>
+    <div className="flex h-dvh w-full items-center justify-center">
+      <LoadingComponent text="加载中..." />
     </div>
   );
 };
