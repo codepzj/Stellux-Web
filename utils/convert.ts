@@ -22,7 +22,8 @@ export function convertToTreeData(
   const tree: DocTreeItem[] = [];
   for (const doc of data) {
     const node = map.get(doc.id)!;
-    if (doc.parent_id === alias || !map.has(doc.parent_id)) {
+    // 如果 parent_id 为空或者等于 document_id，说明是根节点
+    if (!doc.parent_id || doc.parent_id === doc.document_id || !map.has(doc.parent_id)) {
       tree.push(node);
     } else {
       const parent = map.get(doc.parent_id)!;

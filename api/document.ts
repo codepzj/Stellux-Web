@@ -17,7 +17,9 @@ export const getAllPublicDocument: () => Promise<
 export const getDocumentTreeByID: (
   id: string
 ) => Promise<Response<DocumentTreeVO[]>> = (id: string) => {
-  return request.get(`/document/tree?document_id=${id}`);
+  return request.get(
+    `/documentContent/getAllDocByDocumentId?document_id=${id}`
+  );
 };
 
 // 根据id获取文档
