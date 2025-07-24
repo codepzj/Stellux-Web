@@ -1,10 +1,10 @@
 import { getPostByIdAPI } from "@/api/post";
 import { Markdown } from "@/components/business/md";
 import { Metadata } from "next";
-import BlogComment from "./comment";
 import { getSiteConfigAPI } from "@/api/setting";
 import { Spacer } from "@/components/basic/Spacer";
 import { Toc } from "@/components/business/toc";
+import Comment from "@/components/business/comment";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -26,12 +26,14 @@ export default async function PostPage({ params }: Props) {
             className="break-words overflow-x-auto"
             content={post.data.content}
           />
-          <BlogComment />
+              <Spacer y={40} />
+              <Comment postId={id} />
         </div>
         <div className="hidden relative lg:block lg:w-1/5">
           <Toc className="sticky top-20" content={post.data.content} />
         </div>
       </div>
+  
     </>
   );
 }
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const keywords = [data.category, ...(data.tags || [])].filter(Boolean);
   const seoConfig = await getSiteConfigAPI();
   const baseUrl = seoConfig.data.siteUrl;
-  const url = `${baseUrl}/post/${id}`;
+  const url = `${baseUrl}/blog/${id}`;
 
   return {
     title,

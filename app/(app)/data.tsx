@@ -1,679 +1,317 @@
 import {
   HomeIcon,
-  NotebookIcon,
+  BookIcon,
   GithubIcon,
   LinkedinIcon,
-  XIcon,
+  TwitterIcon,
   YoutubeIcon,
   MailIcon,
+  MessageSquareIcon,
+  PackageIcon,
+  UsersIcon,
+  CodeIcon,
+  GlobeIcon,
 } from "lucide-react";
-import { GlobeIcon } from "lucide-react";
 
 export const DATA = {
-  name: "Dillion Verma",
-  initials: "DV",
-  url: "https://dillion.io",
-  location: "San Francisco, CA",
-  locationLink: "https://www.google.com/maps/place/sanfrancisco",
+  name: "Go语言中文网",
+  initials: "Go",
+  url: "https://golang.cn",
+  location: "中国",
+  locationLink: "https://www.google.com/maps/place/china",
   description:
-    "Software Engineer turned Entrepreneur. I love building things and helping people. Very active on Twitter.",
+    "最全面的Go语言中文学习平台，提供高质量的中文教程、文档和社区支持，助力开发者快速掌握Go语言。",
   summary:
-    "At the end of 2022, I quit my job as a software engineer to go fulltime into building and scaling my own SaaS businesses. In the past, [I pursued a double degree in computer science and business](/#education), [interned at big tech companies in Silicon Valley](https://www.youtube.com/watch?v=d-LJ2e5qKdE), and [competed in over 21 hackathons for fun](/#hackathons). I also had the pleasure of being a part of the first ever in-person cohort of buildspace called [buildspace sf1](https://buildspace.so/sf1).",
-  avatarUrl: "/me.png",
+    "Go语言是由Google开发的一种静态强类型、编译型、并发型，并具有垃圾回收功能的编程语言。Go语言专门针对多处理器系统应用程序的编程进行了优化，使用Go编译的程序可以媲美C或C++代码的速度，而且更加安全、支持并行进程。Go语言中文网致力于为中国开发者提供最全面的Go语言学习资源和交流平台。",
+  avatarUrl: "/go-logo.png",
   skills: [
-    "React",
-    "Next.js",
-    "Typescript",
-    "Node.js",
-    "Python",
-    "Go",
-    "Postgres",
+    "Web开发",
+    "微服务",
+    "并发编程",
+    "系统编程",
+    "云原生",
     "Docker",
     "Kubernetes",
-    "Java",
-    "C++",
+    "数据库",
+    "API开发",
+    "DevOps",
   ],
   navbar: [
-    { href: "/", icon: HomeIcon, label: "Home" },
-    { href: "/blog", icon: NotebookIcon, label: "Blog" },
+    { href: "/", icon: HomeIcon, label: "首页" },
+    { href: "/docs", icon: BookIcon, label: "文档" },
+    { href: "/tutorials", icon: CodeIcon, label: "教程" },
+    { href: "/packages", icon: PackageIcon, label: "包索引" },
+    { href: "/community", icon: UsersIcon, label: "社区" },
+    { href: "/blog", icon: MessageSquareIcon, label: "博客" },
   ],
   contact: {
-    email: "hello@example.com",
-    tel: "+123456789",
+    email: "contact@golang.cn",
+    tel: "+86123456789",
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://dub.sh/dillion-github",
+        url: "https://github.com/golang-china",
         icon: GithubIcon,
-
+        navbar: true,
+      },
+      Twitter: {
+        name: "Twitter",
+        url: "https://twitter.com/golangchina",
+        icon: TwitterIcon,
         navbar: true,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://dub.sh/dillion-linkedin",
+        url: "https://linkedin.com/company/golang-china",
         icon: LinkedinIcon,
-
-        navbar: true,
-      },
-      X: {
-        name: "X",
-        url: "https://dub.sh/dillion-twitter",
-        icon: XIcon,
-
         navbar: true,
       },
       Youtube: {
         name: "Youtube",
-        url: "https://dub.sh/dillion-youtube",
+        url: "https://youtube.com/c/golangchina",
         icon: YoutubeIcon,
         navbar: true,
       },
       email: {
-        name: "Send Email",
-        url: "#",
+        name: "发送邮件",
+        url: "mailto:contact@golang.cn",
         icon: MailIcon,
-
         navbar: false,
       },
     },
   },
 
-  work: [
+  team: [
     {
-      company: "Atomic Finance",
-      href: "https://atomic.finance",
-      badges: [],
-      location: "Remote",
-      title: "Bitcoin Protocol Engineer",
-      logoUrl: "/atomic.png",
-      start: "May 2021",
-      end: "Oct 2022",
-      description:
-        "Implemented the Bitcoin discreet log contract (DLC) protocol specifications as an open source Typescript SDK. Dockerized all microservices and setup production kubernetes cluster. Architected a data lake using AWS S3 and Athena for historical backtesting of bitcoin trading strategies. Built a mobile app using react native and typescript.",
+      name: "张三",
+      role: "创始人 & 首席开发者",
+      bio: "资深Go语言专家，拥有10年以上Go语言开发经验，曾参与多个大型开源项目的开发。",
+      avatar: "/team/zhangsan.png",
+      social: {
+        github: "https://github.com/zhangsan",
+        twitter: "https://twitter.com/zhangsan",
+      }
     },
     {
-      company: "Shopify",
-      badges: [],
-      href: "https://shopify.com",
-      location: "Remote",
-      title: "Software Engineer",
-      logoUrl: "/shopify.svg",
-      start: "January 2021",
-      end: "April 2021",
-      description:
-        "Implemented a custom Kubernetes controller in Go to automate the deployment of MySQL and ProxySQL custom resources in order to enable 2,000+ internal developers to instantly deploy their app databases to production. Wrote several scripts in Go to automate MySQL database failovers while maintaining master-slave replication topologies and keeping Zookeeper nodes consistent with changes.",
+      name: "李四",
+      role: "技术总监",
+      bio: "专注于Go语言微服务和云原生应用开发，拥有丰富的企业级应用开发经验。",
+      avatar: "/team/lisi.png",
+      social: {
+        github: "https://github.com/lisi",
+        twitter: "https://twitter.com/lisi",
+      }
     },
     {
-      company: "Nvidia",
-      href: "https://nvidia.com/",
-      badges: [],
-      location: "Santa Clara, CA",
-      title: "Software Engineer",
-      logoUrl: "/nvidia.png",
-      start: "January 2020",
-      end: "April 2020",
-      description:
-        "Architected and wrote the entire MVP of the GeForce Now Cloud Gaming internal admin and A/B testing dashboard using React, Redux, TypeScript, and Python.",
+      name: "王五",
+      role: "内容主管",
+      bio: "技术文档专家，负责Go语言中文网的教程、文档和翻译工作，致力于提供高质量的中文学习资源。",
+      avatar: "/team/wangwu.png",
+      social: {
+        github: "https://github.com/wangwu",
+        twitter: "https://twitter.com/wangwu",
+      }
     },
     {
-      company: "Splunk",
-      href: "https://splunk.com",
-      badges: [],
-      location: "San Jose, CA",
-      title: "Software Engineer",
-      logoUrl: "/splunk.svg",
-      start: "January 2019",
-      end: "April 2019",
-      description:
-        "Co-developed a prototype iOS app with another intern in Swift for the new Splunk Phantom security orchestration product (later publicly demoed and launched at .conf annual conference in Las Vegas). Implemented a realtime service for the iOS app in Django (Python) and C++; serialized data using protobufs transmitted over gRPC resulting in an approximate 500% increase in data throughput.",
-    },
-    {
-      company: "Lime",
-      href: "https://li.me/",
-      badges: [],
-      location: "San Francisco, CA",
-      title: "Software Engineer",
-      logoUrl: "/lime.svg",
-      start: "January 2018",
-      end: "April 2018",
-      description:
-        "Proposed and implemented an internal ruby API for sending/receiving commands to scooters over LTE networks. Developed a fully automated bike firmware update system to handle asynchronous firmware updates of over 100,000+ scooters worldwide, and provide progress reports in real-time using React, Ruby on Rails, PostgreSQL and AWS EC2 saving hundreds of developer hours.",
-    },
-    {
-      company: "Mitre Media",
-      href: "https://mitremedia.com/",
-      badges: [],
-      location: "Toronto, ON",
-      title: "Software Engineer",
-      logoUrl: "/mitremedia.png",
-      start: "May 2017",
-      end: "August 2017",
-      description:
-        "Designed and implemented a robust password encryption and browser cookie storage system in Ruby on Rails. Leveraged the Yahoo finance API to develop the dividend.com equity screener",
+      name: "赵六",
+      role: "社区经理",
+      bio: "负责Go语言中文社区的运营和管理，组织线上线下活动，促进开发者交流和学习。",
+      avatar: "/team/zhaoliu.png",
+      social: {
+        github: "https://github.com/zhaoliu",
+        twitter: "https://twitter.com/zhaoliu",
+      }
     },
   ],
-  education: [
+
+  courses: [
     {
-      school: "Buildspace",
-      href: "https://buildspace.so",
-      degree: "s3, s4, sf1, s5",
-      logoUrl: "/buildspace.jpg",
-      start: "2023",
-      end: "2024",
+      title: "Go语言基础入门",
+      href: "/courses/go-basics",
+      level: "初级",
+      duration: "4周",
+      lessons: 20,
+      description: "从零开始学习Go语言的基础语法、数据类型、控制结构、函数和包管理等核心概念。适合编程新手和想要学习Go的开发者。",
+      image: "/courses/go-basics.png",
+      tags: ["基础", "语法", "入门"]
     },
     {
-      school: "University of Waterloo",
-      href: "https://uwaterloo.ca",
-      degree: "Bachelor's Degree of Computer Science (BCS)",
-      logoUrl: "/waterloo.png",
-      start: "2016",
-      end: "2021",
+      title: "Go并发编程实战",
+      href: "/courses/go-concurrency",
+      level: "中级",
+      duration: "3周",
+      lessons: 15,
+      description: "深入学习Go语言的并发模型，包括goroutine、channel、sync包和常见并发模式，掌握高效并发程序开发技巧。",
+      image: "/courses/go-concurrency.png",
+      tags: ["并发", "goroutine", "channel"]
     },
     {
-      school: "Wilfrid Laurier University",
-      href: "https://wlu.ca",
-      degree: "Bachelor's Degree of Business Administration (BBA)",
-      logoUrl: "/laurier.png",
-      start: "2016",
-      end: "2021",
+      title: "Go Web开发进阶",
+      href: "/courses/go-web",
+      level: "中级",
+      duration: "5周",
+      lessons: 25,
+      description: "学习使用Go语言开发高性能Web应用，包括HTTP服务器、RESTful API、中间件、数据库交互和常用Web框架（如Gin、Echo）等内容。",
+      image: "/courses/go-web.png",
+      tags: ["Web", "API", "框架"]
     },
     {
-      school: "International Baccalaureate",
-      href: "https://ibo.org",
-      degree: "IB Diploma",
-      logoUrl: "/ib.png",
-      start: "2012",
-      end: "2016",
+      title: "Go微服务架构",
+      href: "/courses/go-microservices",
+      level: "高级",
+      duration: "6周",
+      lessons: 30,
+      description: "学习使用Go语言构建微服务架构，包括服务发现、负载均衡、API网关、消息队列、分布式追踪等微服务核心组件的实现。",
+      image: "/courses/go-microservices.png",
+      tags: ["微服务", "分布式", "云原生"]
     },
   ],
+
   projects: [
     {
-      title: "Chat Collect",
-      href: "https://chatcollect.com",
-      dates: "Jan 2024 - Feb 2024",
+      title: "Go中文文档",
+      href: "https://golang.cn/docs",
+      dates: "2015年至今",
       active: true,
       description:
-        "With the release of the [OpenAI GPT Store](https://openai.com/blog/introducing-the-gpt-store), I decided to build a SaaS which allows users to collect email addresses from their GPT users. This is a great way to build an audience and monetize your GPT API usage.",
+        "Go语言官方文档的中文翻译项目，提供最新、最全面的Go语言中文文档，帮助中国开发者更好地学习和使用Go语言。",
       technologies: [
+        "Go",
+        "Markdown",
         "Next.js",
-        "Typescript",
-        "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Stripe",
-        "Shadcn UI",
-        "Magic UI",
+        "HeroUI",
       ],
       links: [
         {
-          type: "Website",
-          href: "https://chatcollect.com",
-          icon: <GlobeIcon className="size-3" />,
-        },
-      ],
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-    },
-    {
-      title: "Magic UI",
-      href: "https://magicui.design",
-      dates: "June 2023 - Present",
-      active: true,
-      description:
-        "Designed, developed and sold animated UI components for developers.",
-      technologies: [
-        "Next.js",
-        "Typescript",
-        "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Stripe",
-        "Shadcn UI",
-        "Magic UI",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://magicui.design",
+          type: "网站",
+          href: "https://golang.cn/docs",
           icon: <GlobeIcon className="size-3" />,
         },
         {
-          type: "Source",
-          href: "https://github.com/magicuidesign/magicui",
+          type: "源码",
+          href: "https://github.com/golang-china/docs",
           icon: <GithubIcon className="size-3" />,
         },
       ],
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
+      image: "/projects/go-docs.png",
     },
     {
-      title: "llm.report",
-      href: "https://llm.report",
-      dates: "April 2023 - September 2023",
+      title: "Go语言实战",
+      href: "https://golang.cn/tutorials",
+      dates: "2018年至今",
       active: true,
       description:
-        "Developed an open-source logging and analytics platform for OpenAI: Log your ChatGPT API requests, analyze costs, and improve your prompts.",
+        "一系列实用的Go语言教程和实战项目，涵盖Web开发、微服务、系统编程、并发编程等多个领域，帮助开发者快速掌握Go语言的实际应用。",
       technologies: [
-        "Next.js",
-        "Typescript",
+        "Go",
+        "Docker",
+        "Kubernetes",
+        "gRPC",
         "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
-        "Magic UI",
-        "Stripe",
-        "Cloudflare Workers",
       ],
       links: [
         {
-          type: "Website",
-          href: "https://llm.report",
+          type: "网站",
+          href: "https://golang.cn/tutorials",
+          icon: <GlobeIcon className="size-3" />,
+        },
+      ],
+      image: "/projects/go-tutorials.png",
+    },
+    {
+      title: "Go开源项目精选",
+      href: "https://golang.cn/projects",
+      dates: "2019年至今",
+      active: true,
+      description:
+        "精选优质的Go语言开源项目，提供中文介绍、使用教程和最佳实践，帮助开发者了解和使用优秀的Go语言开源工具和库。",
+      technologies: [
+        "Go",
+        "GitHub API",
+        "Next.js",
+        "TailwindCSS",
+      ],
+      links: [
+        {
+          type: "网站",
+          href: "https://golang.cn/projects",
+          icon: <GlobeIcon className="size-3" />,
+        },
+      ],
+      image: "/projects/go-projects.png",
+    },
+    {
+      title: "Go语言在线运行环境",
+      href: "https://golang.cn/playground",
+      dates: "2020年至今",
+      active: true,
+      description:
+        "基于浏览器的Go语言在线编译和运行环境，支持代码分享、保存和导出，方便开发者快速测试Go代码片段和学习示例。",
+      technologies: [
+        "Go",
+        "WebAssembly",
+        "React",
+        "Monaco Editor",
+      ],
+      links: [
+        {
+          type: "网站",
+          href: "https://golang.cn/playground",
           icon: <GlobeIcon className="size-3" />,
         },
         {
-          type: "Source",
-          href: "https://github.com/dillionverma/llm.report",
+          type: "源码",
+          href: "https://github.com/golang-china/playground",
           icon: <GithubIcon className="size-3" />,
         },
       ],
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-    },
-    {
-      title: "Automatic Chat",
-      href: "https://automatic.chat",
-      dates: "April 2023 - March 2024",
-      active: true,
-      description:
-        "Developed an AI Customer Support Chatbot which automatically responds to customer support tickets using the latest GPT models.",
-      technologies: [
-        "Next.js",
-        "Typescript",
-        "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
-        "Magic UI",
-        "Stripe",
-        "Cloudflare Workers",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://automatic.chat",
-          icon: <GlobeIcon className="size-3" />,
-        },
-      ],
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
+      image: "/projects/go-playground.png",
     },
   ],
-  hackathons: [
+
+  events: [
     {
-      title: "Hack Western 5",
-      dates: "November 23rd - 25th, 2018",
-      location: "London, Ontario",
+      title: "Go语言中国开发者大会",
+      dates: "2023年10月21日-22日",
+      location: "北京",
       description:
-        "Developed a mobile application which delivered bedtime stories to children using augmented reality.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-western.png",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-white.svg",
-      links: [],
-    },
-    {
-      title: "Hack The North",
-      dates: "September 14th - 16th, 2018",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed a mobile application which delivers university campus wide events in real time to all students.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-the-north.png",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2019/mlh-trust-badge-2019-white.svg",
-      links: [],
-    },
-    {
-      title: "FirstNet Public Safety Hackathon",
-      dates: "March 23rd - 24th, 2018",
-      location: "San Francisco, California",
-      description:
-        "Developed a mobile application which communcicates a victims medical data from inside an ambulance to doctors at hospital.",
-      icon: "public",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/firstnet.png",
-      links: [],
-    },
-    {
-      title: "DeveloperWeek Hackathon",
-      dates: "February 3rd - 4th, 2018",
-      location: "San Francisco, California",
-      description:
-        "Developed a web application which aggregates social media data regarding cryptocurrencies and predicts future prices.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/developer-week.jpg",
+        "中国最大的Go语言开发者年度盛会，汇集国内外Go语言专家和企业代表，分享Go语言最新发展和实践经验。",
+      image: "/events/gochina-conf.png",
       links: [
         {
-          title: "Github",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/cryptotrends/cryptotrends",
-        },
-      ],
-    },
-    {
-      title: "HackDavis",
-      dates: "January 20th - 21st, 2018",
-      location: "Davis, California",
-      description:
-        "Developed a mobile application which allocates a daily carbon emission allowance to users to move towards a sustainable environment.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-davis.png",
-      win: "Best Data Hack",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2018/white.svg",
-      links: [
-        {
-          title: "Devpost",
+          title: "回顾",
           icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://devpost.com/software/my6footprint",
-        },
-        {
-          title: "ML",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/Wallet6/my6footprint-machine-learning",
-        },
-        {
-          title: "iOS",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/Wallet6/CarbonWallet",
-        },
-        {
-          title: "Server",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/Wallet6/wallet6-server",
+          href: "/events/gochina-conf-2023",
         },
       ],
     },
     {
-      title: "ETH Waterloo",
-      dates: "October 13th - 15th, 2017",
-      location: "Waterloo, Ontario",
+      title: "Go语言实战工作坊",
+      dates: "每月举办",
+      location: "线上 + 北京/上海/深圳",
       description:
-        "Developed a blockchain application for doctors and pharmacists to perform trustless transactions and prevent overdosage in patients.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/eth-waterloo.png",
+        "定期举办的Go语言实战工作坊，通过实际项目和案例，帮助开发者掌握Go语言的实际应用技能。",
+      image: "/events/go-workshop.png",
       links: [
         {
-          title: "Organization",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/ethdocnet",
-        },
-      ],
-    },
-    {
-      title: "Hack The North",
-      dates: "September 15th - 17th, 2017",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed a virtual reality application allowing users to see themselves in third person.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-the-north.png",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
-      links: [
-        {
-          title: "Streamer Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/justinmichaud/htn2017",
-        },
-        {
-          title: "Client Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/RTSPClient",
-        },
-      ],
-    },
-    {
-      title: "Hack The 6ix",
-      dates: "August 26th - 27th, 2017",
-      location: "Toronto, Ontario",
-      description:
-        "Developed an open platform for people shipping items to same place to combine shipping costs and save money.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/hack-the-6ix.jpg",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/ShareShip/ShareShip",
-        },
-        {
-          title: "Site",
+          title: "报名",
           icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://share-ship.herokuapp.com/",
+          href: "/events/workshop",
         },
       ],
     },
     {
-      title: "Stupid Hack Toronto",
-      dates: "July 23rd, 2017",
-      location: "Toronto, Ontario",
+      title: "Go语言读书会",
+      dates: "每周四晚上",
+      location: "线上",
       description:
-        "Developed a chrome extension which tracks which facebook profiles you have visited and immediately texts your girlfriend if you visited another girls page.",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/stupid-hackathon.png",
+        "每周一次的Go语言读书会，共同阅读和讨论Go语言相关的经典书籍和文章，促进深入学习和交流。",
+      image: "/events/go-reading.png",
       links: [
         {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/nsagirlfriend/nsagirlfriend",
-        },
-      ],
-    },
-    {
-      title: "Global AI Hackathon - Toronto",
-      dates: "June 23rd - 25th, 2017",
-      location: "Toronto, Ontario",
-      description:
-        "Developed a python library which can be imported to any python game and change difficulty of the game based on real time emotion of player. Uses OpenCV and webcam for facial recognition, and a custom Machine Learning Model trained on a [Kaggle Emotion Dataset](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/leaderboard) using [Tensorflow](https://www.tensorflow.org/Tensorflow) and [Keras](https://keras.io/). This project recieved 1st place prize at the Global AI Hackathon - Toronto and was also invited to demo at [NextAI Canada](https://www.nextcanada.com/next-ai).",
-      image:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/hackline/global-ai-hackathon.jpg",
-      win: "1st Place Winner",
-      links: [
-        {
-          title: "Article",
+          title: "加入",
           icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://syncedreview.com/2017/06/26/global-ai-hackathon-in-toronto/",
-        },
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/TinySamosas/",
-        },
-      ],
-    },
-    {
-      title: "McGill AI for Social Innovation Hackathon",
-      dates: "June 17th - 18th, 2017",
-      location: "Montreal, Quebec",
-      description:
-        "Developed realtime facial microexpression analyzer using AI",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [],
-    },
-    {
-      title: "Open Source Circular Economy Days Hackathon",
-      dates: "June 10th, 2017",
-      location: "Toronto, Ontario",
-      description:
-        "Developed a custom admin interface for food waste startup <a href='http://genecis.co/'>Genecis</a> to manage their data and provide analytics.",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      win: "1st Place Winner",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/genecis",
-        },
-      ],
-    },
-    {
-      title: "Make School's Student App Competition 2017",
-      dates: "May 19th - 21st, 2017",
-      location: "International",
-      description: "Improved PocketDoc and submitted to online competition",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      win: "Top 10 Finalist | Honourable Mention",
-      links: [
-        {
-          title: "Medium Article",
-          icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://medium.com/make-school/the-winners-of-make-schools-student-app-competition-2017-a6b0e72f190a",
-        },
-        {
-          title: "Devpost",
-          icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://devpost.com/software/pocketdoc-react-native",
-        },
-        {
-          title: "YouTube",
-          icon: <YoutubeIcon className="h-4 w-4" />,
-          href: "https://www.youtube.com/watch?v=XwFdn5Rmx68",
-        },
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/pocketdoc-react-native",
-        },
-      ],
-    },
-    {
-      title: "HackMining",
-      dates: "May 12th - 14th, 2017",
-      location: "Toronto, Ontario",
-      description: "Developed neural network to optimize a mining process",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [],
-    },
-    {
-      title: "Waterloo Equithon",
-      dates: "May 5th - 7th, 2017",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed Pocketdoc, an app in which you take a picture of a physical wound, and the app returns common solutions or cures to the injuries or diseases.",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [
-        {
-          title: "Devpost",
-          icon: <GlobeIcon className="h-4 w-4" />,
-          href: "https://devpost.com/software/pocketdoc-react-native",
-        },
-        {
-          title: "YouTube",
-          icon: <YoutubeIcon className="h-4 w-4" />,
-          href: "https://www.youtube.com/watch?v=XwFdn5Rmx68",
-        },
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/pocketdoc-react-native",
-        },
-      ],
-    },
-    {
-      title: "SpaceApps Waterloo",
-      dates: "April 28th - 30th, 2017",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed Earthwatch, a web application which allows users in a plane to virtually see important points of interest about the world below them. They can even choose to fly away from their route and then fly back if they choose. Special thanks to CesiumJS for providing open source world and plane models.",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/earthwatch",
-        },
-      ],
-    },
-    {
-      title: "MHacks 9",
-      dates: "March 24th - 26th, 2017",
-      location: "Ann Arbor, Michigan",
-      description:
-        "Developed Super Graphic Air Traffic, a VR website made to introduce people to the world of air traffic controlling. This project was built completely using THREE.js as well as a node backend server.",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/threejs-planes",
-        },
-      ],
-    },
-    {
-      title: "StartHacks I",
-      dates: "March 4th - 5th, 2017",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed at StartHacks 2017, Recipic is a mobile app which allows you to take pictures of ingredients around your house, and it will recognize those ingredients using ClarifAI image recognition API and return possible recipes to make. Recipic recieved 1st place at the hackathon for best pitch and hack.",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      win: "1st Place Winner",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
-      links: [
-        {
-          title: "Source (Mobile)",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/mattBlackDesign/recipic-ionic",
-        },
-        {
-          title: "Source (Server)",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/mattBlackDesign/recipic-rails",
-        },
-      ],
-    },
-    {
-      title: "QHacks II",
-      dates: "February 3rd - 5th, 2017",
-      location: "Kingston, Ontario",
-      description:
-        "Developed a mobile game which enables city-wide manhunt with random lobbies",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      mlh: "https://s3.amazonaws.com/logged-assets/trust-badge/2017/white.svg",
-      links: [
-        {
-          title: "Source (Mobile)",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/dillionverma/human-huntr-react-native",
-        },
-        {
-          title: "Source (API)",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/mattBlackDesign/human-huntr-rails",
-        },
-      ],
-    },
-    {
-      title: "Terrible Hacks V",
-      dates: "November 26th, 2016",
-      location: "Waterloo, Ontario",
-      description:
-        "Developed a mock of Windows 11 with interesting notifications and functionality",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/justinmichaud/TerribleHacks2016-Windows11",
-        },
-      ],
-    },
-    {
-      title: "Portal Hackathon",
-      dates: "October 29, 2016",
-      location: "Kingston, Ontario",
-      description:
-        "Developed an internal widget for uploading assignments using Waterloo's portal app",
-      image: "https://cdn.codepzj.cn/image/202412161421755.png",
-      links: [
-        {
-          title: "Source",
-          icon: <GithubIcon className="h-4 w-4" />,
-          href: "https://github.com/UWPortalSDK/crowmark",
+          href: "/events/reading-group",
         },
       ],
     },

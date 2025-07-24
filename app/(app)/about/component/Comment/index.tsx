@@ -1,5 +1,5 @@
 "use client";
-import Comment from "@/components/basic/comment";
+import Comment from "@/components/business/comment";
 import useConfigStore from "@/store/config";
 
 export default function AboutComment() {
