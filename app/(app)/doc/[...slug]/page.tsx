@@ -9,10 +9,7 @@ import { ScrollToc } from "@/components/business/toc";
 import { DocumentVO } from "@/types/doc";
 import { Metadata } from "next";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DocSidebar } from "@/components/basic/sidebar/doc/sidebar";
 import { convertToTreeData } from "@/utils/convert";
-import DocTool from "@/components/core/tool/doc";
-import DocComment from "./comment";
 import { Spacer } from "@/components/basic/Spacer";
 import { getSiteConfigAPI } from "@/api/setting";
 
@@ -40,52 +37,31 @@ export default async function DocPage({ params }: DocPageProps) {
   }
 
   return (
-    <SidebarProvider
-      style={{ "--sidebar-width": "256px" } as React.CSSProperties}
-    >
-      <DocSidebar
-        docTitle={rootDocument?.title}
-        docThumbnail={rootDocument?.thumbnail}
-        doctree={treeItems}
-        className="hidden md:block fixed top-0 left-0"
-        alias={alias}
-        document_id={document_id}
-      />
-      <SidebarInset>
-        <div className="flex flex-col gap-4 p-0 md:p-2 pt-0">
-          <div className="relative w-full mx-auto text-default-600">
-            <div className="w-full flex flex-col md:flex-row justify-center gap-2">
-              <div className="flex-1 w-full md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4">
-                <div className="text-3xl font-bold font-sans py-4 mb-12">
-                  {leaf_id ? document?.title || "" : rootDocument.title}
-                </div>
-                <Markdown
-                  className="pl-2 break-words overflow-x-auto"
-                  content={
-                    leaf_id
-                      ? document?.content || ""
-                      : rootDocument.description || ""
-                  }
-                />
-                <Spacer y={32} />
-                {leaf_id && <DocComment />}
-              </div>
-              {leaf_id && (
-                <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
-                  <ScrollToc content={document?.content || ""} />
-                </div>
-              )}
+    <div className="flex flex-col gap-4 p-0 md:p-2 pt-0">
+      <div className="relative w-full mx-auto text-default-600">
+        <div className="w-full flex flex-col md:flex-row justify-center gap-2">
+          <div className="flex-1 w-full md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4">
+            <div className="text-3xl font-bold font-sans py-4 mb-12">
+              {leaf_id ? document?.title || "" : rootDocument.title}
             </div>
+            <Markdown
+              className="pl-2 break-words overflow-x-auto"
+              content={
+                leaf_id
+                  ? document?.content || ""
+                  : rootDocument.description || ""
+              }
+            />
+            <Spacer y={32} />
           </div>
+          {leaf_id && (
+            <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
+              <ScrollToc content={document?.content || ""} />
+            </div>
+          )}
         </div>
-        {/* 文档工具栏 */}
-        <DocTool
-          className="flex z-[999] fixed top-[70%] right-[2%]"
-          alias={alias}
-          id={document_id}
-        />
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </div>
   );
 }
 

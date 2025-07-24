@@ -1,11 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { IconBrandGithub, IconBrandDiscord } from "@tabler/icons-react";
+import {
+  IconBrandGithub,
+  IconBrandDiscord,
+  IconSun,
+  IconMoon,
+} from "@tabler/icons-react";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // 在客户端渲染后再显示主题切换按钮，避免水合不匹配
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80">
@@ -48,6 +61,21 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center ml-auto space-x-4">
+          {/* 主题切换按钮 */}
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="切换主题"
+            >
+              {theme === "dark" ? (
+                <IconSun className="h-5 w-5" />
+              ) : (
+                <IconMoon className="h-5 w-5" />
+              )}
+            </button>
+          )}
+
           <Link
             href="https://github.com/golang-china"
             className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"

@@ -14,10 +14,13 @@ export default async function PostPage({ params }: Props) {
   const { id } = await params;
   const post = await getPostByIdAPI(id);
 
+  // 检查内容是否包含二级(##)或三级(###)标题
+  const hasHeadings = /^##\s|^###\s/m.test(post.data.content);
+
   return (
     <>
       <div className="relative text-default-600 flex flex-col gap-4 lg:flex-row p-2 lg:p-4">
-        <div className="w-full lg:w-4/5">
+        <div className={`w-full ${hasHeadings ? "lg:w-4/5" : "lg:w-full"}`}>
           <h1 className="text-3xl text-default-900 font-medium text-center">
             {post.data.title}
           </h1>
@@ -26,14 +29,15 @@ export default async function PostPage({ params }: Props) {
             className="break-words overflow-x-auto"
             content={post.data.content}
           />
-              <Spacer y={40} />
-              <Comment postId={id} />
+          <Spacer y={40} />
+          <Comment postId={id} />
         </div>
-        <div className="hidden relative lg:block lg:w-1/5">
-          <Toc className="sticky top-20" content={post.data.content} />
-        </div>
+        {hasHeadings && (
+          <div className="hidden relative lg:block lg:w-1/5">
+            <Toc className="sticky top-20" content={post.data.content} />
+          </div>
+        )}
       </div>
-  
     </>
   );
 }
