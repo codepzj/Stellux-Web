@@ -1,7 +1,6 @@
 import { request } from "@/utils/request";
 import { DocumentVO } from "@/types/document";
 import { Response } from "@/types/dto";
-import { SiteMapVO } from "@/types/sitemap";
 
 export const getAllPublicDocument: () => Promise<
   Response<DocumentVO[]>
@@ -23,17 +22,3 @@ export const getDocumentByAlias: (alias: string) => Promise<Response<DocumentVO>
   return request.get(`/document/alias/${alias}`);
 };
 
-// export const getDocumentByKeyword: (
-//   dto: DocumentSearchDTO
-// ) => Promise<Response<DocumentVO[]>> = (dto: DocumentSearchDTO) => {
-//   return request.get(`/document/search`, {
-//     params: {
-//       keyword: dto.keyword,
-//       document_id: dto.document_id,
-//     },
-//   });
-// };
-
-export const getDocumentSiteMapAPI = () => {
-  return request.get<SiteMapVO[]>(`/document/sitemap`);
-};

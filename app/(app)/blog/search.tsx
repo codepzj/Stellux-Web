@@ -1,11 +1,11 @@
 "use client";
-import { Input } from "@heroui/input";
+import { Input, InputProps } from "@heroui/input";
 import { SearchLinearIcon } from "@/components/basic/svg-icon";
 import { Kbd } from "@heroui/kbd";
 import { useEffect } from "react";
-import { useSearch } from "@/context/blog-search-provider";
+import { useSearch } from "./provider";
 
-export const BlogSearch = () => {
+export const Search = ({ ...props }: InputProps) => {
   const { openSearch } = useSearch();
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -22,6 +22,7 @@ export const BlogSearch = () => {
   return (
     <>
       <Input
+        {...props}
         readOnly
         disableAnimation
         classNames={{

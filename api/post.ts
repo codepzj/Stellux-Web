@@ -1,5 +1,5 @@
 import { PageVO, Page } from "@/types/page";
-import { PostVO, PostSearchVO } from "@/types/post";
+import { PostVO } from "@/types/post";
 import { SiteMapVO } from "@/types/sitemap";
 import { request } from "@/utils/request";
 
@@ -8,9 +8,14 @@ export const getPostListAPI = (page: Page) => {
   return request.get<PageVO<PostVO>>("/post/list", { params: page });
 };
 
-// 获取文章详情
+// 根据id获取文章详情
 export const getPostByIdAPI = (id: string) => {
   return request.get<PostVO>(`/post/${id}`);
+};
+
+// 根据别名获取文章详情
+export const getPostByAliasAPI = (alias: string) => {
+  return request.get<PostVO>(`/post/alias/${alias}`);
 };
 
 // 获取所有发布文章
@@ -20,7 +25,7 @@ export const getAllPublishPostAPI = () => {
 
 // 搜索框获取文章列表
 export const getPostByKeyWordAPI = (keyword: string) => {
-  return request.get<PostSearchVO[]>(`/post/search?keyword=${keyword}`);
+  return request.get<PostVO[]>(`/post/search?keyword=${keyword}`);
 };
 
 // 获取站点地图

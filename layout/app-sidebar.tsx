@@ -11,9 +11,9 @@ import { useAppConfig } from "@/context/app-provider";
 import dynamic from "next/dynamic";
 import { AvatarLink } from "@/components/business/avatar/avatar-link";
 import { ThemeSwitcher } from "@/components/basic/theme-switcher";
-import { BlogSearchProvider } from "@/context/blog-search-provider";
-import { BlogSearchModal } from "@/components/business/modal/blog-search";
-import { BlogSearch } from "@/components/business/search/blog-search";
+import { BlogSearchProvider } from "@/app/(app)/blog/provider";
+import { BlogSearchModal } from "@/app/(app)/blog/modal";
+import { BlogSearch } from "@/app/(app)/blog/search";
 import { Spacer } from "@heroui/spacer";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

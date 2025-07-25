@@ -1,6 +1,6 @@
 "use client";
 
-import { IPostCard } from "@/types/post";
+import { PostVO } from "@/types/post";
 import { Card, CardBody, CardHeader, CardFooter } from "@heroui/card";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,7 @@ export function PostCard({
   post,
   className,
 }: {
-  post: IPostCard;
+  post: PostVO;
   className?: string;
 }) {
   const router = useRouter();

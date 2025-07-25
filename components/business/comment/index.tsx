@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Input, Button, Avatar, Textarea, Divider } from "@heroui/react";
+import { Input, Button, Avatar, Textarea } from "@heroui/react";
 import { createCommentAPI, getCommentListByPostIdAPI } from "@/api/comment";
 import { addToast } from "@heroui/toast";
 import type { CommentVO } from "@/types/comment";
 import dayjs from "dayjs";
 
-// SHA256 哈希函数（浏览器原生）
+// SHA256 哈希函数(浏览器原生)
 async function sha256(str: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(str.toLowerCase());
@@ -27,7 +27,7 @@ export interface PostCommentProps {
   postId: string;
 }
 
-const INDENT = 12; // px, 每层缩进宽度
+const INDENT = 2; // px, 每层缩进宽度
 
 // 扁平评论数组转树形结构
 function buildCommentTree(
@@ -50,6 +50,21 @@ function buildCommentTree(
       tree.push(item);
     }
   });
+
+  // 递归排序函数，按 created_at 降序
+  function sortComments(comments: (CommentVO & { replies?: CommentVO[] })[]) {
+    comments.sort((a, b) => {
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+    comments.forEach((item) => {
+      if (item.replies && item.replies.length > 0) {
+        sortComments(item.replies);
+      }
+    });
+  }
+
+  sortComments(tree);
+
   return tree;
 }
 

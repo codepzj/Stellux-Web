@@ -2,7 +2,7 @@ import { IconUsers, IconCode, IconBook, IconRocket } from "@tabler/icons-react";
 import { DATA } from "../data";
 import Link from "next/link";
 
-export default function AboutPage() {
+export default function About() {
   return (
     <div className="container px-4 py-12 md:px-6 md:py-24">
       <div className="mx-auto max-w-4xl space-y-12">

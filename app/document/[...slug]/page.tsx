@@ -5,8 +5,8 @@ import { ScrollToc } from "@/components/business/toc";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DocSidebar } from "@/components/basic/sidebar";
 import { convertToDocumentTreeData } from "@/utils/document-tree";
-import { Spacer } from "@/components/basic/Spacer";
 import { DocumentContentVO } from "@/types/document-content";
+import { Metadata } from "next";
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }>; // 路径参数
@@ -81,7 +81,6 @@ export default async function DocPage({ params }: DocPageProps) {
                   : documentContent?.content || ""
               }
             />
-            <Spacer y={32} />
           </div>
           <div className="hidden lg:block sticky top-4 h-[calc(100vh-1rem)] w-48 shrink-0">
             <ScrollToc
@@ -98,56 +97,49 @@ export default async function DocPage({ params }: DocPageProps) {
   );
 }
 
-// export async function generateMetadata({
-//   params,
-// }: DocPageProps): Promise<Metadata> {
-//   const { slug } = await params;
-//   const [alias, document_id, leaf_id] = slug || [];
+export async function generateMetadata({
+  params,
+}: DocPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const [rootAlias, subAlias] = slug || [];
 
-//   if (!leaf_id) {
-//     const { data: rootDocument } = await getRootDocumentByID(document_id);
-//     const seoConfig = await getSiteConfigAPI();
-//     const baseUrl = seoConfig.data.siteUrl;
-//     const url = `${baseUrl}/doc/${alias}/${document_id}`;
-//     return {
-//       title: rootDocument.title,
-//       description: rootDocument.description,
-//       openGraph: {
-//         title: rootDocument.title,
-//         description: rootDocument.description,
-//         url,
-//         type: "article",
-//         images: [{ url: rootDocument.thumbnail }],
-//       },
-//       twitter: {
-//         card: "summary_large_image",
-//         title: rootDocument.title,
-//         description: rootDocument.description,
-//         images: [{ url: rootDocument.thumbnail }],
-//       },
-//       metadataBase: new URL(url),
-//     };
-//   } else {
-//     const { data: document } = await getDocumentByID(leaf_id);
-//     const seoConfig = await getSiteConfigAPI();
-//     const baseUrl = seoConfig.data.siteUrl;
-//     const url = `${baseUrl}/doc/${alias}/${document_id}/${leaf_id}`;
-//     const description = document.content.slice(0, 150);
-//     return {
-//       title: document.title,
-//       description,
-//       openGraph: {
-//         title: document.title,
-//         description,
-//         url,
-//         type: "article",
-//       },
-//       twitter: {
-//         card: "summary_large_image",
-//         title: document.title,
-//         description,
-//       },
-//       metadataBase: new URL(url),
-//     };
-//   }
-// }
+  const isRoot = subAlias === undefined;
+
+  // 获取根文档
+  const document = await getDocumentByAlias(rootAlias).then((res) => {
+    return res.data;
+  });
+
+  // 获取文档列表内容
+  const documentContentList = await getAllDocumentContentByDocumentId(
+    document.id
+  ).then((res) => res.data);
+
+  // 如果当前是子文档, 则获取子文档内容
+  let documentContent: DocumentContentVO | undefined;
+  if (!isRoot) {
+    documentContent = documentContentList.find(
+      (item) => item.alias === subAlias
+    ) as DocumentContentVO;
+  }
+
+  const title = isRoot ? document.title : documentContent?.title || "";
+  const description = isRoot
+    ? document.description
+    : documentContent?.description || "";
+  const url = isRoot
+    ? `${process.env.NEXT_PUBLIC_SITE_URL}/document/${rootAlias}`
+    : `${process.env.NEXT_PUBLIC_SITE_URL}/document/${rootAlias}/${subAlias}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+      images: [{ url: document.thumbnail }],
+    },
+  };
+}

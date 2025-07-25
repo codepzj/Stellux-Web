@@ -5,9 +5,9 @@ import { Input } from "@heroui/input";
 import { Code } from "@heroui/code";
 import NextLink from "next/link";
 import { SearchLinearIcon } from "@/components/basic/svg-icon";
-import { useSearch } from "@/context/blog-search-provider";
+import { useSearch } from "@/app/(app)/blog/provider";
 
-export function BlogSearchModal() {
+export function SearchModal() {
   const { isOpen, closeSearch, keyword, setKeyword, results, loading } =
     useSearch();
 
@@ -58,7 +58,7 @@ export function BlogSearchModal() {
               results.map((post) => (
                 <NextLink
                   key={post.id}
-                  href={`/post/${post.id}`}
+                  href={`/blog/${post.alias}`}
                   onClick={closeSearch}
                 >
                   <div className="p-3 mb-2 rounded-lg bg-default-100/70 dark:bg-default-500/10 hover:bg-default-200 dark:hover:bg-white/10 transition cursor-pointer border border-transparent hover:border-default-300 dark:hover:border-zinc-800">

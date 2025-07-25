@@ -1,13 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { PostSearchVO } from "@/types/post";
+import { PostVO } from "@/types/post";
 import { getPostByKeyWordAPI } from "@/api/post";
+import { SearchModal } from "./modal";
 
 interface SearchContextType {
   isOpen: boolean;
   keyword: string;
-  results: PostSearchVO[];
+  results: PostVO[];
   loading: boolean;
   openSearch: () => void;
   closeSearch: () => void;
@@ -22,10 +23,10 @@ export const useSearch = () => {
   return ctx;
 };
 
-export const BlogSearchProvider = ({ children }: { children: React.ReactNode }) => {
+export const Provider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState<PostSearchVO[]>([]);
+  const [results, setResults] = useState<PostVO[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export const BlogSearchProvider = ({ children }: { children: React.ReactNode }) 
       }}
     >
       {children}
+      <SearchModal />
     </SearchContext.Provider>
   );
 };

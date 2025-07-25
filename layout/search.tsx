@@ -3,7 +3,7 @@ import { Input } from "@heroui/input";
 import { SearchLinearIcon } from "@/components/basic/svg-icon";
 import { Kbd } from "@heroui/kbd";
 import { useEffect } from "react";
-import { useSearch } from "@/context/blog-search-provider";
+import { useSearch } from "@/app/(app)/blog/provider";
 
 export const BlogSearch = () => {
   const { openSearch } = useSearch();
