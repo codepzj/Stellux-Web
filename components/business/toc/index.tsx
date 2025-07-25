@@ -84,7 +84,6 @@ export function Toc({ content, className }: TocProps) {
         )}
         size={20}
         offset={10}
-        hiddenScrollBar={true}
       >
         <Tree tree={toc} activeItem={activeId} />
       </ScrollShadow>

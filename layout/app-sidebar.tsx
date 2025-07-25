@@ -12,7 +12,7 @@ import dynamic from "next/dynamic";
 import { AvatarLink } from "@/components/business/avatar/avatar-link";
 import { ThemeSwitcher } from "@/components/basic/theme-switcher";
 import { BlogSearchProvider } from "@/context/blog-search-provider";
-import { BlogSearchModal } from "@/components/business/modal/blog-search-modal";
+import { BlogSearchModal } from "@/components/business/modal/blog-search";
 import { BlogSearch } from "@/components/business/search/blog-search";
 import { Spacer } from "@heroui/spacer";
 

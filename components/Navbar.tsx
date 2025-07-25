@@ -47,7 +47,7 @@ export default function Navbar() {
             博客
           </Link>
           <Link
-            href="/doc"
+            href="/document"
             className="text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
           >
             文档
@@ -65,7 +65,7 @@ export default function Navbar() {
           {mounted && (
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
               aria-label="切换主题"
             >
               {theme === "dark" ? (
@@ -150,7 +150,7 @@ export default function Navbar() {
             博客
           </Link>
           <Link
-            href="/doc"
+            href="/document"
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
           >
             文档

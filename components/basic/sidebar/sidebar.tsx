@@ -1,27 +1,22 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
 
 import { DocSearchForm } from "./search-form";
 import { NavMain } from "./nav-main";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ChevronsUpDown } from "lucide-react";
-import Link from "next/link";
 import { DocTitle } from "./title";
-import { DocTreeItem } from "@/types/doctree";
+import { DocTreeItem } from "@/utils/document-tree";
+import { Button } from "@/components/ui/button";
+import { ArrowLeftIcon } from "lucide-react";
+import Link from "next/link";
 
 export async function DocSidebar({
   docTitle,
@@ -43,27 +38,18 @@ export async function DocSidebar({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                >
-                  <DocTitle docTitle={docTitle} docThumbnail={docThumbnail} />
-                  <ChevronsUpDown className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width)"
-                align="start"
-              >
-                <DropdownMenuItem>
-                  <Link href="/doc" className="w-full cursor-pointer">
-                    退出文档
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href="/document">
+              <Button variant="ghost" size="icon" className="w-full justify-start">
+                <ArrowLeftIcon className="w-4 h-4" />
+                返回文档列表
+              </Button>
+            </Link>
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <DocTitle docTitle={docTitle} docThumbnail={docThumbnail} />
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

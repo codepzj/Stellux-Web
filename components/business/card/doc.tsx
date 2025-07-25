@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils";
 import { WikiIcon } from "@/components/basic/svg-icon";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { DocumentRootVO } from "@/types/doc";
+import { DocumentVO } from "@/types/document";
 
 export const DocCard = ({
   document,
   className,
 }: {
-  document: DocumentRootVO;
+  document: DocumentVO;
   className?: string;
 }) => {
   const router = useRouter();
@@ -25,7 +25,7 @@ export const DocCard = ({
         "p-5 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden max-w-3xl",
         className
       )}
-      onPress={() => router.push(`/doc/${document.alias}/${document.id}`)}
+      onPress={() => router.push(`/document/${document.alias}`)}
     >
       <div className="flex flex-wrap md:flex-nowrap gap-4">
         <div className="flex-1 min-w-0">
@@ -49,7 +49,7 @@ export const DocCard = ({
           </CardBody>
         </div>
 
-        {/* Right side: Image */}
+        {/* 右侧图片 */}
         <div className="hidden md:flex justify-center items-center flex-shrink-0">
           {document.thumbnail && (
             <div className="relative w-24 h-24 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">

@@ -1,9 +1,8 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import { IconAlertCircle } from "@tabler/icons-react";
-import Link from "next/link";
 
 export default function NotFound() {
   const router = useRouter();

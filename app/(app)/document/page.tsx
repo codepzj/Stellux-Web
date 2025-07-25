@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { getAllPublicDocument } from "@/api/document";
-import type { DocumentRootVO } from "@/types/doc";
+import type { DocumentVO } from "@/types/document";
 import { DocCard } from "@/components/business/card/doc";
 import { IconLoader2 } from "@tabler/icons-react";
 
 export default function DocumentPage() {
-  const [docList, setDocList] = useState<DocumentRootVO[]>([]);
+  const [docList, setDocList] = useState<DocumentVO[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {

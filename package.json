@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 9003 --turbopack",
+    "dev": "next dev --turbopack",
     "dev:build": "next build && cp -r .next/static .next/standalone/.next && cp -r public .next/standalone/public",
     "dev:start": "node .next/standalone/server.js",
     "build": "next build",
