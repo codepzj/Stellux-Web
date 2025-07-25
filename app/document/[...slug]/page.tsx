@@ -1,29 +1,16 @@
 import { getDocumentByAlias } from "@/api/document";
 import { getAllDocumentContentByDocumentId } from "@/api/document-content";
-
 import { Markdown } from "@/components/business/md";
 import { ScrollToc } from "@/components/business/toc";
-import { DocumentVO } from "@/types/document";
-import { Metadata } from "next";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DocSidebar } from "@/components/basic/sidebar/sidebar";
+import { DocSidebar } from "@/components/basic/sidebar";
 import { convertToDocumentTreeData } from "@/utils/document-tree";
-import DocTool from "@/components/core/tool/doc";
 import { Spacer } from "@/components/basic/Spacer";
-import { getSiteConfigAPI } from "@/api/setting";
 import { DocumentContentVO } from "@/types/document-content";
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }>; // 路径参数
 }
-
-export const OverView = () => {
-  return (
-    <div>
-      <h1>Overview</h1>
-    </div>
-  );
-};
 
 export default async function DocPage({ params }: DocPageProps) {
   const { slug } = await params;

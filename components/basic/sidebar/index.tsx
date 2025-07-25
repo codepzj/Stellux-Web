@@ -6,7 +6,6 @@ import {
 
 import { DocSearchForm } from "./search-form";
 import { NavMain } from "./nav-main";
-import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
