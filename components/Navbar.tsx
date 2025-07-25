@@ -52,12 +52,6 @@ export default function Navbar() {
           >
             文档
           </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
-          >
-            关于
-          </Link>
         </nav>
 
         <div className="flex items-center ml-auto space-x-4">
@@ -90,9 +84,6 @@ export default function Navbar() {
             <IconBrandDiscord className="h-5 w-5" />
             <span className="sr-only">Discord</span>
           </Link>
-          <button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-blue-600 text-white hover:bg-blue-700 h-9 px-4 py-2">
-            开始学习
-          </button>
 
           {/* 移动端菜单按钮 */}
           <button

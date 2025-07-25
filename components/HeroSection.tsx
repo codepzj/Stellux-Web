@@ -9,7 +9,7 @@ export default function HeroSection() {
 import "fmt"
 
 func main() {
-    fmt.Println("你好，Go语言中文网！")
+    fmt.Println("你好, Go语言中文网!")
 }`;
 
   return (
@@ -41,8 +41,8 @@ func main() {
               </Link>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
-            <Terminal className="aspect-video">
+          <div className="mx-auto w-full mt-12 lg:max-h-none">
+            <Terminal className="aspect-video max-h-[220px] lg:max-h-none">
               <TypingAnimation
                 duration={40}
                 className="text-sm text-gray-800 dark:text-gray-200"
