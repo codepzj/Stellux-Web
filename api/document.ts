@@ -18,15 +18,15 @@ export const getDocumentTreeByID: (
   id: string
 ) => Promise<Response<DocumentTreeVO[]>> = (id: string) => {
   return request.get(
-    `/documentContent/getAllDocByDocumentId?document_id=${id}`
+    `/document-content/all/document-id?document_id=${id}`
   );
 };
 
 // 根据id获取文档
-export const getDocumentByID: (id: string) => Promise<Response<DocumentVO>> = (
+export const getDocumentContentById: (id: string) => Promise<Response<DocumentVO>> = (
   id: string
 ) => {
-  return request.get(`/document/${id}`);
+  return request.get(`/document-content/${id}`);
 };
 
 export const getRootDocumentByID: (
