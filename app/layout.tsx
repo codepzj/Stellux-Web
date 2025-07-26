@@ -9,7 +9,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html suppressHydrationWarning lang="zh-CN">
       <head>
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href={`${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`} type="image/x-icon" />
         <link
           rel="stylesheet"
           href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'Go语言中文网',
       images: [
         {
-          url: '/favicon.ico',
+          url: `${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`,
           width: 200,
           height: 200,
           alt: 'Go语言中文网',
