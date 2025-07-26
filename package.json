@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start -p 9003",
-    "format": "prettier --write .",
-    "lint": "next lint --fix && pnpm format"
+    "build": "next build && cp -r .next/static .next/standalone/.next && cp -r public .next/standalone/public",
+    "start": "node .next/standalone/server.js",
+    "lint": "next lint --fix && pnpm format",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@fancyapps/ui": "^6.0.16",
