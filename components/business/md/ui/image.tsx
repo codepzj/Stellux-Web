@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { useEffect, useRef } from "react"
-import "@fancyapps/ui/dist/fancybox/fancybox.css"
-import Image from "next/image"
-import { Fancybox } from "@fancyapps/ui"
+import { useEffect, useRef } from 'react'
+import '@fancyapps/ui/dist/fancybox/fancybox.css'
+import Image from 'next/image'
+import { Fancybox } from '@fancyapps/ui'
 
 interface ZoomImageProps {
   src: string
@@ -19,18 +19,18 @@ export function ZoomImage({
   alt,
   width = 800,
   height = 450,
-  group = "gallery",
+  group = 'gallery',
   className,
 }: ZoomImageProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    Fancybox.bind("[data-fancybox]", {
-      groupAll: true, 
+    Fancybox.bind('[data-fancybox]', {
+      groupAll: true,
     })
 
     return () => {
-      Fancybox.unbind("[data-fancybox]")
+      Fancybox.unbind('[data-fancybox]')
       Fancybox.close()
     }
   }, [])
@@ -43,7 +43,7 @@ export function ZoomImage({
           alt={alt}
           width={width}
           height={height}
-          style={{ cursor: "zoom-in", borderRadius: 8 }}
+          style={{ cursor: 'zoom-in', borderRadius: 8 }}
         />
       </a>
     </span>

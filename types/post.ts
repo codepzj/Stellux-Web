@@ -1,15 +1,15 @@
 export interface PostVO {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  title: string;
-  content: string;
-  description: string;
-  author: string;
-  alias: string;
-  category: string;
-  tags: string[];
-  thumbnail: string;
-  is_top: boolean;
-  is_publish: boolean;
+  id: string
+  created_at: string
+  updated_at: string
+  title: string
+  content: string
+  description: string
+  author: string
+  alias: string
+  category: string
+  tags: string[]
+  thumbnail: string
+  is_top: boolean
+  is_publish: boolean
 }

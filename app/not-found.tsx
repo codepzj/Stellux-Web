@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { Button } from "@heroui/button";
-import { useRouter } from "next/navigation";
-import { IconAlertCircle } from "@tabler/icons-react";
+import { Button } from '@heroui/button'
+import { useRouter } from 'next/navigation'
+import { IconAlertCircle } from '@tabler/icons-react'
 
 export default function NotFound() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
@@ -21,21 +21,15 @@ export default function NotFound() {
             很抱歉，您访问的页面不存在。请检查网址是否正确，或点击下方按钮返回首页。
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button 
-              onClick={() => router.push("/")}
-              color="primary"
-            >
+            <Button onClick={() => router.push('/')} color="primary">
               返回首页
             </Button>
-            <Button 
-              variant="flat"
-              onClick={() => router.back()}
-            >
+            <Button variant="flat" onClick={() => router.back()}>
               返回上一页
             </Button>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

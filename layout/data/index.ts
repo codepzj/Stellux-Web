@@ -29,60 +29,60 @@ import {
   User,
   Book,
   Info,
-} from "lucide-react";
-import { type SidebarData } from "../types";
+} from 'lucide-react'
+import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: "satnaing",
-    email: "satnaingdev@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: 'satnaing',
+    email: 'satnaingdev@gmail.com',
+    avatar: '/avatars/shadcn.jpg',
   },
   navGroups: [
     {
-      title: "General",
+      title: 'General',
       items: [
         {
-          title: "首页",
-          url: "/",
+          title: '首页',
+          url: '/',
           icon: LayoutDashboard,
         },
         {
-          title: "文章",
-          url: "/post",
+          title: '文章',
+          url: '/post',
           icon: Book,
         },
         {
-          title: "文档",
-          url: "/doc",
+          title: '文档',
+          url: '/doc',
           icon: BookOpen,
         },
         {
-          title: "分类",
-          url: "/category",
+          title: '分类',
+          url: '/category',
           icon: BookMarked,
         },
         {
-          title: "标签",
-          url: "/tag",
+          title: '标签',
+          url: '/tag',
           icon: Tag,
         },
         {
-          title: "朋友",
-          url: "/friend",
+          title: '朋友',
+          url: '/friend',
           icon: Users,
         },
         {
-          title: "关于",
-          url: "/about",
+          title: '关于',
+          url: '/about',
           icon: Info,
         },
         {
-          title: "测试",
-          url: "/test",
+          title: '测试',
+          url: '/test',
           icon: Bug,
         },
       ],
     },
   ],
-};
+}

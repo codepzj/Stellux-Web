@@ -1,31 +1,23 @@
-"use client";
+'use client'
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-} from "@/components/ui/sidebar";
-import { LinkGroup } from "./nav-group";
-import { useAppConfig } from "@/context/app-provider";
-import dynamic from "next/dynamic";
-import { AvatarLink } from "@/components/business/avatar/avatar-link";
-import { ThemeSwitcher } from "@/components/basic/theme-switcher";
-import { BlogSearchProvider } from "@/app/(app)/blog/provider";
-import { BlogSearchModal } from "@/app/(app)/blog/modal";
-import { BlogSearch } from "@/app/(app)/blog/search";
-import { Spacer } from "@heroui/spacer";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar'
+import { LinkGroup } from './nav-group'
+import { useAppConfig } from '@/context/app-provider'
+import dynamic from 'next/dynamic'
+import { AvatarLink } from '@/components/business/avatar/avatar-link'
+import { ThemeSwitcher } from '@/components/basic/theme-switcher'
+import { BlogSearchProvider } from '@/app/(app)/blog/provider'
+import { BlogSearchModal } from '@/app/(app)/blog/modal'
+import { BlogSearch } from '@/app/(app)/blog/search'
+import { Spacer } from '@heroui/spacer'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const config = useAppConfig();
+  const config = useAppConfig()
   return (
     <BlogSearchProvider>
       <Sidebar collapsible="icon" variant="floating" {...props}>
         <SidebarHeader>
-          <AvatarLink
-            avatar={config?.siteAvatar || ""}
-            author={config?.siteAuthor || ""}
-          />
+          <AvatarLink avatar={config?.siteAvatar || ''} author={config?.siteAuthor || ''} />
           <Spacer y={2} />
         </SidebarHeader>
         <SidebarContent>
@@ -43,5 +35,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </Sidebar>
       <BlogSearchModal />
     </BlogSearchProvider>
-  );
+  )
 }

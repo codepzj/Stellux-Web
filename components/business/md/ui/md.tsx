@@ -1,29 +1,22 @@
-"use client";
+'use client'
 
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import rehypeHighlight from "rehype-highlight";
-import { ZoomImage } from "./image";
-import CopyButton from "./copy";
-import Link from "next/link";
-import "./md.css";
-import { cn } from "@/lib/utils";
-import { Info } from "lucide-react";
-import { Alert } from "@heroui/react";
+import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+import rehypeHighlight from 'rehype-highlight'
+import { ZoomImage } from './image'
+import CopyButton from './copy'
+import Link from 'next/link'
+import './md.css'
+import { cn } from '@/lib/utils'
+import { Alert } from '@heroui/alert'
 
-export default function Md({
-  content,
-  className,
-}: {
-  content: string;
-  className?: string;
-}) {
-  let index = 1;
+export default function Md({ content, className }: { content: string; className?: string }) {
+  let index = 1
 
   return (
-    <article className={cn("font-main markdown-body", className)}>
+    <article className={cn('font-main markdown-body', className)}>
       <ReactMarkdown
         rehypePlugins={[rehypeRaw, rehypeHighlight]}
         remarkPlugins={[remarkGfm]}
@@ -45,27 +38,15 @@ export default function Md({
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight my-2">
-              {children}
-            </h4>
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight my-2">{children}</h4>
           ),
           p: ({ children }) => <p className="mt-4 leading-7">{children}</p>,
           blockquote: ({ children }) => {
-            return (
-              <Alert
-                className="blockquote"
-                color="primary"
-                title={children}
-              />
-            );
+            return <Alert className="blockquote" color="primary" title={children} />
           },
 
-          table: ({ children }) => (
-            <table className="mt-6 w-full border">{children}</table>
-          ),
-          tr: ({ children }) => (
-            <tr className="even:bg-muted border-t">{children}</tr>
-          ),
+          table: ({ children }) => <table className="mt-6 w-full border">{children}</table>,
+          tr: ({ children }) => <tr className="even:bg-muted border-t">{children}</tr>,
           th: ({ children }) => (
             <th className="px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
               {children}
@@ -77,21 +58,13 @@ export default function Md({
             </td>
           ),
           ul: ({ children }) => (
-            <ul className="mt-4 list-disc [&>li]:mt-2 [&>li]:ml-0">
-              {children}
-            </ul>
+            <ul className="mt-4 list-disc [&>li]:mt-2 [&>li]:ml-0">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="mt-4 list-decimal [&>li]:mt-2 [&>li]:ml-0">
-              {children}
-            </ol>
+            <ol className="mt-4 list-decimal [&>li]:mt-2 [&>li]:ml-0">{children}</ol>
           ),
           img: ({ src, alt }) => (
-            <ZoomImage
-              className="my-6"
-              src={src as string}
-              alt={alt as string}
-            />
+            <ZoomImage className="my-6" src={src as string} alt={alt as string} />
           ),
           a: ({ children, href }) => (
             <Link href={href as string} className="text-primary">
@@ -104,18 +77,14 @@ export default function Md({
             </pre>
           ),
           code: ({ className, children }) => {
-            const match = /language-(\w+)/.exec(className || "");
+            const match = /language-(\w+)/.exec(className || '')
             const count =
               React.Children.toArray(children).length === 1
-                ? (
-                    React.Children.toArray(children)[0]
-                      .toString()
-                      .match(/\n/g) || []
-                  ).length
-                : 0;
+                ? (React.Children.toArray(children)[0].toString().match(/\n/g) || []).length
+                : 0
 
             if (match?.length || count > 0) {
-              const id = Math.random().toString(36).slice(2, 11);
+              const id = Math.random().toString(36).slice(2, 11)
               return (
                 <div className="not-prose relative rounded-md text-sm">
                   <div
@@ -123,14 +92,11 @@ export default function Md({
                     id={id}
                     suppressHydrationWarning
                   >
-                    <CopyButton
-                      className="absolute top-1.5 right-1.5"
-                      copyId={id}
-                    />
+                    <CopyButton className="absolute top-1.5 right-1.5" copyId={id} />
                     {children}
                   </div>
                 </div>
-              );
+              )
             }
 
             // 单行代码块
@@ -138,12 +104,12 @@ export default function Md({
               <code className="font-main rounded-md bg-muted px-2 mx-1 py-0.5 text-sm text-foreground">
                 {children}
               </code>
-            );
+            )
           },
         }}
       >
         {content}
       </ReactMarkdown>
     </article>
-  );
+  )
 }

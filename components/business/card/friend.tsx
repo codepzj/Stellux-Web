@@ -1,29 +1,23 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
-import Image from "next/image";
-import { FriendShowVO } from "@/types/friend";
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
-import Link from "next/link";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+import Image from 'next/image'
+import { FriendShowVO } from '@/types/friend'
+import { Button } from '@/components/ui/button'
+import { ArrowRightIcon, ExternalLinkIcon } from 'lucide-react'
+import Link from 'next/link'
 
 const websiteTypeMap = {
-  0: "大佬",
-  1: "技术型",
-  2: "设计型",
-  3: "生活型",
-};
+  0: '大佬',
+  1: '技术型',
+  2: '设计型',
+  3: '生活型',
+}
 
 const websiteTypeColors = {
-  0: "bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 dark:from-purple-800/50 dark:to-purple-900/50 dark:text-purple-300",
-  1: "bg-gradient-to-r from-green-100 to-green-200 text-green-700 dark:from-green-800/50 dark:to-green-900/50 dark:text-green-300",
-  2: "bg-gradient-to-r from-pink-100 to-pink-200 text-pink-700 dark:from-pink-800/50 dark:to-pink-900/50 dark:text-pink-300",
-  3: "bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 dark:from-orange-800/50 dark:to-orange-900/50 dark:text-orange-300",
-};
+  0: 'bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700 dark:from-purple-800/50 dark:to-purple-900/50 dark:text-purple-300',
+  1: 'bg-gradient-to-r from-green-100 to-green-200 text-green-700 dark:from-green-800/50 dark:to-green-900/50 dark:text-green-300',
+  2: 'bg-gradient-to-r from-pink-100 to-pink-200 text-pink-700 dark:from-pink-800/50 dark:to-pink-900/50 dark:text-pink-300',
+  3: 'bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 dark:from-orange-800/50 dark:to-orange-900/50 dark:text-orange-300',
+}
 
 export default function FriendCard({ friend }: { friend: FriendShowVO }) {
   return (
@@ -81,5 +75,5 @@ export default function FriendCard({ friend }: { friend: FriendShowVO }) {
         </CardFooter>
       </Link>
     </Card>
-  );
+  )
 }

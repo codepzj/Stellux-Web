@@ -105,17 +105,17 @@ go mod tidy
 
 ```yaml
 mongodb:
-  HOST: "localhost"
+  HOST: 'localhost'
   PORT: 27017
-  MONGO_INITDB_ROOT_USERNAME: "admin"
-  MONGO_INITDB_ROOT_PASSWORD: "123456"
-  MONGO_INITDB_DATABASE: "stellux"
-  MONGO_USERNAME: "stellux"
-  MONGO_PASSWORD: "123456"
+  MONGO_INITDB_ROOT_USERNAME: 'admin'
+  MONGO_INITDB_ROOT_PASSWORD: '123456'
+  MONGO_INITDB_DATABASE: 'stellux'
+  MONGO_USERNAME: 'stellux'
+  MONGO_PASSWORD: '123456'
 
 server:
   PORT: 9001
-  JWT_SECRET: "stellux"
+  JWT_SECRET: 'stellux'
 ```
 
 ### 使用 Makefile 启动

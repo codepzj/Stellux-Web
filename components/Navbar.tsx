@@ -1,24 +1,19 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import {
-  IconBrandGithub,
-  IconBrandDiscord,
-  IconSun,
-  IconMoon,
-} from "@tabler/icons-react";
-import { useTheme } from "next-themes";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { IconBrandGithub, IconBrandDiscord, IconSun, IconMoon } from '@tabler/icons-react'
+import { useTheme } from 'next-themes'
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
   // 在客户端渲染后再显示主题切换按钮，避免水合不匹配
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80">
@@ -58,11 +53,11 @@ export default function Navbar() {
           {/* 主题切换按钮 */}
           {mounted && (
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
               aria-label="切换主题"
             >
-              {theme === "dark" ? (
+              {theme === 'dark' ? (
                 <IconSun className="h-5 w-5" />
               ) : (
                 <IconMoon className="h-5 w-5" />
@@ -71,18 +66,22 @@ export default function Navbar() {
           )}
 
           <Link
-            href="https://github.com/golang-china"
+            href="https://github.com/golang/go"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
           >
             <IconBrandGithub className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
           </Link>
           <Link
-            href="/discord"
+            href="https://groups.google.com/g/golang-nuts"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
           >
             <IconBrandDiscord className="h-5 w-5" />
-            <span className="sr-only">Discord</span>
+            <span className="sr-only">Go Discussion</span>
           </Link>
 
           {/* 移动端菜单按钮 */}
@@ -100,7 +99,7 @@ export default function Navbar() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`}
+              className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
             >
               <line x1="4" x2="20" y1="12" y2="12"></line>
               <line x1="4" x2="20" y1="6" y2="6"></line>
@@ -116,7 +115,7 @@ export default function Navbar() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`${isMenuOpen ? "block" : "hidden"} h-6 w-6`}
+              className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
             >
               <line x1="18" x2="6" y1="6" y2="18"></line>
               <line x1="6" x2="18" y1="6" y2="18"></line>
@@ -126,7 +125,7 @@ export default function Navbar() {
       </div>
 
       {/* 移动端菜单 */}
-      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
+      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link
             href="/"
@@ -149,5 +148,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  );
+  )
 }

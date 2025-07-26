@@ -1,11 +1,11 @@
-import { Response } from "@/types/dto";
+import { Response } from '@/types/dto'
 
-type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 class Request {
-  private readonly baseUrl: string;
+  private readonly baseUrl: string
   constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl
   }
 
   private async request<T, D>(
@@ -20,42 +20,42 @@ class Request {
     const options: RequestInit = {
       method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...headers,
       },
       body: data ? JSON.stringify(data) : undefined, // body携带参数
       next: { revalidate: isCache ? cacheTime : 0 },
-    };
+    }
 
     try {
-      const res = await fetch(`${this.baseUrl}${url}`, options);
-      return await res?.json();
+      const res = await fetch(`${this.baseUrl}${url}`, options)
+      return await res?.json()
     } catch (err: any) {
-      console.error("捕获到异常：", err, "请检查后端服务是否正常");
-      return {} as Response<D>;
+      console.error('捕获到异常：', err, '请检查后端服务是否正常')
+      return {} as Response<D>
     }
   }
 
   public get<D>(url: string, data?: { params?: object }): Promise<Response<D>> {
     const queryString = data?.params
       ? `?${new URLSearchParams(data.params as Record<string, string>).toString()}`
-      : "";
-    return this.request<any, D>(`${url}${queryString}`, "GET");
+      : ''
+    return this.request<any, D>(`${url}${queryString}`, 'GET')
   }
 
   public async post<T, D>(url: string, data: T): Promise<Response<D>> {
-    return this.request<T, D>(url, "POST", data);
+    return this.request<T, D>(url, 'POST', data)
   }
 
   public async put<T, D>(url: string, data: T): Promise<Response<D>> {
-    return this.request<T, D>(url, "PUT", data);
+    return this.request<T, D>(url, 'PUT', data)
   }
 
   public async delete<T, D>(url: string, data: T): Promise<Response<D>> {
-    const respData = this.request<T, D>(url, "DELETE", data);
-    return respData;
+    const respData = this.request<T, D>(url, 'DELETE', data)
+    return respData
   }
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string;
-export const request = new Request(baseUrl);
+const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string
+export const request = new Request(baseUrl)

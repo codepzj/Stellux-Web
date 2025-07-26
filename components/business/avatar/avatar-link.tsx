@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import Image from "next/image";
+import Image from 'next/image'
 
 type AvatarLinkProps = {
-  avatar: string;
-  author: string;
-};
+  avatar: string
+  author: string
+}
 
 export function AvatarLink(props: AvatarLinkProps) {
   return (
@@ -13,7 +13,7 @@ export function AvatarLink(props: AvatarLinkProps) {
       <Image
         className="w-14 h-14 cursor-pointer border-0.5 border-default-500 hover:scale-95 transition-all duration-500"
         src={props.avatar}
-        alt={props.author + "的头像"}
+        alt={props.author + '的头像'}
         width={56}
         height={56}
       />
@@ -22,5 +22,5 @@ export function AvatarLink(props: AvatarLinkProps) {
         <p className="text-sm text-default-500">{props.author}</p>
       </div>
     </div>
-  );
+  )
 }

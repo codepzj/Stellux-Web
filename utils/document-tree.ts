@@ -1,25 +1,22 @@
-import { DocumentContentVO } from "@/types/document-content";
-import { LucideIcon } from "lucide-react";
+import { DocumentContentVO } from '@/types/document-content'
+import { LucideIcon } from 'lucide-react'
 
 export interface DocTreeItem {
-  title: string;
-  url: string;
-  sort: number;
-  created_at: string;
-  icon?: LucideIcon;
-  isActive?: boolean;
-  items?: DocTreeItem[];
+  title: string
+  url: string
+  sort: number
+  created_at: string
+  icon?: LucideIcon
+  isActive?: boolean
+  items?: DocTreeItem[]
 }
 
 // 将文档内容列表转换为文档树结构，并根据 sort、created_at 字段同级升序排序
-export function convertToDocumentTreeData(
-  data: DocumentContentVO[],
-  alias: string
-): DocTreeItem[] {
-  const map = new Map<string, DocTreeItem>();
+export function convertToDocumentTreeData(data: DocumentContentVO[], alias: string): DocTreeItem[] {
+  const map = new Map<string, DocTreeItem>()
 
   if (!data) {
-    return [];
+    return []
   }
 
   // 先创建所有节点
@@ -29,23 +26,19 @@ export function convertToDocumentTreeData(
       url: `/document/${alias}/${doc.alias}`,
       sort: doc.sort,
       created_at: doc.created_at,
-    });
+    })
   }
 
-  const tree: DocTreeItem[] = [];
+  const tree: DocTreeItem[] = []
   for (const doc of data) {
-    const node = map.get(doc.id)!;
+    const node = map.get(doc.id)!
     // 如果 parent_id 为空或者等于 document_id，说明是根节点
-    if (
-      !doc.parent_id ||
-      doc.parent_id === doc.document_id ||
-      !map.has(doc.parent_id)
-    ) {
-      tree.push(node);
+    if (!doc.parent_id || doc.parent_id === doc.document_id || !map.has(doc.parent_id)) {
+      tree.push(node)
     } else {
-      const parent = map.get(doc.parent_id)!;
-      if (!parent.items) parent.items = [];
-      parent.items.push(node);
+      const parent = map.get(doc.parent_id)!
+      if (!parent.items) parent.items = []
+      parent.items.push(node)
     }
   }
 
@@ -53,21 +46,21 @@ export function convertToDocumentTreeData(
   function sortTree(items: DocTreeItem[]) {
     items.sort((a, b) => {
       if ((a.sort ?? 0) !== (b.sort ?? 0)) {
-        return (a.sort ?? 0) - (b.sort ?? 0);
+        return (a.sort ?? 0) - (b.sort ?? 0)
       }
       // created_at 升序
-      if (a.created_at < b.created_at) return -1;
-      if (a.created_at > b.created_at) return 1;
-      return 0;
-    });
+      if (a.created_at < b.created_at) return -1
+      if (a.created_at > b.created_at) return 1
+      return 0
+    })
     for (const item of items) {
       if (item.items && item.items.length > 0) {
-        sortTree(item.items);
+        sortTree(item.items)
       }
     }
   }
 
-  sortTree(tree);
+  sortTree(tree)
 
-  return tree;
+  return tree
 }

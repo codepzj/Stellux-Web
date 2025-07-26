@@ -1,223 +1,237 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import {
   IconCalendar,
   IconUser,
   IconTag,
   IconChevronRight,
-  IconLoader2,
-} from "@tabler/icons-react";
-import { getPostListAPI } from "@/api/post";
-import { formatDate, formatRelativeTime } from "@/utils/date";
-import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
-import { PostVO } from "@/types/post";
-import { Pagination } from "@heroui/pagination";
-import { Spacer } from "@heroui/spacer";
-import { Search } from "./search";
-import { Provider } from "./provider";
+  IconAlertCircle,
+  IconBook2,
+} from '@tabler/icons-react'
+import { getPostListAPI } from '@/api/post'
+import { formatDate, formatRelativeTime } from '@/utils/date'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { PostVO } from '@/types/post'
+import { Pagination } from '@heroui/pagination'
+import { Spacer } from '@heroui/spacer'
+import { Search } from './search'
+import { Provider } from './provider'
+import { Card, CardBody, CardFooter } from '@heroui/card'
+import { Button } from '@heroui/button'
+import { Alert } from '@heroui/alert'
+import { Spinner } from '@heroui/spinner'
+import Footer from '@/components/Footer'
+import Image from 'next/image'
+
+// 美化后的 Empty 组件（不显示"发布博客"按钮）
+function Empty({ title }: { title: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24">
+      <div className="relative mb-6">
+        <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-blue-200/60 via-blue-100/60 to-blue-300/60 dark:from-blue-900/40 dark:via-blue-800/40 dark:to-blue-900/40 blur-lg animate-pulse" />
+        <div className="relative z-10 flex items-center justify-center w-20 h-20 rounded-full bg-white dark:bg-gray-900 shadow-lg">
+          <IconAlertCircle className="w-12 h-12 text-blue-400 dark:text-blue-300 animate-bounce" />
+        </div>
+      </div>
+      <div className="text-2xl font-bold text-gray-700 dark:text-gray-200 mb-2">{title}</div>
+      <div className="text-gray-500 dark:text-gray-400 text-base mb-4">
+        这里空空如也，暂时没有任何博客内容。
+      </div>
+    </div>
+  )
+}
 
 export default function BlogList() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const pageSize = 6;
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const currentPage = Number(searchParams.get('page')) || 1
+  const pageSize = 6
 
-  const [posts, setPosts] = useState<PostVO[]>([]);
+  const [posts, setPosts] = useState<PostVO[]>([])
   const [pagination, setPagination] = useState<{
-    total_page: number;
-    page_no: number;
-    total_count: number;
+    total_page: number
+    page_no: number
+    total_count: number
   }>({
     total_page: 1,
     page_no: 1,
     total_count: 0,
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+  })
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        setLoading(true);
-        setError(null);
+        setLoading(true)
+        setError(null)
 
-        // 从API获取数据
         const response = await getPostListAPI({
           page_no: currentPage,
           page_size: pageSize,
-        });
+        })
 
         if (response && response.data) {
-          setPosts(response.data.list || []);
+          setPosts(response.data.list || [])
           setPagination({
             total_page: response.data.total_page || 1,
             page_no: response.data.page_no || 1,
             total_count: response.data.total_count || 0,
-          });
+          })
         } else {
-          throw new Error("获取文章列表失败");
+          throw new Error('获取文章列表失败')
         }
-      } catch (err) {
-        setError("获取文章列表失败，请稍后再试");
-        setPosts([]);
+      } catch (error) {
+        console.error(error)
+        setError('获取文章列表失败，请稍后再试')
+        setPosts([])
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
 
-    fetchPosts();
-  }, [currentPage, pageSize]);
+    fetchPosts()
+  }, [currentPage, pageSize])
 
   const handlePageChange = (page: number) => {
-    router.push(`/blog?page=${page}`);
-  };
-
-  // 处理图片加载错误
-  const handleImageError = (postId: string) => {
-    setImageErrors((prev) => ({
-      ...prev,
-      [postId]: true,
-    }));
-  };
+    router.push(`/blog?page=${page}`)
+  }
 
   if (loading) {
     return (
-      <div className="bg-white dark:bg-gray-950 min-h-screen">
-        <div className="container px-4 py-12 md:px-6 md:py-24">
-          <div className="mx-auto max-w-5xl flex flex-col items-center justify-center py-20">
-            <IconLoader2 className="h-10 w-10 animate-spin text-gray-600 dark:text-gray-400" />
-            <p className="mt-4 text-gray-600 dark:text-gray-400">
+      <>
+        <div className="bg-white dark:bg-gray-950 min-h-screen flex items-center">
+          <div className="container px-4 py-12 md:px-6 md:py-24 flex flex-col items-center justify-center">
+            <Spinner color="primary" />
+            <div className="mt-4 text-gray-600 dark:text-gray-400 text-base">
               正在加载文章列表...
-            </p>
+            </div>
           </div>
         </div>
-      </div>
-    );
+        <Footer />
+      </>
+    )
   }
 
   if (error) {
     return (
-      <div className="bg-white dark:bg-gray-950 min-h-screen">
-        <div className="container px-4 py-12 md:px-6 md:py-24">
-          <div className="mx-auto max-w-5xl flex flex-col items-center justify-center py-20 text-center">
-            <div className="rounded-full bg-red-100 p-4 dark:bg-red-900/20">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 text-red-600 dark:text-red-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
-              </svg>
-            </div>
-            <h2 className="mt-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {error}
-            </h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              请稍后再试或刷新页面
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-6 inline-flex items-center rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
-            >
-              刷新页面
-            </button>
+      <>
+        <div className="bg-white dark:bg-gray-950 min-h-screen flex items-center">
+          <div className="container px-4 py-12 md:px-6 md:py-24 flex flex-col items-center justify-center">
+            <Alert
+              color="danger"
+              title="获取文章列表失败"
+              description={
+                <>
+                  <div>{error}</div>
+                  <div className="mt-2">请稍后再试或刷新页面</div>
+                  <Button className="mt-6" color="primary" onPress={() => window.location.reload()}>
+                    刷新页面
+                  </Button>
+                </>
+              }
+              icon={<IconAlertCircle className="w-4 h-4" />}
+            />
           </div>
         </div>
-      </div>
-    );
+        <Footer />
+      </>
+    )
   }
 
   return (
-    <Provider>
-      <div className="bg-white dark:bg-gray-950 min-h-screen">
-        <div className="container px-4 py-12 md:px-6 md:py-24">
-          <div className="mx-auto max-w-5xl space-y-12">
-            <section className="space-y-6">
-              <div className="space-y-2 text-center">
-                <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                  博客
+    <>
+      <Provider>
+        <div className="bg-white dark:bg-gray-950 min-h-screen">
+          <div className="container px-4 py-12 md:px-6 md:py-24">
+            <div className="mx-auto max-w-5xl space-y-12">
+              <section className="space-y-6">
+                {/* 顶部标题美化：增加渐变背景、图标、分割线、动画 */}
+                <div className="relative overflow-hidden rounded-2xl mb-8 shadow-sm bg-gradient-to-r from-blue-50 via-white to-blue-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
+                  <div className="absolute -top-8 -left-8 opacity-10 pointer-events-none select-none">
+                    <IconBook2 className="w-40 h-40 text-blue-300 dark:text-gray-700 animate-spin-slow" />
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center py-12 px-4">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-gray-800 dark:to-gray-700 px-5 py-1.5 text-base font-semibold text-blue-700 dark:text-blue-200 shadow">
+                      <IconBook2 className="w-5 h-5" />
+                      博客
+                    </span>
+                    <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white drop-shadow-sm">
+                      Go语言中文网博客
+                    </h1>
+                    <p className="mx-auto max-w-2xl text-gray-600 dark:text-gray-300 text-lg mt-3">
+                      分享{' '}
+                      <span className="font-semibold text-blue-600 dark:text-blue-300">Go语言</span>{' '}
+                      的最新动态、技术教程、最佳实践和社区新闻
+                    </p>
+                    <div className="w-24 h-1 mt-6 rounded-full bg-gradient-to-r from-blue-400/60 via-blue-200/60 to-blue-400/60 dark:from-blue-800/60 dark:via-blue-900/60 dark:to-blue-800/60 animate-pulse" />
+                  </div>
                 </div>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Go语言中文网博客
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 text-lg">
-                  分享Go语言的最新动态、技术教程、最佳实践和社区新闻
-                </p>
-              </div>
-              <Spacer y={4} />
-              <div className="flex justify-end">
-                <Search className="w-40" placeholder="搜索博客" />
-              </div>
-              <Spacer y={16} />
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
-                {posts.length > 0 ? (
-                  posts.map((post) => (
-                    <article
-                      key={post.id}
-                      className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
-                    >
-                      <Link href={`/blog/${post.alias}`} className="block">
-                        {/* 16:9 比例的图片容器 */}
-                        <div className="relative w-full pt-[56.25%] overflow-hidden bg-gray-100 dark:bg-gray-800">
-                          {post.thumbnail && !imageErrors[post.id] ? (
-                            <>
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                              <Image
-                                src={post.thumbnail}
-                                alt={post.title}
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                                onError={() => handleImageError(post.id)}
-                              />
-                            </>
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-                              <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-4">
-                                <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">
-                                  Go
-                                </span>
+                <Spacer y={4} />
+                <div className="flex justify-end">
+                  <Search className="w-40" placeholder="搜索博客" />
+                </div>
+                <Spacer y={16} />
+                <div className="flex flex-col gap-8">
+                  {posts.length > 0 ? (
+                    posts.map((post) => (
+                      <Card
+                        key={post.id}
+                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
+                      >
+                        <CardBody className="p-5">
+                          <div className="flex gap-4">
+                            <div className="flex-1 space-y-2">
+                              <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
+                                <Link href={`/blog/${post.alias}`}>{post.title}</Link>
+                              </h2>
+                              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
+                                <div className="flex items-center gap-1">
+                                  <IconCalendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                  <time
+                                    dateTime={post.created_at}
+                                    title={formatDate(post.created_at)}
+                                  >
+                                    {formatRelativeTime(post.created_at)}
+                                  </time>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <IconUser className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                  <span>{post.author}</span>
+                                </div>
                               </div>
+                              <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                                {post.description}
+                              </p>
                             </div>
-                          )}
-                        </div>
-                      </Link>
-                      <div className="p-5">
-                        <div className="space-y-2">
-                          <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
-                            <Link href={`/blog/${post.alias}`}>{post.title}</Link>
-                          </h2>
-                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
-                            <div className="flex items-center gap-1">
-                              <IconCalendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                              <time
-                                dateTime={post.created_at}
-                                title={formatDate(post.created_at)}
-                              >
-                                {formatRelativeTime(post.created_at)}
-                              </time>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <IconUser className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                              <span>{post.author}</span>
+                            <div className="flex-shrink-0">
+                              <Link href={`/blog/${post.alias}`} className="block">
+                                <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg">
+                                  {post.thumbnail ? (
+                                    <Image
+                                      width={192}
+                                      height={108}
+                                      src={post.thumbnail}
+                                      alt={post.title}
+                                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-[1.02]"
+                                    />
+                                  ) : (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                      <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-3">
+                                        <span className="text-xl font-bold text-gray-700 dark:text-gray-300">
+                                          Go
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </Link>
                             </div>
                           </div>
-                        </div>
-                        <p className="mt-3 text-gray-600 dark:text-gray-400 line-clamp-2">
-                          {post.description}
-                        </p>
-                        <div className="mt-4 flex flex-wrap items-center justify-between">
+                        </CardBody>
+                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
                           <div className="flex flex-wrap gap-2">
                             {post.tags &&
                               post.tags.slice(0, 2).map((tag, i) => (
@@ -233,54 +247,35 @@ export default function BlogList() {
                           </div>
                           <Link
                             href={`/blog/${post.alias}`}
-                            className="inline-flex items-center text-sm font-medium text-gray-700 transition-all duration-300 hover:text-gray-900 hover:translate-x-1 dark:text-gray-400 dark:hover:text-gray-200"
+                            className="inline-flex items-center text-sm font-medium text-primary-600 transition-all duration-300 hover:text-primary-800 hover:translate-x-1 dark:text-primary-400 dark:hover:text-primary-200"
                           >
                             阅读更多
                             <IconChevronRight className="ml-1 h-4 w-4" />
                           </Link>
-                        </div>
-                      </div>
-                    </article>
-                  ))
-                ) : (
-                  <div className="col-span-2 flex h-60 items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900/50">
-                    <div className="text-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                        />
-                      </svg>
-                      <p className="mt-4 text-gray-500 dark:text-gray-400">
-                        暂无文章
-                      </p>
-                    </div>
+                        </CardFooter>
+                      </Card>
+                    ))
+                  ) : (
+                    <Empty title="暂无文章" />
+                  )}
+                </div>
+                <Spacer y={16} />
+                {pagination.total_page > 1 && (
+                  <div className="flex justify-end">
+                    <Pagination
+                      total={pagination.total_page}
+                      page={pagination.page_no}
+                      onChange={handlePageChange}
+                    />
                   </div>
                 )}
-              </div>
-              <Spacer y={16} />
-              {/* 分页组件 - 确保显示 */}
-              {pagination.total_page > 1 && (
-                <div className="flex justify-end">
-                  <Pagination
-                    total={pagination.total_page}
-                    page={pagination.page_no}
-                    onChange={handlePageChange}
-                  />
-                </div>
-              )}
-            </section>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
-    </Provider>
-  );
+      </Provider>
+      <div className="py-16 md:py-24 lg:py-32"></div>
+      <Footer />
+    </>
+  )
 }

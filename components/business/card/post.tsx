@@ -1,27 +1,21 @@
-"use client";
+'use client'
 
-import { PostVO } from "@/types/post";
-import { Card, CardBody, CardHeader, CardFooter } from "@heroui/card";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Image } from "@heroui/image";
-import { TopIcon, CategoryIcon, TagIcon } from "@/components/basic/svg-icon";
+import { PostVO } from '@/types/post'
+import { Card, CardBody, CardHeader, CardFooter } from '@heroui/card'
+import { useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
+import { Image } from '@heroui/image'
+import { TopIcon, CategoryIcon, TagIcon } from '@/components/basic/svg-icon'
 
-export function PostCard({
-  post,
-  className,
-}: {
-  post: PostVO;
-  className?: string;
-}) {
-  const router = useRouter();
-  const tags = post.tags?.join(", ");
+export function PostCard({ post, className }: { post: PostVO; className?: string }) {
+  const router = useRouter()
+  const tags = post.tags?.join(', ')
 
   return (
     <Card
       key={post.id}
       className={cn(
-        "p-6 rounded-2xl bg-default-100/30 dark:bg-default-100/70 transition-all shadow-md hover:shadow-md overflow-hidden transition-none",
+        'p-6 rounded-2xl bg-default-100/30 dark:bg-default-100/70 transition-all shadow-md hover:shadow-md overflow-hidden transition-none',
         className
       )}
       onPress={() => router.push(`/post/${post.id}`)}
@@ -66,9 +60,7 @@ export function PostCard({
                 <span className="text-sm">{tags}</span>
               </span>
             )}
-            {post.is_top && (
-              <TopIcon className="text-red-500 flex-shrink-0" size={24} />
-            )}
+            {post.is_top && <TopIcon className="text-red-500 flex-shrink-0" size={24} />}
           </CardFooter>
         </div>
 
@@ -89,5 +81,5 @@ export function PostCard({
         </div>
       </div>
     </Card>
-  );
+  )
 }
