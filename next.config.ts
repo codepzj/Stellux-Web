@@ -21,7 +21,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  output: 'standalone',
 }
 
 export default withBundleAnalyzer(nextConfig)

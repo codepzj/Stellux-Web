@@ -5,7 +5,6 @@ import { TopIcon } from './icon/top'
 import { SearchLinearIcon } from './icon/search'
 import { DocIcon } from './icon/doc'
 import { WikiIcon } from './icon/wiki'
-import { PostIcon } from './icon/post'
 import { CategoryIcon } from './icon/category'
 import { TagIcon } from './icon/tag'
 import { SystemIcon } from './icon/system'
@@ -21,7 +20,6 @@ export {
   SearchLinearIcon,
   DocIcon,
   WikiIcon,
-  PostIcon,
   CategoryIcon,
   TagIcon,
   SystemIcon,
