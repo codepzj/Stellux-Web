@@ -1,25 +1,35 @@
 'use client'
 
+import { Button } from '@heroui/button'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import NotFoundSvg from '@/assets/svg/not-found.svg'
-import { Button } from "@heroui/react"
+import { IconAlertCircle } from '@tabler/icons-react'
 
 export default function NotFound() {
   const router = useRouter()
 
   return (
-    <>
-      <div className='w-full h-full flex flex-col items-center justify-center' suppressHydrationWarning>
-        <div className='flex flex-col items-center justify-center mt-20'>
-          <Image src={NotFoundSvg} alt="404" className='w-2/3 xl:w-[20rem] lg:w-[16rem] md:w-[12rem]' />
-          <h2 className='text-3xl sm:text-3xl font-bold my-4'>页面不存在</h2>
-          <p className='text-sm text-default-600 mb-4'>页面不存在或已删除，请返回首页</p>
-          <Button className='mt-6 cursor-pointer' color="primary" variant="solid" onPress={() => router.push("/")}>返回首页</Button>
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center">
+          <div className="inline-flex items-center justify-center rounded-full bg-blue-100 p-4 dark:bg-blue-900/20 mb-6">
+            <IconAlertCircle className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-3">
+            页面不存在
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 mb-6">
+            很抱歉，您访问的页面不存在。请检查网址是否正确，或点击下方按钮返回首页。
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button onClick={() => router.push('/')} color="primary">
+              返回首页
+            </Button>
+            <Button variant="flat" onClick={() => router.back()}>
+              返回上一页
+            </Button>
+          </div>
         </div>
-
       </div>
-
-    </>
-  );
+    </div>
+  )
 }

@@ -1,0 +1,11 @@
+html {
+  scrollbar-gutter: stable;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+}

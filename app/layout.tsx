@@ -1,67 +1,52 @@
-import { getBasicConfigAPI, getSeoConfigAPI } from "@/api/config";
-import "@/global.css";
-import { clsx } from "clsx";
+import '@/global.css'
 
-import { Providers } from "./providers";
-import { Metadata } from "next";
-import Handler from "@/components/Hander";
+import { Providers } from './providers'
+import { Metadata } from 'next'
+import { Toaster } from '@/components/ui/sonner' // 全局消息组件
 
 // 布局组件
-export default async function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return (
-        <html suppressHydrationWarning lang="zh-CN">
-            <head>
-                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-                <link
-                    rel="stylesheet"
-                    href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
-                />
-            </head>
-            <body className={clsx("min-h-screen bg-background antialiased w-full font-main")}>
-                <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-                    <Handler />
-                    <div className="max-w-7xl mx-auto">
-                        {children}
-                    </div>
-                </Providers>
-            </body>
-        </html>
-    )
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html suppressHydrationWarning lang="zh-CN">
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link
+          rel="stylesheet"
+          href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
+        />
+      </head>
+      <body className="min-h-screen bg-background antialiased w-full font-main">
+        <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
+          {children}
+          <Toaster position="top-right" richColors duration={1500} />
+        </Providers>
+      </body>
+    </html>
+  )
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-    const [basicConfig, seoConfig] = await Promise.all([getBasicConfigAPI().then(res => res.data), getSeoConfigAPI().then(res => res.data)]);
-    return {
-        title: `${basicConfig.site_title} - ${basicConfig.site_subtitle}`,
-        description: seoConfig.site_description,
-        keywords: seoConfig.site_keywords,
-        authors: [{ name: seoConfig.site_author }],
-        robots: seoConfig.robots,
-        openGraph: {
-            title: `${basicConfig.site_title} - ${basicConfig.site_subtitle}`,
-            description: seoConfig.site_description,
-            url: seoConfig.site_url,
-            siteName: basicConfig.site_title,
-            images: [
-                {
-                    url: seoConfig.og_image,
-                    width: 800,
-                    height: 600,
-                    alt: basicConfig.site_title,
-                },
-            ],
-            locale: "zh-CN",
-            type: seoConfig?.og_type || "website",
+  return {
+    title: `Go语言中文网 - 最全面的Go语言中文学习平台`,
+    description:
+      '最全面的Go语言中文学习平台,提供高质量的中文教程和社区支持,助力开发者快速掌握Go语言。',
+    keywords: 'Go,Golang,Go语言,Go编程,Go教程,Go开发,Go语言中文网',
+    openGraph: {
+      title: `Go语言中文网 - 最全面的Go语言中文学习平台`,
+      description:
+        '最全面的Go语言中文学习平台,提供高质量的中文教程和社区支持,助力开发者快速掌握Go语言。',
+      url: process.env.NEXT_PUBLIC_SITE_URL,
+      siteName: 'Go语言中文网',
+      images: [
+        {
+          url: '/favicon.ico',
+          width: 200,
+          height: 200,
+          alt: 'Go语言中文网',
         },
-        twitter: {
-            card: seoConfig?.twitter_card || "summary_large_image",
-            title: basicConfig.site_title,
-            description: seoConfig.site_description,
-            images: [seoConfig.og_image],
-        },
-    };
+      ],
+      locale: 'zh-CN',
+      type: 'website',
+    },
+  }
 }

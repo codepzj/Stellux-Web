@@ -1,0 +1,15 @@
+:root {
+  --font-main: 'MiSans VF', 'MiSans', 'PingFang SC', system-ui, sans-serif; /* 正文字体 */
+  --font-sans: 'Inter', sans-serif;
+
+  font-synthesis: style; /* 禁用字体抗锯齿 */
+  -webkit-font-smoothing: antialiased; /* 禁用字体抗锯齿 */
+  -moz-osx-font-smoothing: grayscale; /* 禁用字体抗锯齿 */
+  word-wrap: break-word; /* 自动换行 */
+  hyphens: auto; /* 自动断字 */
+}
+
+@theme {
+  --font-main: var(--font-main);
+  --font-sans: var(--font-sans);
+}
