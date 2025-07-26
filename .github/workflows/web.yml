@@ -28,3 +28,8 @@ jobs:
         working-directory: .
         run: |
           pnpm install
+
+      - name: pnpm lint
+        working-directory: .
+        run: |
+          pnpm lint
