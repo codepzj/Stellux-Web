@@ -3,10 +3,11 @@ import { getAllDocumentContentByDocumentId } from '@/api/document-content'
 import { Markdown } from '@/components/business/md'
 import { ScrollToc } from '@/components/business/toc'
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
-import { DocSidebar } from '@/components/basic/sidebar'
+import { DocSidebar } from '@/app/document/[...slug]/sidebar'
 import { convertToDocumentTreeData } from '@/utils/document-tree'
 import { DocumentContentVO } from '@/types/document-content'
 import { Metadata } from 'next'
+import Doctool from './doctool'
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }> // 路径参数
@@ -80,6 +81,9 @@ export default async function DocPage({ params }: DocPageProps) {
           </div>
         </div>
       </SidebarInset>
+      <div className="fixed bottom-4 right-4">
+        <Doctool />
+      </div>
     </SidebarProvider>
   )
 }

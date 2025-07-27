@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
 import type { DocTreeItem } from '@/utils/document-tree'
 import { usePathname } from 'next/navigation'
+import { IconChevronLeft } from '@tabler/icons-react'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 
@@ -60,18 +60,18 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
 
   return (
     <Collapsible asChild open={open} onOpenChange={setOpen}>
-      <SidebarMenuItem className={cn(`ml-${depth * 2}`)}>
+      <SidebarMenuItem className="ml-0">
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={item.title}>
             {item.icon && <item.icon />}
             <span>{item.title}</span>
-            <ChevronRight
-              className={cn('ml-auto transition-transform duration-200', open && 'rotate-90')}
+            <IconChevronLeft
+              className={cn('ml-auto transition-transform duration-200', open && '-rotate-90')}
             />
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <SidebarMenuSub>
+          <SidebarMenuSub className="px-0">
             {item.items?.map((child: DocTreeItem) => (
               <RecursiveMenuItem key={child.title} item={child} depth={depth + 1} />
             ))}
