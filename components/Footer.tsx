@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-              最全面的Go语言中文学习平台，提供高质量的中文教程、文档和社区支持。
+              最全面的Go语言中文学习平台, 提供高质量的中文教程、文档和社区支持。
             </p>
             <div className="flex space-x-4">
               <Link

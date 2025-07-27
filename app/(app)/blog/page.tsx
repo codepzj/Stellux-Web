@@ -104,10 +104,7 @@ export default function BlogList() {
       <>
         <div className="bg-white dark:bg-gray-950 min-h-screen flex items-center">
           <div className="container px-4 py-12 md:px-6 md:py-24 flex flex-col items-center justify-center">
-            <Spinner color="primary" />
-            <div className="mt-4 text-gray-600 dark:text-gray-400 text-base">
-              正在加载文章列表...
-            </div>
+            <Spinner color="primary" label="文章列表加载中" />
           </div>
         </div>
         <Footer />
@@ -206,7 +203,7 @@ export default function BlogList() {
                                 {post.description}
                               </p>
                             </div>
-                            <div className="flex-shrink-0">
+                            <div className="flex-shrink-0 hidden md:block">
                               <Link href={`/blog/${post.alias}`} className="block">
                                 <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg">
                                   {post.thumbnail ? (
@@ -274,7 +271,7 @@ export default function BlogList() {
           </div>
         </div>
       </Provider>
-      <div className="py-16 md:py-24 lg:py-32"></div>
+      <Spacer y={80} />
       <Footer />
     </>
   )
