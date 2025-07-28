@@ -3,7 +3,6 @@ import { Markdown } from '@/components/business/md'
 import { Metadata } from 'next'
 import { Spacer } from '@heroui/spacer'
 import { Toc } from '@/components/business/toc'
-import Comment from '@/components/business/comment'
 
 type Props = {
   params: Promise<{ alias: string }>
@@ -24,10 +23,6 @@ export default async function BlogContent({ params }: Props) {
         <h1 className="text-3xl text-default-900 font-medium text-center">{post.title}</h1>
         <Spacer y={16} />
         <Markdown className="break-words overflow-x-auto" content={post.content} />
-        <Spacer y={40} />
-        <div className="w-full lg:p-2">
-          <Comment postId={post.id} />
-        </div>
       </div>
       {hasHeadings && (
         <div className="hidden relative lg:block lg:w-1/5">

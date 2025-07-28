@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import type { DocTreeItem } from '@/utils/document-tree'
 import { usePathname } from 'next/navigation'
-import { IconChevronLeft } from '@tabler/icons-react'
+import { IconChevronRight } from '@tabler/icons-react'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 
@@ -65,8 +65,8 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
           <SidebarMenuButton tooltip={item.title}>
             {item.icon && <item.icon />}
             <span>{item.title}</span>
-            <IconChevronLeft
-              className={cn('ml-auto transition-transform duration-200', open && '-rotate-90')}
+            <IconChevronRight
+              className={cn('ml-auto transition-transform duration-200', open && 'rotate-90')}
             />
           </SidebarMenuButton>
         </CollapsibleTrigger>
