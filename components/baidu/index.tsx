@@ -3,6 +3,10 @@
 import Script from 'next/script'
 
 const BaiduAnalytics = () => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log('百度统计在开发环境不启用')
+    return null
+  }
   return (
     <Script
       id="baidu-analytics"
