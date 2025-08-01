@@ -3,7 +3,7 @@ import '@/global.css'
 import { Providers } from './providers'
 import { Metadata } from 'next'
 import { Toaster } from '@/components/ui/sonner' // 全局消息组件
-import Baidu from '@/components/baidu'
+import Baidu from '@/components/business/baidu'
 
 // 布局组件
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -19,6 +19,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           rel="stylesheet"
           href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
         />
+        <meta
+          name="google-site-verification"
+          content="rQ0kTqa4G_WtJzaC27Mg1VizLHmc7R7ri7ZyNCjMQmo"
+        />
+        <meta name="msvalidate.01" content="30CD55A935E75B69A1565E31EA21513B" />
         <Baidu />
       </head>
       <body className="min-h-screen bg-background antialiased w-full font-main">
