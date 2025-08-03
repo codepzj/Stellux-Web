@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { IconBrandGithub, IconBrandDiscord, IconSun, IconMoon } from '@tabler/icons-react'
+import { IconBrandGithub, IconSun, IconMoon } from '@tabler/icons-react'
 import { useTheme } from 'next-themes'
 
 export default function Navbar() {
@@ -74,19 +74,10 @@ export default function Navbar() {
             <IconBrandGithub className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
           </Link>
-          <Link
-            href="https://groups.google.com/g/golang-nuts"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-          >
-            <IconBrandDiscord className="h-5 w-5" />
-            <span className="sr-only">Go Discussion</span>
-          </Link>
 
           {/* 移动端菜单按钮 */}
           <button
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+            className="md:hidden text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg

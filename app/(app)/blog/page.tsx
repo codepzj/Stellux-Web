@@ -22,7 +22,7 @@ import { Card, CardBody, CardFooter } from '@heroui/card'
 import { Button } from '@heroui/button'
 import { Alert } from '@heroui/alert'
 import { Spinner } from '@heroui/spinner'
-import Image from 'next/image'
+import { Image } from '@heroui/image'
 
 // 美化后的 Empty 组件（不显示"发布博客"按钮）
 function Empty({ title }: { title: string }) {
@@ -202,14 +202,16 @@ export default function BlogList() {
                             </div>
                             <div className="flex-shrink-0 hidden md:block">
                               <Link href={`/blog/${post.alias}`} className="block">
-                                <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg">
+                                <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-sm">
                                   {post.thumbnail ? (
                                     <Image
                                       width={192}
                                       height={108}
                                       src={post.thumbnail}
                                       alt={post.title}
-                                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-[1.02]"
+                                      className="object-cover w-full h-full"
+                                      loading="lazy"
+                                      isZoomed
                                     />
                                   ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">

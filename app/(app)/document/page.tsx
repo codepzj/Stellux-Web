@@ -6,7 +6,7 @@ import type { DocumentVO } from '@/types/document'
 import { IconAlertCircle, IconBook2, IconChevronRight } from '@tabler/icons-react'
 import { Card, CardBody, CardFooter } from '@heroui/card'
 import { WikiIcon } from '@/components/basic/svg-icon'
-import Image from 'next/image'
+import { Image } from '@heroui/image'
 import { Spinner } from '@heroui/spinner'
 import { Alert } from '@heroui/alert'
 import { Button } from '@heroui/button'
@@ -139,14 +139,16 @@ export default function DocumentPage() {
                           </div>
                           <div className="flex-shrink-0 hidden md:block">
                             <Link href={`/document/${item.alias}`} className="block">
-                              <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg">
+                              <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-sm">
                                 {item.thumbnail ? (
                                   <Image
-                                    src={item.thumbnail}
-                                    alt={item.title}
                                     width={192}
                                     height={108}
-                                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-[1.02]"
+                                    src={item.thumbnail}
+                                    alt={item.title}
+                                    className="object-cover w-full h-full"
+                                    loading="lazy"
+                                    isZoomed
                                   />
                                 ) : (
                                   <div className="absolute inset-0 flex items-center justify-center">

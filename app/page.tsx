@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Terminal, TypingAnimation } from '@/components/magicui/terminal'
-import Navbar from '@/components/basic/navbar/Navbar'
+import Navbar from '@/components/basic/navbar'
 import Footer from '@/components/basic/footer'
 
 export default function Page() {

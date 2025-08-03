@@ -2,11 +2,13 @@
 import { Input, InputProps } from '@heroui/input'
 import { SearchLinearIcon } from '@/components/basic/svg-icon'
 import { Kbd } from '@heroui/kbd'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSearch } from './provider'
 
 export const Search = ({ ...props }: InputProps) => {
   const { openSearch } = useSearch()
+  const mouseDownRef = useRef(false)
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isMac = navigator.userAgent.includes('Mac')
@@ -18,20 +20,24 @@ export const Search = ({ ...props }: InputProps) => {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [])
+  }, [openSearch])
+
+  // 解决再次点击搜索框弹窗一闪而过的问题
+  // 用 onClick 替代 onMouseDown，并阻止默认行为
   return (
     <>
       <Input
         {...props}
         readOnly
-        disableAnimation
         classNames={{
           input: 'cursor-pointer',
           inputWrapper: 'cursor-pointer',
         }}
-        onMouseDown={() => {
+        onClick={(e) => {
+          e.preventDefault()
           openSearch()
         }}
+        size="sm"
         placeholder="搜索博客"
         startContent={<SearchLinearIcon size={20} className="text-default-500" />}
         endContent={
