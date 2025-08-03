@@ -22,7 +22,6 @@ import { Card, CardBody, CardFooter } from '@heroui/card'
 import { Button } from '@heroui/button'
 import { Alert } from '@heroui/alert'
 import { Spinner } from '@heroui/spinner'
-import Footer from '@/components/Footer'
 import Image from 'next/image'
 
 // 美化后的 Empty 组件（不显示"发布博客"按钮）
@@ -107,7 +106,6 @@ export default function BlogList() {
             <Spinner color="primary" label="正在加载文章列表..." />
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -133,7 +131,6 @@ export default function BlogList() {
             />
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -271,8 +268,6 @@ export default function BlogList() {
           </div>
         </div>
       </Provider>
-      <div className="py-16 md:py-24 lg:py-32"></div>
-      <Footer />
     </>
   )
 }

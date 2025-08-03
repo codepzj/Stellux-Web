@@ -12,7 +12,6 @@ import { Alert } from '@heroui/alert'
 import { Button } from '@heroui/button'
 import { Spacer } from '@heroui/spacer'
 import Link from 'next/link'
-import Footer from '@/components/Footer'
 
 // 美化后的 Empty 组件
 function Empty({ title }: { title: string }) {
@@ -64,7 +63,6 @@ export default function DocumentPage() {
             <Spinner color="primary" label="正在加载文档列表..." />
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -90,7 +88,6 @@ export default function DocumentPage() {
             />
           </div>
         </div>
-        <Footer />
       </>
     )
   }
@@ -187,8 +184,6 @@ export default function DocumentPage() {
           </div>
         </div>
       </div>
-      <div className="py-16 md:py-24 lg:py-32"></div>
-      <Footer />
     </>
   )
 }

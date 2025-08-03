@@ -29,7 +29,7 @@ export async function DocSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <Link href="/document">
-              <Button variant="ghost" size="icon" className="w-full justify-start">
+              <Button variant="outline" size="icon" className="w-full justify-start px-2 my-2">
                 <ArrowLeftIcon className="w-4 h-4" />
                 返回文档列表
               </Button>
