@@ -2,14 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import {
-  IconCalendar,
-  IconUser,
-  IconTag,
-  IconChevronRight,
-  IconAlertCircle,
-  IconBook2,
-} from '@tabler/icons-react'
+import { IconCalendar, IconUser, IconTag, IconChevronRight, IconBook2 } from '@tabler/icons-react'
 import { getPostListAPI } from '@/api/post'
 import { formatDate, formatRelativeTime } from '@/utils/date'
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -19,28 +12,7 @@ import { Spacer } from '@heroui/spacer'
 import { Search } from './search'
 import { Provider } from './provider'
 import { Card, CardBody, CardFooter } from '@heroui/card'
-import { Button } from '@heroui/button'
-import { Alert } from '@heroui/alert'
-import { Spinner } from '@heroui/spinner'
 import { Image } from '@heroui/image'
-
-// 美化后的 Empty 组件（不显示"发布博客"按钮）
-function Empty({ title }: { title: string }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-24">
-      <div className="relative mb-6">
-        <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-blue-200/60 via-blue-100/60 to-blue-300/60 dark:from-blue-900/40 dark:via-blue-800/40 dark:to-blue-900/40 blur-lg animate-pulse" />
-        <div className="relative z-10 flex items-center justify-center w-20 h-20 rounded-full bg-white dark:bg-gray-900 shadow-lg">
-          <IconAlertCircle className="w-12 h-12 text-blue-400 dark:text-blue-300 animate-bounce" />
-        </div>
-      </div>
-      <div className="text-2xl font-bold text-gray-700 dark:text-gray-200 mb-2">{title}</div>
-      <div className="text-gray-500 dark:text-gray-400 text-base mb-4">
-        这里空空如也，暂时没有任何博客内容。
-      </div>
-    </div>
-  )
-}
 
 export default function BlogList() {
   const searchParams = useSearchParams()
@@ -58,15 +30,10 @@ export default function BlogList() {
     page_no: 1,
     total_count: 0,
   })
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        setLoading(true)
-        setError(null)
-
         const response = await getPostListAPI({
           page_no: currentPage,
           page_size: pageSize,
@@ -84,10 +51,7 @@ export default function BlogList() {
         }
       } catch (error) {
         console.error(error)
-        setError('获取文章列表失败，请稍后再试')
         setPosts([])
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -96,43 +60,6 @@ export default function BlogList() {
 
   const handlePageChange = (page: number) => {
     router.push(`/blog?page=${page}`)
-  }
-
-  if (loading) {
-    return (
-      <>
-        <div className="bg-white dark:bg-gray-950 min-h-screen flex items-center">
-          <div className="container px-4 py-12 md:px-6 md:py-24 flex flex-col items-center justify-center">
-            <Spinner color="primary" label="正在加载文章列表..." />
-          </div>
-        </div>
-      </>
-    )
-  }
-
-  if (error) {
-    return (
-      <>
-        <div className="bg-white dark:bg-gray-950 min-h-screen flex items-center">
-          <div className="container px-4 py-12 md:px-6 md:py-24 flex flex-col items-center justify-center">
-            <Alert
-              color="danger"
-              title="获取文章列表失败"
-              description={
-                <>
-                  <div>{error}</div>
-                  <div className="mt-2">请稍后再试或刷新页面</div>
-                  <Button className="mt-6" color="primary" onPress={() => window.location.reload()}>
-                    刷新页面
-                  </Button>
-                </>
-              }
-              icon={<IconAlertCircle className="w-4 h-4" />}
-            />
-          </div>
-        </div>
-      </>
-    )
   }
 
   return (
@@ -165,95 +92,91 @@ export default function BlogList() {
                 </div>
                 <Spacer y={4} />
                 <div className="flex justify-end">
-                  <Search className="w-40" placeholder="搜索博客" />
+                  <Search className="md:w-40" />
                 </div>
                 <Spacer y={16} />
                 <div className="flex flex-col gap-8">
-                  {posts.length > 0 ? (
-                    posts.map((post) => (
-                      <Card
-                        key={post.id}
-                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
-                      >
-                        <CardBody className="p-5">
-                          <div className="flex gap-4">
-                            <div className="flex-1 space-y-2">
-                              <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
-                                <Link href={`/blog/${post.alias}`}>{post.title}</Link>
-                              </h2>
-                              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
-                                <div className="flex items-center gap-1">
-                                  <IconCalendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                  <time
-                                    dateTime={post.created_at}
-                                    title={formatDate(post.created_at)}
-                                  >
-                                    {formatRelativeTime(post.created_at)}
-                                  </time>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <IconUser className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                  <span>{post.author}</span>
-                                </div>
-                              </div>
-                              <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
-                                {post.description}
-                              </p>
-                            </div>
-                            <div className="flex-shrink-0 hidden md:block">
-                              <Link href={`/blog/${post.alias}`} className="block">
-                                <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-sm">
-                                  {post.thumbnail ? (
-                                    <Image
-                                      width={192}
-                                      height={108}
-                                      src={post.thumbnail}
-                                      alt={post.title}
-                                      className="object-cover w-full h-full"
-                                      loading="lazy"
-                                      isZoomed
-                                    />
-                                  ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                      <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-3">
-                                        <span className="text-xl font-bold text-gray-700 dark:text-gray-300">
-                                          Go
-                                        </span>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </Link>
-                            </div>
-                          </div>
-                        </CardBody>
-                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
-                          <div className="flex flex-wrap gap-2">
-                            {post.tags &&
-                              post.tags.slice(0, 2).map((tag, i) => (
-                                <Link
-                                  key={i}
-                                  href={`/tag/${tag}`}
-                                  className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                  {posts.map((post) => (
+                    <Card
+                      key={post.id}
+                      className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
+                    >
+                      <CardBody className="p-5">
+                        <div className="flex gap-4">
+                          <div className="flex-1 space-y-2">
+                            <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
+                              <Link href={`/blog/${post.alias}`}>{post.title}</Link>
+                            </h2>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
+                              <div className="flex items-center gap-1">
+                                <IconCalendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <time
+                                  dateTime={post.created_at}
+                                  title={formatDate(post.created_at)}
                                 >
-                                  <IconTag className="mr-1 h-3 w-3" />
-                                  {tag}
-                                </Link>
-                              ))}
+                                  {formatRelativeTime(post.created_at)}
+                                </time>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <IconUser className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <span>{post.author}</span>
+                              </div>
+                            </div>
+                            <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                              {post.description}
+                            </p>
                           </div>
-                          <Link
-                            href={`/blog/${post.alias}`}
-                            className="inline-flex items-center text-sm font-medium text-primary-600 transition-all duration-300 hover:text-primary-800 hover:translate-x-1 dark:text-primary-400 dark:hover:text-primary-200"
-                          >
-                            阅读更多
-                            <IconChevronRight className="ml-1 h-4 w-4" />
-                          </Link>
-                        </CardFooter>
-                      </Card>
-                    ))
-                  ) : (
-                    <Empty title="暂无文章" />
-                  )}
+                          <div className="flex-shrink-0 hidden md:block">
+                            <Link href={`/blog/${post.alias}`} className="block">
+                              <div className="relative w-48 h-28 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-sm">
+                                {post.thumbnail ? (
+                                  <Image
+                                    width={192}
+                                    height={108}
+                                    src={post.thumbnail}
+                                    alt={post.title}
+                                    className="object-cover w-full h-full"
+                                    loading="lazy"
+                                    isZoomed
+                                  />
+                                ) : (
+                                  <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-3">
+                                      <span className="text-xl font-bold text-gray-700 dark:text-gray-300">
+                                        Go
+                                      </span>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </CardBody>
+                      <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags &&
+                            post.tags.slice(0, 2).map((tag, i) => (
+                              <Link
+                                key={i}
+                                href={`/tag/${tag}`}
+                                className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                              >
+                                <IconTag className="mr-1 h-3 w-3" />
+                                {tag}
+                              </Link>
+                            ))}
+                        </div>
+                        <Link
+                          href={`/blog/${post.alias}`}
+                          className="inline-flex items-center text-sm font-medium text-primary-600 transition-all duration-300 hover:text-primary-800 hover:translate-x-1 dark:text-primary-400 dark:hover:text-primary-200"
+                        >
+                          阅读更多
+                          <IconChevronRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </CardFooter>
+                    </Card>
+                  ))}
                 </div>
                 <Spacer y={16} />
                 {pagination.total_page > 1 && (

@@ -37,7 +37,6 @@ export const Search = ({ ...props }: InputProps) => {
           e.preventDefault()
           openSearch()
         }}
-        size="sm"
         placeholder="搜索博客"
         startContent={<SearchLinearIcon size={20} className="text-default-500" />}
         endContent={
