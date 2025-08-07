@@ -2,6 +2,7 @@ import { getPostByAliasAPI } from '@/api/post'
 import { Markdown } from '@/components/business/md'
 import { Metadata } from 'next'
 import { Spacer } from '@heroui/spacer'
+import BackToTopButton from './back'
 
 type Props = {
   params: Promise<{ alias: string }>
@@ -22,6 +23,7 @@ export default async function BlogContent({ params }: Props) {
         <Spacer y={16} />
         <Markdown className="break-words overflow-x-auto" content={post.content} />
       </div>
+      <BackToTopButton />
     </div>
   )
 }

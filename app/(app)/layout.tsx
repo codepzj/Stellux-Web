@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     // 2秒后平滑返回顶部
     const timer = setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    }, 2000)
+    }, 500)
     return () => clearTimeout(timer)
   }, [])
 

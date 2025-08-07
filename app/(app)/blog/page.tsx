@@ -46,6 +46,17 @@ export default function BlogList() {
     total_count: 0,
   })
 
+  // 新增：用于分页切换后2秒内平滑滚动到顶部
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  useEffect(() => {
+    // 组件卸载时清理定时器
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
+  }, [])
+
   useEffect(() => {
     let isMounted = true
     const fetchId = ++fetchIdRef.current
@@ -98,6 +109,16 @@ export default function BlogList() {
     // 切换分页时立即显示骨架屏，但内容区保持高度不跳动
     setLoading(true)
     router.push(`/blog?page=${page}`)
+
+    // 2秒后平滑滚动到顶部
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+    }
+    scrollTimeoutRef.current = setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }, 500)
   }
 
   // 计算骨架屏的数量，优先用上一次的posts数量，否则用pageSize
@@ -243,7 +264,7 @@ export default function BlogList() {
                     ))
                   )}
                 </div>
-                <Spacer y={16} />
+                <Spacer y={8} />
                 {(loading ? prevPagination.total_page : pagination.total_page) > 1 && (
                   <div className="flex justify-end">
                     <Pagination
