@@ -8,7 +8,7 @@ type SitemapUrl = {
   lastmod?: string
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   const postList = await getAllPublishPostAPI().then((res) => res.data)
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL as string

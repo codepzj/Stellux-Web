@@ -2,12 +2,11 @@
 import { Input, InputProps } from '@heroui/input'
 import { SearchLinearIcon } from '@/components/basic/svg-icon'
 import { Kbd } from '@heroui/kbd'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useSearch } from './provider'
 
 export const Search = ({ ...props }: InputProps) => {
   const { openSearch } = useSearch()
-  const mouseDownRef = useRef(false)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

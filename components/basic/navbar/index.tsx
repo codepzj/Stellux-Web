@@ -5,6 +5,79 @@ import Link from 'next/link'
 import { IconBrandGithub, IconSun, IconMoon } from '@tabler/icons-react'
 import { useTheme } from 'next-themes'
 
+// 公共导航项配置
+const NAV_LINKS = [
+  {
+    href: '/',
+    label: '首页',
+  },
+  {
+    href: '/blog',
+    label: '博客',
+  },
+  {
+    href: '/document',
+    label: '文档',
+  },
+]
+
+// 桌面端导航渲染
+function DesktopNav() {
+  return (
+    <nav className="hidden md:flex items-center space-x-4 justify-start flex-1 ml-16">
+      {NAV_LINKS.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="text-sm font-medium px-1 text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  )
+}
+
+// 移动端导航渲染
+function MobileNav({ onClick }: { onClick: () => void }) {
+  return (
+    <div className="mx-auto mt-2 max-w-2xl rounded-lg dark:bg-gray-950/95 px-2 pt-2 pb-3 space-y-1">
+      {NAV_LINKS.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          onClick={onClick}
+          className="block px-4 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+// 主题切换按钮
+function ThemeToggle({
+  theme,
+  setTheme,
+  mounted,
+}: {
+  theme: string | undefined
+  setTheme: (theme: string) => void
+  mounted: boolean
+}) {
+  if (!mounted) return null
+  return (
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+      aria-label="切换主题"
+    >
+      {theme === 'dark' ? <IconSun className="h-5 w-5" /> : <IconMoon className="h-5 w-5" />}
+    </button>
+  )
+}
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
@@ -16,54 +89,20 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 backdrop-blur-lg bg-opacity-80 dark:bg-opacity-80">
-      <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center space-x-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold text-xl">
-              G
-            </div>
-            <span className="font-bold text-xl">Go语言中文网</span>
-          </Link>
-        </div>
+    <header className="z-40 w-full bg-white dark:bg-gray-950">
+      <div className="mx-auto flex h-12 items-center justify-between px-4 mt-2 max-w-3xl rounded-lg shadow-xs bg-white/80 dark:bg-gray-950/80">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-2">
+          <span className="font-bold text-lg">Go中文网</span>
+        </Link>
 
         {/* 桌面导航 */}
-        <nav className="hidden md:flex items-center space-x-6 ml-10">
-          <Link
-            href="/"
-            className="text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
-          >
-            首页
-          </Link>
-          <Link
-            href="/blog"
-            className="text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
-          >
-            博客
-          </Link>
-          <Link
-            href="/document"
-            className="text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-500"
-          >
-            文档
-          </Link>
-        </nav>
+        <DesktopNav />
 
-        <div className="flex items-center ml-auto space-x-4">
+        {/* 右侧操作区 */}
+        <div className="flex items-center space-x-2">
           {/* 主题切换按钮 */}
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
-              aria-label="切换主题"
-            >
-              {theme === 'dark' ? (
-                <IconSun className="h-5 w-5" />
-              ) : (
-                <IconMoon className="h-5 w-5" />
-              )}
-            </button>
-          )}
+          <ThemeToggle theme={theme} setTheme={setTheme} mounted={mounted} />
 
           <Link
             href="https://github.com/golang/go"
@@ -79,6 +118,7 @@ export default function Navbar() {
           <button
             className="md:hidden text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="打开菜单"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,29 +157,7 @@ export default function Navbar() {
 
       {/* 移动端菜单 */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link
-            href="/"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            首页
-          </Link>
-          <Link
-            href="/blog"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            博客
-          </Link>
-          <Link
-            href="/document"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
-          >
-            文档
-          </Link>
-        </div>
+        <MobileNav onClick={() => setIsMenuOpen(false)} />
       </div>
     </header>
   )

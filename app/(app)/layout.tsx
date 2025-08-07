@@ -1,9 +1,18 @@
 'use client'
 
+import { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import Navbar from '@/components/basic/navbar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    // 2秒后平滑返回顶部
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="flex flex-col">
       <Navbar />
@@ -16,8 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           'flex h-svh flex-col',
           'group-data-[scroll-locked=1]/body:h-full',
           'has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh',
-          'w-full mx-auto max-w-4xl',
-          '2xl:mx-auto 2xl:max-w-6xl'
+          'w-full mx-auto max-w-3xl'
         )}
       >
         {children}
