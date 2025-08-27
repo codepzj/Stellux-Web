@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/basic/navbar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,8 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           'flex h-svh flex-col',
           'group-data-[scroll-locked=1]/body:h-full',
           'has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh',
-          'w-full mx-auto max-w-4xl',
-          '2xl:mx-auto 2xl:max-w-6xl'
+          'w-full mx-auto max-w-5xl'
         )}
       >
         {children}

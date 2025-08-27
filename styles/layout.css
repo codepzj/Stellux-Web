@@ -1,11 +1,9 @@
 html {
-  scrollbar-gutter: stable;
-  overflow-x: hidden;
   scrollbar-width: thin;
 }
 
-body {
-  position: relative;
-  min-height: 100vh;
-  margin: 0;
+@media (max-width: 768px) {
+  html {
+    scrollbar-width: none;
+  }
 }

@@ -7,6 +7,8 @@ import { DocSidebar } from '@/components/basic/sidebar'
 import { convertToDocumentTreeData } from '@/utils/document-tree'
 import { DocumentContentVO } from '@/types/document-content'
 import { Metadata } from 'next'
+import { SidebarToggle } from '@/components/basic/tool/sidebar-toggle'
+import { BackToTop } from '@/components/basic/tool/back-to-top'
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }> // 路径参数
@@ -79,6 +81,8 @@ export default async function DocPage({ params }: DocPageProps) {
             />
           </div>
         </div>
+        <SidebarToggle />
+        <BackToTop />
       </SidebarInset>
     </SidebarProvider>
   )

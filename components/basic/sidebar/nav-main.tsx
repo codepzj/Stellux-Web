@@ -41,7 +41,7 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
 
   if (!hasChildren) {
     return (
-      <SidebarMenuItem className={cn('rounded-md', `ml-${depth * 2}`)}>
+      <SidebarMenuItem className={cn('rounded-md transition-all duration-200', `ml-${depth * 2}`)}>
         <SidebarMenuButton asChild tooltip={item.title}>
           <Link
             href={item.url}
@@ -60,7 +60,7 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
 
   return (
     <Collapsible asChild open={open} onOpenChange={setOpen}>
-      <SidebarMenuItem className={cn(`ml-${depth * 2}`)}>
+      <SidebarMenuItem className="ml-0">
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={item.title}>
             {item.icon && <item.icon />}

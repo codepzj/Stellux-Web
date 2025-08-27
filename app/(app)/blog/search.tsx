@@ -1,4 +1,5 @@
 'use client'
+
 import { Input, InputProps } from '@heroui/input'
 import { SearchLinearIcon } from '@/components/basic/svg-icon'
 import { Kbd } from '@heroui/kbd'
