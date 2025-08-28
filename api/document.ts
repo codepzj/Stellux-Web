@@ -2,6 +2,7 @@ import { request } from '@/utils/request'
 import { DocumentVO } from '@/types/document'
 import { Response } from '@/types/dto'
 
+// 获取全部公开文档
 export const getAllPublicDocument: () => Promise<Response<DocumentVO[]>> = () => {
   return request.get('/document/all')
 }

@@ -6,10 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build && cp -r .next/static .next/standalone/.next && cp -r public .next/standalone/public",
     "start": "node .next/standalone/server.js -p 9003",
-    "lint": "next lint --fix && pnpm format",
+    "lint": "eslint . --fix && pnpm format",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@fancyapps/ui": "^6.0.25",
     "@heroui/accordion": "^2.2.21",
     "@heroui/alert": "^2.2.24",
@@ -96,7 +97,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "prettier": "3.6.2",
-    "typescript": "5.9.2"
+    "typescript": "5.8.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import CopyButton from './copy'
-import { Image } from '@heroui/image'
+import Image from 'next/image'
 import './md.css'
 import { cn } from '@/lib/utils'
 import { Alert } from '@heroui/alert'
@@ -139,7 +139,13 @@ export default function Md({ content, className }: { content: string; className?
             ),
             img: ({ src, alt }) => (
               <PhotoView src={src as string} key={photoIndex++}>
-                <Image className="my-6 rounded-md" src={src as string} alt={alt as string} />
+                <Image
+                  height={1000}
+                  width={1000}
+                  className="my-6 rounded-md"
+                  src={src as string}
+                  alt={alt as string}
+                />
               </PhotoView>
             ),
             a: ({ children, href }) => (

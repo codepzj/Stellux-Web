@@ -14,23 +14,6 @@ export function formatDate(dateString: string): string {
 }
 
 /**
- * 格式化日期时间
- * @param dateString 日期字符串
- * @returns 格式化后的日期时间字符串，如：2023-12-15 14:30
- */
-export function formatDateTime(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const dateStr = date.toISOString().split('T')[0]
-    const timeStr = date.toTimeString().split(' ')[0].substring(0, 5)
-    return `${dateStr} ${timeStr}`
-  } catch (error) {
-    console.error('日期时间格式化错误:', error)
-    return dateString
-  }
-}
-
-/**
  * 格式化为相对时间
  * @param dateString 日期字符串
  * @returns 相对时间，如：3天前、2小时前

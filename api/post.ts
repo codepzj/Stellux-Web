@@ -2,7 +2,7 @@ import { PageVO, Page } from '@/types/page'
 import { PostVO } from '@/types/post'
 import { request } from '@/utils/request'
 
-// 获取首页文章列表
+// 获取文章列表
 export const getPostListAPI = (page: Page) => {
   return request.get<PageVO<PostVO>>('/post/list', { params: page })
 }

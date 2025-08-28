@@ -17,6 +17,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           rel="stylesheet"
           href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
         />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS Feed"
+          href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss.xml`}
+        />
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          title="Atom Feed"
+          href={`${process.env.NEXT_PUBLIC_SITE_URL}/atom.xml`}
+        />
       </head>
       <body className="min-h-screen bg-background antialiased w-full font-main">
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>{children}</Providers>

@@ -9,16 +9,39 @@ export default function Footer() {
         <p className="text-gray-500 dark:text-gray-400 text-sm text-center">
           © {new Date().getFullYear()} 浩瀚星河. 保留所有权利.
         </p>
-        <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-          <Image src="/icp.png" alt="备案图标" width={14} height={14} />
-          <a
-            href="https://beian.miit.gov.cn/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200"
-          >
-            粤ICP备2024275864号-4
-          </a>
+        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1">
+            <Image src="/icp.png" alt="备案图标" width={14} height={14} />
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200"
+            >
+              粤ICP备2024275864号-4
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200"
+              title="RSS订阅"
+            >
+              RSS
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="/atom.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200"
+              title="Atom订阅"
+            >
+              Atom
+            </a>
+          </div>
         </div>
       </div>
     </footer>
