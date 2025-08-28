@@ -6,6 +6,9 @@ export async function GET(request: NextRequest) {
     const posts = await getAllPublishPostAPI()
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
 
+    // 确保 posts.data 存在且为数组，同时检查 API 返回状态
+    const postsData = posts?.code === 0 && posts?.data ? posts.data : []
+
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -26,7 +29,7 @@ export async function GET(request: NextRequest) {
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  ${posts.data
+  ${postsData
     .map(
       (post) => `
   <url>
@@ -48,6 +51,35 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error('Sitemap generation error:', error)
-    return new Response('Error generating sitemap', { status: 500 })
+    // 即使出错也返回基本的 sitemap，包含静态页面
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    const fallbackSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${siteUrl}</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/blog</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${siteUrl}/document</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>`
+
+    return new Response(fallbackSitemap, {
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      },
+    })
   }
 }

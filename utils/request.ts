@@ -24,7 +24,7 @@ class Request {
         ...headers,
       },
       body: data ? JSON.stringify(data) : undefined, // body携带参数
-      next: { revalidate: isCache ? cacheTime : 0 },
+      next: { revalidate: isCache ? cacheTime : 3600 }, // 默认缓存1小时，避免动态服务器使用错误
     }
 
     try {
