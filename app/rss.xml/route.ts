@@ -15,6 +15,10 @@ export async function GET(request: NextRequest) {
     <language>zh-CN</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml" />
+    <follow_challenge>
+      <feedId>183725508737880064</feedId>
+      <userId>74684007892567040</userId>
+    </follow_challenge>
     ${posts.data
       .map(
         (post) => `
