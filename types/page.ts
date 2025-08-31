@@ -17,3 +17,8 @@ export interface PageVO<T> {
   total_page: number
   list: T[]
 }
+
+// 请求分页携带的params，包含标签名称
+export interface PageWithTagName extends Page {
+  label_name?: string
+}

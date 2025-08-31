@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from '@heroui/react'
 
 import { Calendar, UserRoundPen, Tag, ChevronRight, Book } from 'lucide-react'
@@ -17,6 +17,7 @@ import { Provider } from './provider'
 export default function BlogList() {
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get('page')) || 1
+  const tagName = searchParams.get('tag') || ''
   const router = useRouter()
   const pageSize = 10
 
@@ -31,6 +32,7 @@ export default function BlogList() {
     total_count: 0,
   })
   const [loading, setLoading] = useState<boolean>(true)
+  const loadingRef = useRef<boolean>(false)
 
   useEffect(() => {
     setLoading(true)
@@ -39,6 +41,7 @@ export default function BlogList() {
         const response = await getPostListAPI({
           page_no: currentPage,
           page_size: pageSize,
+          label_name: tagName,
         })
 
         if (response && response.data) {
@@ -60,15 +63,47 @@ export default function BlogList() {
         setPosts([])
       } finally {
         setLoading(false)
+        loadingRef.current = false
       }
     }
 
     fetchPosts()
-  }, [currentPage, pageSize])
+  }, [currentPage, pageSize, tagName])
 
   const handlePageChange = (page: number) => {
+    // 如果正在加载中，阻止重复点击
+    if (loadingRef.current) {
+      return
+    }
+
+    loadingRef.current = true
     setLoading(true)
-    router.push(`/blog?page=${page}`)
+    const params = new URLSearchParams()
+    params.set('page', page.toString())
+    if (tagName) {
+      params.set('tag', tagName)
+    }
+    router.push(`/blog?${params.toString()}`)
+  }
+
+  const handleTagClick = (tag: string) => {
+    // 如果正在加载中，阻止重复点击
+    if (loadingRef.current) {
+      return
+    }
+
+    // 如果点击的是当前选中的标签，不做任何操作
+    if (tag === tagName) {
+      return
+    }
+
+    loadingRef.current = true
+    setLoading(true)
+    const params = new URLSearchParams()
+    params.set('tag', tag)
+    // 重置页码为1
+    params.set('page', '1')
+    router.push(`/blog?${params.toString()}`)
   }
 
   // 计算骨架屏的数量，优先用上一次的posts数量，否则用pageSize
@@ -94,6 +129,41 @@ export default function BlogList() {
                     <span className="text-gray-500 text-sm ml-2">{pagination.total_count} 篇</span>
                   </div>
                   <Search className="md:w-36" />
+                </div>
+
+                {/* 当前选中的标签 - 固定高度区域 */}
+                <div className="h-8 mb-4 flex items-center">
+                  {tagName && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                        当前标签:
+                      </span>
+                      <div className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium dark:bg-gray-800/60 dark:text-gray-200">
+                        <Tag className="mr-1 h-3 w-3" />
+                        {tagName}
+                      </div>
+                      <button
+                        onClick={() => {
+                          // 如果正在加载中，阻止重复点击
+                          if (loadingRef.current) {
+                            return
+                          }
+
+                          // 如果当前没有标签筛选，不做任何操作
+                          if (!tagName) {
+                            return
+                          }
+
+                          loadingRef.current = true
+                          setLoading(true)
+                          router.push('/blog?page=1')
+                        }}
+                        className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 whitespace-nowrap"
+                      >
+                        清除筛选
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <Spacer y={4} />
                 <div className="flex flex-col gap-8 min-h-[600px]">
@@ -188,13 +258,15 @@ export default function BlogList() {
                           <div className="flex flex-wrap gap-2">
                             {post.tags &&
                               post.tags.slice(0, 2).map((tag, i) => (
-                                <div
+                                <button
                                   key={i}
-                                  className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium dark:bg-gray-800/60 dark:text-gray-200"
+                                  onClick={() => handleTagClick(tag)}
+                                  className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium dark:bg-gray-800/60 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 hover:scale-105 transition-all duration-200 cursor-pointer"
+                                  title={`筛选标签: ${tag}`}
                                 >
                                   <Tag className="mr-1 h-3 w-3" />
                                   {tag}
-                                </div>
+                                </button>
                               ))}
                           </div>
                           <Link
