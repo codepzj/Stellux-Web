@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^6.0.25",
+    "@giscus/react": "^3.1.0",
     "@heroui/accordion": "^2.2.21",
     "@heroui/alert": "^2.2.24",
     "@heroui/avatar": "^2.2.20",

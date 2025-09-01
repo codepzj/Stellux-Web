@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 import { Spacer } from '@heroui/spacer'
 import { Toc } from '@/components/business/toc'
 import { BackToTop } from '@/components/basic/tool/back-to-top'
+import { ScrollToComment } from '@/components/basic/tool/scroll-to-comment'
+import Comment from '@/components/business/comment'
 
 type Props = {
   params: Promise<{ alias: string }>
@@ -24,6 +26,8 @@ export default async function BlogContent({ params }: Props) {
         <h1 className="text-3xl text-default-900 font-medium text-center">{post.title}</h1>
         <Spacer y={16} />
         <Markdown className="break-words overflow-x-auto" content={post.content} />
+        <Spacer y={16} />
+        <Comment />
       </div>
       {hasHeadings && (
         <div className="hidden relative lg:block lg:w-1/5">
@@ -31,6 +35,7 @@ export default async function BlogContent({ params }: Props) {
         </div>
       )}
       <BackToTop />
+      <ScrollToComment />
     </div>
   )
 }
