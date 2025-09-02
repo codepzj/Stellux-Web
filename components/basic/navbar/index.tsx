@@ -28,6 +28,7 @@ const NAV_LINKS = [
   { href: '/', label: '首页' },
   { href: '/blog', label: '博客' },
   { href: '/document', label: '文档' },
+  { href: '/friends', label: '友链' },
 ]
 
 function DesktopNav() {
