@@ -23,7 +23,7 @@ function ErrorPage({ error }: Props) {
             {error.message || '发生了一个错误，请稍后再试'}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button onClick={() => window.location.reload()} color="primary">
+            <Button onPress={() => window.location.reload()} color="primary">
               重新加载
             </Button>
             <Link href="/">
