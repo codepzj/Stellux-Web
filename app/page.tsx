@@ -1,36 +1,72 @@
 'use client'
 
-import { Button } from '@heroui/react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import Navbar from '@/components/basic/navbar'
 import Footer from '@/components/basic/footer'
+import { BookOpen, FileText, Users, Coffee } from 'lucide-react'
 
 export default function Page() {
   const router = useRouter()
+
   return (
-    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950">
+    <div className="flex flex-col h-screen bg-background">
       <Navbar />
-      <main className="flex-1 flex flex-col items-center justify-center overflow-hidden">
-        <section className="w-full max-w-5xl px-6 py-20 flex flex-col items-center justify-center relative">
-          <div className="relative z-10 text-center space-y-4">
-            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 leading-tight">
-              建站初衷：<span className="text-primary">【记录知识】</span>
-            </h1>
+      <main className="flex-1 flex items-center justify-center px-6">
+        <div className="w-full max-w-3xl mx-auto">
+          <div className="text-center space-y-8">
+            {/* 主标题区域 */}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <p className="text-xl text-primary">一个程序员的碎碎念</p>
+                <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
+                  偶尔写点技术，偶尔聊聊生活，偶尔分享一些踩坑经历
+                </p>
+              </div>
+            </div>
 
-            <p className="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              低级的欲望通过放纵就可获得；高级的欲望通过自律方可获得；顶级的欲望通过煎熬才可获得。“所谓自由，不是随心所欲，而是自我主宰。”
-            </p>
-
-            <div className="flex gap-3 justify-center pt-2">
-              <Button color="primary" onPress={() => router.push('/blog')}>
+            {/* 导航区域 */}
+            <div className="flex flex-wrap justify-center gap-4 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => router.push('/blog')}
+                className="flex items-center gap-2"
+              >
+                <BookOpen className="w-4 h-4" />
                 博客
               </Button>
-              <Button variant="light" color="default" onPress={() => router.push('/document')}>
+              <Button
+                variant="outline"
+                onClick={() => router.push('/document')}
+                className="flex items-center gap-2"
+              >
+                <FileText className="w-4 h-4" />
                 文档
               </Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push('/friends')}
+                className="flex items-center gap-2"
+              >
+                <Users className="w-4 h-4" />
+                友链
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => router.push('/about')}
+                className="flex items-center gap-2"
+              >
+                <Coffee className="w-4 h-4" />
+                关于
+              </Button>
+            </div>
+
+            {/* 底部小字 */}
+            <div className="pt-8">
+              <p className="text-sm text-muted-foreground">最近在学 Grpc, 有空聊聊</p>
             </div>
           </div>
-        </section>
+        </div>
       </main>
       <Footer />
     </div>

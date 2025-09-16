@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from '@heroui/react'
 import { usePathname } from 'next/navigation'
+import { useTheme } from 'next-themes'
+import { SunIcon, MoonIcon } from '@/components/basic/svg-icon'
 
 // 自定义更密集、振幅更小、颜色为淡黑色的波浪线样式
 const WAVE_UNDERLINE_STYLE = `
@@ -25,7 +27,6 @@ const WAVE_UNDERLINE_STYLE = `
 `
 
 const NAV_LINKS = [
-  { href: '/', label: '首页' },
   { href: '/blog', label: '博客' },
   { href: '/document', label: '文档' },
   { href: '/friends', label: '友链' },
@@ -40,7 +41,7 @@ function DesktopNav() {
     <>
       {/* 注入波浪线样式 */}
       <style>{WAVE_UNDERLINE_STYLE}</style>
-      <nav className="hidden w-full md:flex items-center justify-end space-x-6">
+      <nav className="hidden w-full md:flex items-center justify-end space-x-8">
         {NAV_LINKS.map((item) => {
           const isActive =
             currentPath === item.href.split('/')[1] || (currentPath === '/' && item.href === '/')
@@ -51,7 +52,7 @@ function DesktopNav() {
               className={`text-sm transition-colors duration-200 ${
                 isActive
                   ? 'text-primary font-medium nav-link-active'
-                  : 'text-gray-500 hover:text-gray-800 dark:hover:text-gray-200'
+                  : 'text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100'
               }`}
               style={{ position: 'relative' }}
             >
@@ -64,6 +65,37 @@ function DesktopNav() {
   )
 }
 
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+      aria-label={theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'}
+    >
+      {theme === 'dark' ? (
+        <SunIcon size={18} className="text-gray-600 dark:text-gray-300" />
+      ) : (
+        <MoonIcon size={18} className="text-gray-600 dark:text-gray-300" />
+      )}
+    </button>
+  )
+}
+
 function MobileNav({ onClick }: { onClick: () => void }) {
   return (
     <div className="fixed inset-x-0 top-14 z-30 bg-white/95 dark:bg-gray-950/95 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
@@ -73,11 +105,14 @@ function MobileNav({ onClick }: { onClick: () => void }) {
             key={item.href}
             href={item.href}
             onClick={onClick}
-            className="px-2 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary transition-colors"
+            className="px-2 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-100 hover:text-primary transition-colors"
           >
             {item.label}
           </Link>
         ))}
+        <div className="px-2 py-1.5">
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   )
@@ -101,7 +136,7 @@ export default function Navbar() {
         <DesktopNav />
 
         {/* 右侧操作区 */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           {/* 移动端菜单按钮 */}
           <button
             className="md:hidden text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -132,6 +167,10 @@ export default function Navbar() {
               </svg>
             )}
           </button>
+        </div>
+        {/* 主题切换按钮 */}
+        <div className="hidden md:block ml-4">
+          <ThemeToggle />
         </div>
       </div>
 

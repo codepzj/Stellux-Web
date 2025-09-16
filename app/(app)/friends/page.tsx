@@ -1,10 +1,13 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
 import FriendCard from '@/components/friends/FriendCard'
 import FriendSubmitModal from '@/components/friends/FriendSubmitModal'
-import { Card, CardBody } from '@heroui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Alert } from '@heroui/alert'
 import Comment from '@/components/business/comment'
 import { Spacer } from '@heroui/spacer'
+import { ExternalLink, User, Globe, MessageCircle } from 'lucide-react'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,30 +53,57 @@ export default async function FriendsPage() {
         variant="faded"
       />
       <div className="mt-8">
-        <Card
-          radius="lg"
-          className="border border-gray-100 dark:border-gray-900/60 bg-gradient-to-br from-white/70 to-white/40 dark:from-gray-950/70 dark:to-gray-950/40 backdrop-blur-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-shadow duration-300"
-        >
-          <CardBody className="p-4 gap-2 flex-col-1">
-            <span>
-              <b>头像链接：</b>
-              <a href="https://cdn.codepzj.cn/image/20250529174726187.jpeg" target="_blank">
-                https://cdn.codepzj.cn/image/20250529174726187.jpeg
-              </a>
-            </span>
-            <span>
-              <b>站点名称：</b>浩瀚星河
-            </span>
-            <span>
-              <b>网址：</b>
-              <a href="https://www.golangblog.com" target="_blank">
-                https://www.golangblog.com
-              </a>
-            </span>
-            <span>
-              <b>简介：</b>缓慢向上也是一种勇气。
-            </span>
-          </CardBody>
+        <Card className="border border-border/20 bg-card/10 shadow-sm">
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row gap-6">
+              {/* 左侧：头像和基本信息 */}
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20">
+                  <Image
+                    src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+                    alt="头像"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="font-semibold text-lg text-foreground">浩瀚星河</h3>
+                    <Badge variant="secondary" className="text-xs">
+                      站长
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    缓慢向上也是一种勇气。
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-sm">
+                    <a
+                      href="https://www.golangblog.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors"
+                    >
+                      <Globe className="w-4 h-4" />
+                      网站
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                    <a
+                      href="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      头像
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
         </Card>
       </div>
       <Spacer y={16} />
