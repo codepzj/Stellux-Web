@@ -1,18 +1,20 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Link } from '@heroui/react'
 
-import { Calendar, UserRoundPen, Tag, ChevronRight, Book } from 'lucide-react'
+import { Calendar, Tag, Book, FolderOpen } from 'lucide-react'
 import { getPostListAPI } from '@/api/post'
-import { formatDate, formatRelativeTime } from '@/utils/date'
+import { formatRelativeTime } from '@/utils/date'
 import type { PostVO } from '@/types/post'
-import { Pagination, Spacer, Card, CardBody, CardFooter, Skeleton, Image } from '@heroui/react'
+import { Pagination, Spacer, Skeleton } from '@heroui/react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ErrorPage } from '@/components/basic/error-page'
 import { Search } from './search'
 import { Provider } from './provider'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export default function BlogList() {
   const searchParams = useSearchParams()
@@ -111,164 +113,174 @@ export default function BlogList() {
   return (
     <>
       <Provider>
-        <div className="bg-white dark:bg-gray-950 min-h-screen">
-          <div className="container px-4 py-12 md:px-6 md:py-24">
-            <div className="mx-auto max-w-5xl space-y-12">
-              <section className="space-y-6">
-                {/* 博客标题、总数和搜索框同一行 */}
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <Book className="w-6 h-6" />
-                    <span className="text-xl font-semibold">
-                      Posts
+        <div className="dark:bg-gray-950 min-h-screen">
+          <div className="w-full">
+            <div className="container mx-auto px-4 py-12 md:px-6 md:py-24">
+              <div className="max-w-5xl mx-auto space-y-12">
+                <section className="space-y-6">
+                  {/* 博客标题、总数和搜索框同一行 */}
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Book className="w-6 h-6" />
+                      <span className="text-xl font-semibold">
+                        Posts
+                        {tagName && (
+                          <span className="text-base font-semibold text-gray-600 dark:text-gray-400 ml-2">
+                            · {tagName}
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-gray-500 text-sm ml-2">
+                        {pagination.total_count} 篇
+                      </span>
                       {tagName && (
-                        <span className="text-base font-semibold text-gray-600 dark:text-gray-400 ml-2">
-                          · {tagName}
-                        </span>
+                        <button
+                          onClick={() => {
+                            if (!tagName) return
+                            navigateToPage(1) // 清除标签，重置页码
+                          }}
+                          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 whitespace-nowrap ml-2"
+                        >
+                          清除筛选
+                        </button>
                       )}
-                    </span>
-                    <span className="text-gray-500 text-sm ml-2">{pagination.total_count} 篇</span>
-                    {tagName && (
-                      <button
-                        onClick={() => {
-                          if (!tagName) return
-                          navigateToPage(1) // 清除标签，重置页码
-                        }}
-                        className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 whitespace-nowrap ml-2"
-                      >
-                        清除筛选
-                      </button>
-                    )}
+                    </div>
+                    <Search className="md:w-36" />
                   </div>
-                  <Search className="md:w-36" />
-                </div>
-                <div className="flex flex-col gap-8 min-h-[600px]">
-                  {loading ? (
-                    Array.from({ length: skeletonCount }).map((_, idx) => (
-                      <Card
-                        key={idx}
-                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
-                      >
-                        <CardBody className="p-5">
-                          <div className="flex gap-4">
+                  <div className="flex flex-col gap-4 min-h-[600px]">
+                    {loading ? (
+                      Array.from({ length: skeletonCount }).map((_, idx) => (
+                        <Card
+                          key={idx}
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg"
+                        >
+                          <div className="flex items-start gap-4">
                             <div className="flex-1 space-y-2">
-                              <Skeleton className="h-6 w-2/3 mb-2" />
-                              <Skeleton className="h-4 w-full mb-2" />
-                              <Skeleton className="h-4 w-5/6" />
+                              <Skeleton className="h-4 w-3/4" />
+                              <Skeleton className="h-4 w-full" />
+                              <Skeleton className="h-4 w-2/3" />
+                              <div className="flex items-center gap-2">
+                                <Skeleton className="h-5 w-12 rounded-full" />
+                                <Skeleton className="h-5 w-16 rounded-full" />
+                              </div>
                             </div>
-                            <div className="flex-shrink-0 hidden md:block">
-                              <Skeleton className="w-48 h-27 rounded-md" />
+                            <div className="flex flex-col items-end gap-2">
+                              {/* 右侧图片 - 固定16:9比例 */}
+                              <div className="hidden md:block w-48 h-27">
+                                <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
+                                  <Skeleton className="w-full h-full rounded-md" />
+                                </AspectRatio>
+                              </div>
+                              {/* 时间骨架屏 */}
+                              <Skeleton className="h-5 w-16 rounded-full" />
                             </div>
                           </div>
-                        </CardBody>
-                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
-                          <div className="flex flex-wrap gap-2">
-                            <Skeleton className="h-5 w-12 rounded-full" />
-                            <Skeleton className="h-5 w-12 rounded-full" />
-                          </div>
-                          <Skeleton className="h-5 w-20" />
-                        </CardFooter>
-                      </Card>
-                    ))
-                  ) : posts.length === 0 ? (
-                    <ErrorPage title="暂无博客内容" />
-                  ) : (
-                    posts.map((post) => (
-                      <Card
-                        key={post.id}
-                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
-                      >
-                        <CardBody className="p-5">
-                          <div className="flex gap-4 ">
-                            <div className="flex-1 space-y-2">
-                              <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
-                                <Link href={`/blog/${post.alias}`}>{post.title}</Link>
-                              </h2>
-                              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 dark:text-gray-400">
-                                <div className="flex items-center gap-1">
-                                  <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                  <time
-                                    dateTime={post.created_at}
-                                    title={formatDate(post.created_at)}
-                                  >
-                                    {formatRelativeTime(post.created_at)}
-                                  </time>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <UserRoundPen className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                                  <span>{post.author}</span>
+                        </Card>
+                      ))
+                    ) : posts.length === 0 ? (
+                      <ErrorPage title="暂无博客内容" />
+                    ) : (
+                      posts.map((post) => (
+                        <Card
+                          key={post.id}
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-800/70 transition-all duration-200 cursor-pointer group rounded-lg"
+                          onClick={() => router.push(`/blog/${post.alias}`)}
+                        >
+                          <CardContent className="p-0">
+                            <div className="flex items-start gap-4">
+                              {/* 内容区域 */}
+                              <div className="flex-1 min-w-0">
+                                {/* 文章标题 */}
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
+                                  {post.title}
+                                </h3>
+
+                                {/* 文章摘要 */}
+                                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                                  {post.description}
+                                </p>
+
+                                {/* 分类和标签 */}
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  {/* 显示分类 */}
+                                  {post.category && (
+                                    <Badge
+                                      variant="secondary"
+                                      className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 cursor-pointer"
+                                    >
+                                      <FolderOpen className="h-3 w-3 mr-1" />
+                                      {post.category}
+                                    </Badge>
+                                  )}
+                                  {/* 显示标签 */}
+                                  {post.tags?.slice(0, 2).map((tag, i) => (
+                                    <Badge
+                                      key={i}
+                                      variant="outline"
+                                      className="text-xs hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleTagClick(tag)
+                                      }}
+                                    >
+                                      <Tag className="h-3 w-3 mr-1" />
+                                      {tag}
+                                    </Badge>
+                                  ))}
                                 </div>
                               </div>
-                              <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
-                                {post.description}
-                              </p>
-                            </div>
-                            <div className="flex-shrink-0 hidden md:block">
-                              <Link href={`/blog/${post.alias}`} className="block">
-                                <div className="relative w-48 h-27 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-md">
-                                  {post.thumbnail ? (
-                                    <Image
-                                      width={192}
-                                      height={108}
-                                      src={post.thumbnail}
-                                      alt={post.title}
-                                      className="object-cover w-full h-full"
-                                      loading="lazy"
-                                      isZoomed
-                                    />
-                                  ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                      <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-3">
-                                        <span className="text-xl font-bold text-gray-700 dark:text-gray-300">
-                                          Go
-                                        </span>
+
+                              {/* 右侧区域 - 图片和时间 */}
+                              <div className="flex flex-col items-end gap-2">
+                                {/* 右侧图片 - 固定16:9比例 */}
+                                <div className="hidden md:block w-48 h-27">
+                                  <AspectRatio
+                                    ratio={16 / 9}
+                                    className="overflow-hidden rounded-md"
+                                  >
+                                    {post.thumbnail ? (
+                                      <img
+                                        src={post.thumbnail}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                        <Book className="w-8 h-8 text-gray-400 dark:text-gray-600" />
                                       </div>
-                                    </div>
-                                  )}
+                                    )}
+                                  </AspectRatio>
                                 </div>
-                              </Link>
-                            </div>
-                          </div>
-                        </CardBody>
-                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
-                          <div className="flex flex-wrap gap-2">
-                            {post.tags &&
-                              post.tags.slice(0, 2).map((tag, i) => (
-                                <button
-                                  key={i}
-                                  onClick={() => handleTagClick(tag)}
-                                  className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium dark:bg-gray-800/60 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 hover:scale-105 transition-all duration-200 cursor-pointer"
-                                  title={`筛选标签: ${tag}`}
+
+                                {/* 时间信息在右下角 */}
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
                                 >
-                                  <Tag className="mr-1 h-3 w-3" />
-                                  {tag}
-                                </button>
-                              ))}
-                          </div>
-                          <Link
-                            href={`/blog/${post.alias}`}
-                            className="inline-flex items-center text-sm font-medium text-primary-600 transition-all duration-300 hover:text-primary-800 hover:translate-x-1 dark:text-primary-400 dark:hover:text-primary-200"
-                          >
-                            阅读更多
-                            <ChevronRight className="ml-1 h-4 w-4" />
-                          </Link>
-                        </CardFooter>
-                      </Card>
-                    ))
-                  )}
-                </div>
-                <Spacer y={8} />
-                {pagination.total_page > 1 && (
-                  <div className="flex justify-end">
-                    <Pagination
-                      total={loading ? pagination.total_page : pagination.total_page}
-                      page={loading ? pagination.page_no : pagination.page_no}
-                      onChange={handlePageChange}
-                      isDisabled={loading}
-                    />
+                                  <Calendar className="h-3 w-3 mr-1" />
+                                  {formatRelativeTime(post.created_at)}
+                                </Badge>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
                   </div>
-                )}
-              </section>
+                  <Spacer y={8} />
+                  {pagination.total_page > 1 && (
+                    <div className="flex justify-end">
+                      <Pagination
+                        total={loading ? pagination.total_page : pagination.total_page}
+                        page={loading ? pagination.page_no : pagination.page_no}
+                        onChange={handlePageChange}
+                        isDisabled={loading}
+                      />
+                    </div>
+                  )}
+                </section>
+              </div>
             </div>
           </div>
         </div>

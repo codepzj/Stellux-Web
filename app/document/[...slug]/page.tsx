@@ -64,9 +64,7 @@ export default async function DocPage({ params }: DocPageProps) {
       />
       <SidebarInset>
         <div className="w-full flex flex-col md:flex-row justify-center gap-2 mt-8">
-          <div
-            className={`w-full ${hasHeadings() ? 'lg:w-4/5' : 'lg:w-full'} md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4`}
-          >
+          <div className="w-full lg:w-4/5 md:max-w-xl lg:max-w-3xl md:mr-4 mb-20 px-4">
             <div className="text-3xl font-bold font-sans py-4 mb-12">
               {isRoot ? document?.title || '' : documentContent?.title || ''}
             </div>
@@ -75,11 +73,13 @@ export default async function DocPage({ params }: DocPageProps) {
               content={isRoot ? document?.description || '' : documentContent?.content || ''}
             />
           </div>
-          <div className="hidden lg:block sticky top-8 h-[calc(100vh-1rem)] w-48 shrink-0">
-            <ScrollToc
-              content={isRoot ? document?.description || '' : documentContent?.content || ''}
-            />
-          </div>
+          {hasHeadings() && (
+            <div className="hidden lg:block sticky top-8 h-[calc(100vh-1rem)] w-48 shrink-0">
+              <ScrollToc
+                content={isRoot ? document?.description || '' : documentContent?.content || ''}
+              />
+            </div>
+          )}
         </div>
         <SidebarToggle />
         <BackToTop />

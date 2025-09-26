@@ -22,7 +22,7 @@ export default async function BlogContent({ params }: Props) {
 
   return (
     <div className="relative text-default-600 flex flex-col gap-4 lg:flex-row p-2 lg:p-4">
-      <div className={`w-full p-4 ${hasHeadings ? 'lg:w-4/5' : ''}`}>
+      <div className="w-full lg:w-4/5 p-4">
         <h1 className="text-3xl text-default-900 font-medium text-center">{post.title}</h1>
         <Spacer y={16} />
         <Markdown className="break-words overflow-x-auto" content={post.content} />

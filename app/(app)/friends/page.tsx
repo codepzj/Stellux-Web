@@ -1,6 +1,6 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
-import FriendCard from '@/components/friends/FriendCard'
-import FriendSubmitModal from '@/components/friends/FriendSubmitModal'
+import FriendCard from '@/components/business/friends/FriendCard'
+import FriendSubmitModal from '@/components/business/friends/FriendSubmitModal'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert } from '@heroui/alert'
