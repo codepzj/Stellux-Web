@@ -88,7 +88,7 @@ function ThemeToggle() {
 
 function MobileNav({ onClick }: { onClick: () => void }) {
   return (
-    <div className="fixed inset-x-0 top-14 z-30 bg-white/95 dark:bg-gray-950/95 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+    <div className="fixed inset-x-0 top-14 z-30 bg-white/95 dark:bg-gray-950 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
       <div className="flex flex-col space-y-3 px-4 py-3">
         {NAV_LINKS.map((item) => (
           <Link
@@ -112,7 +112,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-20 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+    <header className="sticky top-0 z-20 w-full bg-white/80 dark:bg-gray-950 backdrop-blur-sm">
       <div className="mx-auto flex h-16 items-center justify-between px-4 max-w-7xl">
         {/* 左侧：头像 + 品牌（移动端只显示头像） */}
         <Link href="/" className="flex items-center gap-2">

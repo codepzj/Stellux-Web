@@ -6,11 +6,13 @@ import type { DocumentVO } from '@/types/document'
 import { Book, Calendar, FileText } from 'lucide-react'
 import { WikiIcon } from '@/components/basic/svg-icon'
 import { ErrorPage } from '@/components/basic/error-page'
-import { Image, Card, CardBody, CardFooter, Link, Skeleton, Spacer } from '@heroui/react'
+import { Card, Skeleton, Spacer } from '@heroui/react'
 import { CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { formatRelativeTime } from '@/utils/date'
+import { useRouter } from 'next/navigation'
+import NextLink from 'next/link'
 
 export default function DocumentPage() {
   const [docList, setDocList] = useState<DocumentVO[]>([])
@@ -94,74 +96,75 @@ export default function DocumentPage() {
                       </Card>
                     ))
                   : docList.map((item) => (
-                      <Card
-                        key={item.id}
-                        className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
-                        onClick={() => window.open(`/document/${item.alias}`, '_blank')}
-                      >
-                        <CardContent className="p-0">
-                          <div className="flex items-stretch gap-4 min-h-[120px]">
-                            {/* 内容区域 */}
-                            <div className="flex-1 min-w-0 flex flex-col justify-between">
-                              <div>
-                                {/* 文章标题 */}
-                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
-                                  {item.title}
-                                </h3>
+                      <NextLink key={item.id} href={`/document/${item.alias}`} className="block">
+                        <Card className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
+                          <CardContent className="p-0">
+                            <div className="flex items-stretch gap-4 min-h-[120px]">
+                              {/* 内容区域 */}
+                              <div className="flex-1 min-w-0 flex flex-col justify-between">
+                                <div>
+                                  {/* 文章标题 */}
+                                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
+                                    {item.title}
+                                  </h3>
 
-                                {/* 文章摘要 */}
-                                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
-                                  {item.description}
-                                </p>
+                                  {/* 文章摘要 */}
+                                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                                    {item.description}
+                                  </p>
+                                </div>
+
+                                {/* 分类和标签 - 固定在卡片最底部 */}
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  {/* 显示文档类型 */}
+                                  <Badge
+                                    variant="secondary"
+                                    className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 cursor-pointer"
+                                  >
+                                    <FileText className="h-3 w-3 mr-1" />
+                                    文档
+                                  </Badge>
+                                </div>
                               </div>
 
-                              {/* 分类和标签 - 固定在卡片最底部 */}
-                              <div className="flex items-center gap-2 flex-wrap">
-                                {/* 显示文档类型 */}
-                                <Badge
-                                  variant="secondary"
-                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 cursor-pointer"
-                                >
-                                  <FileText className="h-3 w-3 mr-1" />
-                                  文档
-                                </Badge>
+                              {/* 右侧区域 - 图片和时间 */}
+                              <div className="flex flex-col items-end justify-between">
+                                {/* 右侧图片 - 固定16:9比例 */}
+                                <div className="hidden md:block w-48 h-27 mb-3">
+                                  <AspectRatio
+                                    ratio={16 / 9}
+                                    className="overflow-hidden rounded-md"
+                                  >
+                                    {item.thumbnail ? (
+                                      <img
+                                        src={item.thumbnail}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                        <WikiIcon className="w-8 h-8 text-gray-400 dark:text-gray-600" />
+                                      </div>
+                                    )}
+                                  </AspectRatio>
+                                </div>
+
+                                {/* 时间信息 - 与左侧标签对齐 */}
+                                <div>
+                                  <Badge
+                                    variant="outline"
+                                    className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                                  >
+                                    <Calendar className="h-3 w-3 mr-1" />
+                                    {formatRelativeTime(item.created_at)}
+                                  </Badge>
+                                </div>
                               </div>
                             </div>
-
-                            {/* 右侧区域 - 图片和时间 */}
-                            <div className="flex flex-col items-end justify-between">
-                              {/* 右侧图片 - 固定16:9比例 */}
-                              <div className="hidden md:block w-48 h-27 mb-3">
-                                <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
-                                  {item.thumbnail ? (
-                                    <img
-                                      src={item.thumbnail}
-                                      alt={item.title}
-                                      className="w-full h-full object-cover"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                                      <WikiIcon className="w-8 h-8 text-gray-400 dark:text-gray-600" />
-                                    </div>
-                                  )}
-                                </AspectRatio>
-                              </div>
-
-                              {/* 时间信息 - 与左侧标签对齐 */}
-                              <div>
-                                <Badge
-                                  variant="outline"
-                                  className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
-                                >
-                                  <Calendar className="h-3 w-3 mr-1" />
-                                  {formatRelativeTime(item.created_at)}
-                                </Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                          </CardContent>
+                        </Card>
+                      </NextLink>
                     ))}
               </div>
             </section>

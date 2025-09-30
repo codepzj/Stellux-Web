@@ -48,7 +48,7 @@ export default function Page() {
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
               一个程序员的碎碎念
             </h1>
-            <p className="text-sm md:text-[15px] text-gray-800 max-w-2xl mx-auto">
+            <p className="text-sm md:text-[15px] text-gray-800 dark:text-gray-300 max-w-2xl mx-auto">
               偶尔写点技术，偶尔聊聊生活，偶尔分享一些踩坑经历
             </p>
             {/* 改为移动端两列按钮网格，避免单个按钮被挤到下一行 */}
