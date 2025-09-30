@@ -73,7 +73,7 @@
   background-color: transparent;
   --focus-outlineColor: #1f6feb;
   --fgColor-default: #f0f6fc;
-  --fgColor-muted: #9198a1;
+  --fgColor-muted: #aab1bb; /* 稍微提升对比度 */
   --fgColor-accent: #4493f8;
   --fgColor-success: #3fb950;
   --fgColor-attention: #d29922;
@@ -91,7 +91,7 @@
   --borderColor-attention-emphasis: #9e6a03;
   --borderColor-danger-emphasis: #da3633;
   --borderColor-done-emphasis: #8957e5;
-  --color-prettylights-syntax-comment: #9198a1;
+  --color-prettylights-syntax-comment: #aab1bb; /* 提升可读性 */
   --color-prettylights-syntax-constant: #79c0ff;
   --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
   --color-prettylights-syntax-entity: #d2a8ff;
@@ -101,14 +101,14 @@
   --color-prettylights-syntax-string: #a5d6ff;
   --color-prettylights-syntax-variable: #ffa657;
   --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-  --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
+  --color-prettylights-syntax-brackethighlighter-angle: #aab1bb;
   --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
   --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
   --color-prettylights-syntax-carriage-return-text: #f0f6fc;
   --color-prettylights-syntax-carriage-return-bg: #b62324;
   --color-prettylights-syntax-string-regexp: #7ee787;
   --color-prettylights-syntax-markup-list: #f2cc60;
-  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-markup-heading: #9ec1ff; /* 提升标题可读性 */
   --color-prettylights-syntax-markup-italic: #f0f6fc;
   --color-prettylights-syntax-markup-bold: #f0f6fc;
   --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
@@ -138,9 +138,36 @@
   margin: 0;
   color: var(--fgColor-default);
   background-color: var(--bgColor-default);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 17px; /* 提升基础字号 */
+  line-height: 1.85; /* 再提升行高，增强可读性 */
   word-wrap: break-word;
+}
+
+/* 提升段落可读性与间距 */
+.markdown-body p {
+  margin: 0.8em 0 1em;
+  letter-spacing: 0.1px;
+}
+
+/* 标题在深色下更清晰 */
+.dark .markdown-body h1,
+.dark .markdown-body h2,
+.dark .markdown-body h3,
+.dark .markdown-body h4,
+.dark .markdown-body h5,
+.dark .markdown-body h6 {
+  color: var(--fgColor-default);
+}
+
+/* 链接在深色下提升对比度 */
+.dark .markdown-body a {
+  color: #9ec1ff;
+}
+
+/* 代码字号稍大一点，便于阅读 */
+.markdown-body code,
+.markdown-body pre {
+  font-size: 0.95rem;
 }
 
 /* 图片居中 */

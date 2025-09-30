@@ -3,10 +3,14 @@
 import { useEffect, useState } from 'react'
 import { getAllPublicDocument } from '@/api/document'
 import type { DocumentVO } from '@/types/document'
-import { Book, ChevronRight } from 'lucide-react'
+import { Book, Calendar, FileText } from 'lucide-react'
 import { WikiIcon } from '@/components/basic/svg-icon'
 import { ErrorPage } from '@/components/basic/error-page'
 import { Image, Card, CardBody, CardFooter, Link, Skeleton, Spacer } from '@heroui/react'
+import { CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { formatRelativeTime } from '@/utils/date'
 
 export default function DocumentPage() {
   const [docList, setDocList] = useState<DocumentVO[]>([])
@@ -50,87 +54,113 @@ export default function DocumentPage() {
                 </div>
               </div>
               <Spacer y={4} />
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4 min-h-[600px]">
                 {loading
                   ? Array.from({ length: skeletonCount }).map((_, idx) => (
                       <Card
                         key={idx}
-                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
+                        className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg"
                       >
-                        <CardBody className="p-5">
-                          <div className="flex gap-4 items-center">
-                            <div className="flex-1 space-y-2">
-                              <Skeleton className="h-6 w-2/3 mb-2" />
-                              <Skeleton className="h-4 w-full mb-2" />
-                              <Skeleton className="h-4 w-5/6" />
+                        <div className="flex items-stretch gap-4 min-h-[120px]">
+                          {/* 左侧内容骨架屏 */}
+                          <div className="flex-1 min-w-0 flex flex-col justify-between">
+                            <div className="space-y-2">
+                              {/* 标题骨架屏 */}
+                              <Skeleton className="h-5 w-3/4" />
+                              <Skeleton className="h-5 w-5/6" />
+                              {/* 描述骨架屏 */}
+                              <Skeleton className="h-4 w-full" />
+                              <Skeleton className="h-4 w-3/4" />
                             </div>
-                            <div className="flex-shrink-0 hidden md:block">
-                              <Skeleton className="w-48 h-27 rounded-md" />
+                            {/* 标签骨架屏 */}
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Skeleton className="h-5 w-16 rounded-full" />
                             </div>
                           </div>
-                        </CardBody>
-                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
-                          <div className="flex flex-wrap gap-2">
-                            <Skeleton className="h-5 w-12 rounded-full" />
+                          {/* 右侧图片和时间骨架屏 */}
+                          <div className="flex flex-col items-end justify-between">
+                            {/* 右侧图片骨架屏 */}
+                            <div className="hidden md:block w-48 h-27 mb-3">
+                              <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
+                                <Skeleton className="w-full h-full rounded-md" />
+                              </AspectRatio>
+                            </div>
+                            {/* 时间骨架屏 */}
+                            <div>
+                              <Skeleton className="h-5 w-16 rounded-full" />
+                            </div>
                           </div>
-                          <Skeleton className="h-5 w-20" />
-                        </CardFooter>
+                        </div>
                       </Card>
                     ))
                   : docList.map((item) => (
                       <Card
                         key={item.id}
-                        className="group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md w-full"
+                        className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
+                        onClick={() => window.open(`/document/${item.alias}`, '_blank')}
                       >
-                        <CardBody className="p-5">
-                          <div className="flex gap-4 items-center">
-                            <div className="flex-1 space-y-2">
-                              <h2 className="text-xl font-bold line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
-                                <Link href={`/document/${item.alias}`}>{item.title}</Link>
-                              </h2>
-                              <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
-                                {item.description}
-                              </p>
+                        <CardContent className="p-0">
+                          <div className="flex items-stretch gap-4 min-h-[120px]">
+                            {/* 内容区域 */}
+                            <div className="flex-1 min-w-0 flex flex-col justify-between">
+                              <div>
+                                {/* 文章标题 */}
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
+                                  {item.title}
+                                </h3>
+
+                                {/* 文章摘要 */}
+                                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                                  {item.description}
+                                </p>
+                              </div>
+
+                              {/* 分类和标签 - 固定在卡片最底部 */}
+                              <div className="flex items-center gap-2 flex-wrap">
+                                {/* 显示文档类型 */}
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 cursor-pointer"
+                                >
+                                  <FileText className="h-3 w-3 mr-1" />
+                                  文档
+                                </Badge>
+                              </div>
                             </div>
-                            <div className="flex-shrink-0 hidden md:block">
-                              <Link href={`/document/${item.alias}`} className="block">
-                                <div className="relative w-48 h-27 overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-md">
+
+                            {/* 右侧区域 - 图片和时间 */}
+                            <div className="flex flex-col items-end justify-between">
+                              {/* 右侧图片 - 固定16:9比例 */}
+                              <div className="hidden md:block w-48 h-27 mb-3">
+                                <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
                                   {item.thumbnail ? (
-                                    <Image
-                                      width={192}
-                                      height={108}
+                                    <img
                                       src={item.thumbnail}
                                       alt={item.title}
-                                      className="object-cover w-full h-full"
+                                      className="w-full h-full object-cover"
                                       loading="lazy"
-                                      isZoomed
                                     />
                                   ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                      <div className="rounded-full bg-white/90 dark:bg-gray-700/90 p-3">
-                                        <WikiIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                                      </div>
+                                    <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                      <WikiIcon className="w-8 h-8 text-gray-400 dark:text-gray-600" />
                                     </div>
                                   )}
-                                </div>
-                              </Link>
+                                </AspectRatio>
+                              </div>
+
+                              {/* 时间信息 - 与左侧标签对齐 */}
+                              <div>
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                                >
+                                  <Calendar className="h-3 w-3 mr-1" />
+                                  {formatRelativeTime(item.created_at)}
+                                </Badge>
+                              </div>
                             </div>
                           </div>
-                        </CardBody>
-                        <CardFooter className="flex flex-wrap items-center justify-between px-5 pb-5 pt-0">
-                          <div className="flex flex-wrap gap-2">
-                            <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:bg-gray-800/60 dark:text-gray-200">
-                              文档
-                            </span>
-                          </div>
-                          <Link
-                            href={`/document/${item.alias}`}
-                            className="inline-flex items-center text-sm font-medium text-primary-600 transition-all duration-300 hover:text-primary-800 hover:translate-x-1 dark:text-primary-400 dark:hover:text-primary-200"
-                          >
-                            查看文档
-                            <ChevronRight className="ml-1 h-4 w-4" />
-                          </Link>
-                        </CardFooter>
+                        </CardContent>
                       </Card>
                     ))}
               </div>

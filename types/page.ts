@@ -22,3 +22,8 @@ export interface PageVO<T> {
 export interface PageWithTagName extends Page {
   label_name?: string
 }
+
+// 请求分页携带的params，包含分类名称
+export interface PageWithCategoryName extends Page {
+  category_name?: string
+}

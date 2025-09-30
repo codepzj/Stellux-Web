@@ -2,6 +2,10 @@
 
 import { Card, CardBody, Image, Link, Tooltip } from '@heroui/react'
 import { FriendShowVO } from '@/api/friend'
+import { CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { ExternalLink, Globe } from 'lucide-react'
 
 type Props = {
   friend: FriendShowVO
@@ -19,40 +23,63 @@ export default function FriendCard({ friend }: Props) {
 
   return (
     <Link href={friend.site_url} target="_blank" rel="noreferrer noopener" className="block">
-      <Card
-        className="relative border border-gray-100 dark:border-gray-900/60 bg-white/60 dark:bg-gray-950/60 backdrop-blur-[2px] shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_18px_rgba(0,0,0,0.08)] hover:translate-y-[-1px] transition-all duration-200"
-        radius="lg"
-      >
-        <CardBody className="flex items-start gap-4 p-4">
-          <div className="relative">
-            <Image
-              alt={friend.name}
-              src={friend.avatar_url || '/favicon.ico'}
-              width={48}
-              height={48}
-              radius="full"
-              className="object-cover ring-1 ring-gray-200/80 dark:ring-gray-800/80"
-            />
-          </div>
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <div className="font-semibold truncate max-w-[12rem] sm:max-w-[16rem]">
-                {friend.name}
+      <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
+        <CardContent className="p-0 transition-none">
+          <div className="flex items-stretch gap-4 min-h-[120px] transition-none">
+            {/* 内容区域 */}
+            <div className="flex-1 min-w-0 flex flex-col justify-between transition-none">
+              <div>
+                {/* 友链标题 */}
+                <h3 className="transition-none text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400">
+                  {friend.name}
+                </h3>
+
+                {/* 友链描述 */}
+                <p className="transition-none text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                  {friend.description}
+                </p>
               </div>
-              <Tooltip content={typeLabel} placement="top" offset={6}>
-                <span className="shrink-0 rounded-full border border-gray-200/80 dark:border-gray-800/80 px-2 py-0.5 text-[10px] text-gray-600 dark:text-gray-300 bg-gray-50/60 dark:bg-gray-900/40">
+
+              {/* 类型标签 - 固定在卡片最底部 */}
+              <div className="flex items-center gap-2 flex-wrap transition-none">
+                {/* 显示友链类型 */}
+                <Badge
+                  variant="secondary"
+                  className="transition-none text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 cursor-pointer"
+                >
+                  <Globe className="h-3 w-3 mr-1" />
                   {typeLabel}
-                </span>
-              </Tooltip>
+                </Badge>
+              </div>
             </div>
-            <p className="mt-1 text-sm text-gray-600/90 dark:text-gray-300/90 line-clamp-2">
-              {friend.description}
-            </p>
-            <p className="mt-1 text-xs text-gray-500/90 dark:text-gray-400/90 truncate">
-              {friend.site_url}
-            </p>
+
+            {/* 右侧区域 - 头像和链接 */}
+            <div className="flex flex-col items-end justify-between transition-none">
+              {/* 头像 - 1:1比例小头像 */}
+              <div className="hidden md:block w-16 h-16 mb-3 transition-none">
+                <Image
+                  alt={friend.name}
+                  src={friend.avatar_url || '/favicon.ico'}
+                  width={64}
+                  height={64}
+                  radius="full"
+                  className="object-cover ring-2 ring-gray-200/80 dark:ring-gray-800/80 w-full h-full"
+                />
+              </div>
+
+              {/* 网站信息 - 与左侧标签对齐 */}
+              <div className="transition-none">
+                <Badge
+                  variant="outline"
+                  className="transition-none text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  {typeLabel}
+                </Badge>
+              </div>
+            </div>
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </Link>
   )

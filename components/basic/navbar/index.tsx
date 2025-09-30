@@ -27,6 +27,7 @@ const WAVE_UNDERLINE_STYLE = `
 `
 
 const NAV_LINKS = [
+  { href: '/', label: '首页' },
   { href: '/blog', label: '博客' },
   { href: '/document', label: '文档' },
   { href: '/friends', label: '友链' },
@@ -49,10 +50,10 @@ function DesktopNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm transition-colors duration-200 ${
+              className={`text-[14px] font-medium ${
                 isActive
-                  ? 'text-primary font-medium nav-link-active'
-                  : 'text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100'
+                  ? 'text-primary nav-link-active'
+                  : 'text-gray-800 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white'
               }`}
               style={{ position: 'relative' }}
             >
@@ -67,15 +68,6 @@ function DesktopNav() {
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
@@ -84,14 +76,12 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-      aria-label={theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'}
+      className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+      aria-label="切换主题"
     >
-      {theme === 'dark' ? (
-        <SunIcon size={18} className="text-gray-600 dark:text-gray-300" />
-      ) : (
-        <MoonIcon size={18} className="text-gray-600 dark:text-gray-300" />
-      )}
+      {/* 同时渲染两个图标，依赖 html.dark 类控制显示，避免首次客户端插入造成闪烁 */}
+      <SunIcon size={18} className="hidden dark:inline text-gray-600 dark:text-gray-300" />
+      <MoonIcon size={18} className="inline dark:hidden text-gray-600 dark:text-gray-300" />
     </button>
   )
 }
@@ -122,14 +112,19 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-20 w-full bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
-      <div className="mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="text-xl font-semibold text-primary hover:opacity-80 transition-opacity"
-        >
-          Gopher
+    <header className="sticky top-0 z-20 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+      <div className="mx-auto flex h-16 items-center justify-between px-4 max-w-7xl">
+        {/* 左侧：头像 + 品牌（移动端只显示头像） */}
+        <Link href="/" className="flex items-center gap-2">
+          <img
+            src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+            alt="avatar"
+            className="w-7 h-7 rounded-full object-cover"
+            loading="lazy"
+          />
+          <span className="hidden md:block w-24 text-md font-bold text-primary hover:opacity-80">
+            浩瀚星河
+          </span>
         </Link>
 
         {/* 桌面导航 */}
@@ -139,7 +134,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-2">
           {/* 移动端菜单按钮 */}
           <button
-            className="md:hidden text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="md:hidden text-gray-700 dark:text-gray-200 p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
             onClick={() => setIsMenuOpen((v) => !v)}
             aria-label="菜单"
           >

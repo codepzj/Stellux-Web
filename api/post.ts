@@ -1,9 +1,9 @@
-import { PageVO, Page, PageWithTagName } from '@/types/page'
+import { PageVO, Page, PageWithTagName, PageWithCategoryName } from '@/types/page'
 import { PostVO } from '@/types/post'
 import { request } from '@/utils/request'
 
 // 获取文章列表
-export const getPostListAPI = (page: PageWithTagName) => {
+export const getPostListAPI = (page: PageWithTagName | PageWithCategoryName) => {
   return request.get<PageVO<PostVO>>('/post/list', { params: page })
 }
 

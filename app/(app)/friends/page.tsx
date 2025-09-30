@@ -1,12 +1,10 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
 import FriendCard from '@/components/business/friends/FriendCard'
 import FriendSubmitModal from '@/components/business/friends/FriendSubmitModal'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Alert } from '@heroui/alert'
+import { Card, CardContent } from '@/components/ui/card'
 import Comment from '@/components/business/comment'
 import { Spacer } from '@heroui/spacer'
-import { ExternalLink, User, Globe, MessageCircle } from 'lucide-react'
+import { User, Globe, MessageCircle, Crown, Info } from 'lucide-react'
 import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
@@ -45,15 +43,19 @@ export default async function FriendsPage() {
       <div className="mt-8 text-sm">
         <FriendSubmitModal />
       </div>
-      <Alert
-        className="my-4"
-        color="warning"
-        description="每月持续输出内容, 先挂载好本站友链, 完成后在「自助提交友链」提交申请"
-        title="友链交换规则"
-        variant="faded"
-      />
+      <div className="my-6 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-4">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-gray-600 dark:text-gray-300 mt-0.5" />
+          <div className="space-y-1">
+            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">友链交换规则</div>
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+              每月持续输出内容；请先挂载本站友链，完成后在「自助提交友链」中提交申请。
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="mt-8">
-        <Card className="border border-border/20 bg-card/10 shadow-sm">
+        <Card className="border border-border/20 bg-card/10 shadow-sm transition-none">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-6">
               {/* 左侧：头像和基本信息 */}
@@ -69,36 +71,31 @@ export default async function FriendsPage() {
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-lg text-foreground">浩瀚星河</h3>
-                    <Badge variant="secondary" className="text-xs">
-                      站长
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    缓慢向上也是一种勇气。
-                  </p>
-                  <div className="flex flex-wrap gap-4 text-sm">
-                    <a
-                      href="https://www.golangblog.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors"
-                    >
-                      <Globe className="w-4 h-4" />
-                      网站
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                    <a
-                      href="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors"
-                    >
-                      <User className="w-4 h-4" />
-                      头像
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Crown className="w-4 h-4 text-gray-500" />
+                      <span className="text-gray-800 dark:text-gray-200">名称：</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">浩瀚星河</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className="w-4 h-4 text-gray-500" />
+                      <span className="text-gray-800 dark:text-gray-200">描述：</span>
+                      <span className="text-gray-900 dark:text-white">缓慢向上也是一种勇气。</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-gray-500" />
+                      <span className="text-gray-800 dark:text-gray-200">网站：</span>
+                      <span className="text-gray-900 dark:text-white font-mono text-xs">
+                        https://www.golangblog.com
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-gray-800 dark:text-gray-200">头像：</span>
+                      <span className="text-gray-900 dark:text-white font-mono text-xs">
+                        https://cdn.codepzj.cn/image/20250529174726187.jpeg
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -20,6 +20,7 @@ export default function BlogList() {
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get('page')) || 1
   const tagName = searchParams.get('tag') || ''
+  const categoryName = searchParams.get('category') || ''
   const router = useRouter()
   const pageSize = 10
 
@@ -44,6 +45,7 @@ export default function BlogList() {
           page_no: currentPage,
           page_size: pageSize,
           label_name: tagName,
+          category_name: categoryName,
         })
 
         if (response && response.data) {
@@ -70,36 +72,54 @@ export default function BlogList() {
     }
 
     fetchPosts()
-  }, [currentPage, pageSize, tagName])
+  }, [currentPage, pageSize, tagName, categoryName])
 
   // 构建URL参数
-  const buildUrlParams = (page: number, tag?: string) => {
+  const buildUrlParams = (page: number, tag?: string, category?: string) => {
     const params = new URLSearchParams()
     params.set('page', page.toString())
     if (tag) {
       params.set('tag', tag)
+    } else if (category) {
+      params.set('category', category)
     }
     return params.toString()
   }
 
   // 导航到指定页面
-  const navigateToPage = (page: number, tag?: string) => {
+  const navigateToPage = (page: number, tag?: string, category?: string) => {
     if (loadingRef.current) return
 
     loadingRef.current = true
     setLoading(true)
-    router.push(`/blog?${buildUrlParams(page, tag)}`)
+    router.push(`/blog?${buildUrlParams(page, tag, category)}`)
   }
 
   const handlePageChange = (page: number) => {
-    navigateToPage(page, tagName)
+    // 互斥：若已有 tag，则忽略 category；否则使用 category
+    if (tagName) {
+      navigateToPage(page, tagName, undefined)
+    } else if (categoryName) {
+      navigateToPage(page, undefined, categoryName)
+    } else {
+      navigateToPage(page)
+    }
   }
 
   const handleTagClick = (tag: string) => {
     // 如果点击的是当前选中的标签，不做任何操作
     if (tag === tagName) return
 
-    navigateToPage(1, tag) // 重置页码为1
+    // 互斥：选择 tag 时清空 category
+    navigateToPage(1, tag, undefined)
+  }
+
+  const handleCategoryClick = (category: string) => {
+    // 如果点击的是当前选中的分类，不做任何操作
+    if (category === categoryName) return
+
+    // 互斥：选择 category 时清空 tag
+    navigateToPage(1, undefined, category)
   }
 
   // 计算骨架屏的数量，优先用上一次的posts数量，否则用pageSize
@@ -118,35 +138,59 @@ export default function BlogList() {
             <div className="container mx-auto px-4 py-12 md:px-6 md:py-24">
               <div className="max-w-5xl mx-auto space-y-12">
                 <section className="space-y-6">
-                  {/* 博客标题、总数和搜索框同一行 */}
+                  {/* 博客标题和搜索框同一行 */}
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <Book className="w-6 h-6" />
-                      <span className="text-xl font-semibold">
-                        Posts
-                        {tagName && (
-                          <span className="text-base font-semibold text-gray-600 dark:text-gray-400 ml-2">
-                            · {tagName}
-                          </span>
-                        )}
-                      </span>
-                      <span className="text-gray-500 text-sm ml-2">
+                      <span className="text-xl font-semibold">Posts</span>
+                      <span className="text-gray-700 dark:text-gray-300 text-sm ml-2 font-medium">
                         {pagination.total_count} 篇
                       </span>
-                      {tagName && (
-                        <button
-                          onClick={() => {
-                            if (!tagName) return
-                            navigateToPage(1) // 清除标签，重置页码
-                          }}
-                          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 whitespace-nowrap ml-2"
-                        >
-                          清除筛选
-                        </button>
-                      )}
                     </div>
                     <Search className="md:w-36" />
                   </div>
+
+                  {/* 筛选信息显示区域 */}
+                  {(tagName || categoryName) && (
+                    <div className="bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            当前筛选：
+                          </span>
+                          <div className="flex items-center gap-2">
+                            {categoryName && (
+                              <Badge
+                                variant="secondary"
+                                className="text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                              >
+                                <FolderOpen className="h-4 w-4 mr-1" />
+                                {categoryName}
+                              </Badge>
+                            )}
+                            {tagName && (
+                              <Badge
+                                variant="outline"
+                                className="text-sm text-gray-700 dark:text-gray-300"
+                              >
+                                <Tag className="h-4 w-4 mr-1" />
+                                {tagName}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (!tagName && !categoryName) return
+                            navigateToPage(1) // 清除所有筛选，重置页码
+                          }}
+                          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 font-medium"
+                        >
+                          清除筛选
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-col gap-4 min-h-[600px]">
                     {loading ? (
                       Array.from({ length: skeletonCount }).map((_, idx) => (
@@ -154,25 +198,35 @@ export default function BlogList() {
                           key={idx}
                           className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg"
                         >
-                          <div className="flex items-start gap-4">
-                            <div className="flex-1 space-y-2">
-                              <Skeleton className="h-4 w-3/4" />
-                              <Skeleton className="h-4 w-full" />
-                              <Skeleton className="h-4 w-2/3" />
-                              <div className="flex items-center gap-2">
-                                <Skeleton className="h-5 w-12 rounded-full" />
+                          <div className="flex items-stretch gap-4 min-h-[120px]">
+                            {/* 左侧内容骨架屏 */}
+                            <div className="flex-1 min-w-0 flex flex-col justify-between">
+                              <div className="space-y-2">
+                                {/* 标题骨架屏 */}
+                                <Skeleton className="h-5 w-3/4" />
+                                <Skeleton className="h-5 w-5/6" />
+                                {/* 描述骨架屏 */}
+                                <Skeleton className="h-4 w-full" />
+                                <Skeleton className="h-4 w-3/4" />
+                              </div>
+                              {/* 标签骨架屏 */}
+                              <div className="flex items-center gap-2 flex-wrap">
                                 <Skeleton className="h-5 w-16 rounded-full" />
+                                <Skeleton className="h-5 w-12 rounded-full" />
                               </div>
                             </div>
-                            <div className="flex flex-col items-end gap-2">
-                              {/* 右侧图片 - 固定16:9比例 */}
-                              <div className="hidden md:block w-48 h-27">
+                            {/* 右侧图片和时间骨架屏 */}
+                            <div className="flex flex-col items-end justify-between">
+                              {/* 右侧图片骨架屏 */}
+                              <div className="hidden md:block w-48 h-27 mb-3">
                                 <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
                                   <Skeleton className="w-full h-full rounded-md" />
                                 </AspectRatio>
                               </div>
                               {/* 时间骨架屏 */}
-                              <Skeleton className="h-5 w-16 rounded-full" />
+                              <div>
+                                <Skeleton className="h-5 w-16 rounded-full" />
+                              </div>
                             </div>
                           </div>
                         </Card>
@@ -183,30 +237,36 @@ export default function BlogList() {
                       posts.map((post) => (
                         <Card
                           key={post.id}
-                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-800/70 transition-all duration-200 cursor-pointer group rounded-lg"
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
                           onClick={() => router.push(`/blog/${post.alias}`)}
                         >
                           <CardContent className="p-0">
-                            <div className="flex items-start gap-4">
+                            <div className="flex items-stretch gap-4 min-h-[120px]">
                               {/* 内容区域 */}
-                              <div className="flex-1 min-w-0">
-                                {/* 文章标题 */}
-                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
-                                  {post.title}
-                                </h3>
+                              <div className="flex-1 min-w-0 flex flex-col justify-between">
+                                <div>
+                                  {/* 文章标题 */}
+                                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400 transition-colors duration-200">
+                                    {post.title}
+                                  </h3>
 
-                                {/* 文章摘要 */}
-                                <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
-                                  {post.description}
-                                </p>
+                                  {/* 文章摘要 */}
+                                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                                    {post.description}
+                                  </p>
+                                </div>
 
-                                {/* 分类和标签 */}
+                                {/* 分类和标签 - 固定在卡片最底部 */}
                                 <div className="flex items-center gap-2 flex-wrap">
                                   {/* 显示分类 */}
                                   {post.category && (
                                     <Badge
                                       variant="secondary"
                                       className="text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors duration-200 cursor-pointer"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleCategoryClick(post.category)
+                                      }}
                                     >
                                       <FolderOpen className="h-3 w-3 mr-1" />
                                       {post.category}
@@ -231,9 +291,9 @@ export default function BlogList() {
                               </div>
 
                               {/* 右侧区域 - 图片和时间 */}
-                              <div className="flex flex-col items-end gap-2">
+                              <div className="flex flex-col items-end justify-between">
                                 {/* 右侧图片 - 固定16:9比例 */}
-                                <div className="hidden md:block w-48 h-27">
+                                <div className="hidden md:block w-48 h-27 mb-3">
                                   <AspectRatio
                                     ratio={16 / 9}
                                     className="overflow-hidden rounded-md"
@@ -253,14 +313,16 @@ export default function BlogList() {
                                   </AspectRatio>
                                 </div>
 
-                                {/* 时间信息在右下角 */}
-                                <Badge
-                                  variant="outline"
-                                  className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
-                                >
-                                  <Calendar className="h-3 w-3 mr-1" />
-                                  {formatRelativeTime(post.created_at)}
-                                </Badge>
+                                {/* 时间信息 - 与左侧标签对齐 */}
+                                <div>
+                                  <Badge
+                                    variant="outline"
+                                    className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                                  >
+                                    <Calendar className="h-3 w-3 mr-1" />
+                                    {formatRelativeTime(post.created_at)}
+                                  </Badge>
+                                </div>
                               </div>
                             </div>
                           </CardContent>
