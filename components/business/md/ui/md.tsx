@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import CopyButton from './copy'
-import Image from 'next/image'
+import { Image } from '@heroui/image'
 import './md.css'
 import { cn } from '@/lib/utils'
 import { Alert } from '@heroui/alert'
@@ -96,7 +96,7 @@ export default function Md({ content, className }: { content: string; className?
             h2: ({ node, children, ...props }) => (
               <h2
                 id={getHeaderId(node)}
-                className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 my-6"
+                className="scroll-m-20 border-b border-gray-200 dark:border-gray-700 pb-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 first:mt-0 my-8"
                 {...props}
               >
                 {children}
@@ -105,56 +105,71 @@ export default function Md({ content, className }: { content: string; className?
             h3: ({ node, children, ...props }) => (
               <h3
                 id={getHeaderId(node)}
-                className="scroll-m-20 text-2xl font-semibold tracking-tight my-4"
+                className="scroll-m-20 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100 my-6"
                 {...props}
               >
                 {children}
               </h3>
             ),
             h4: ({ children }) => (
-              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight my-2">{children}</h4>
+              <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 my-4">
+                {children}
+              </h4>
             ),
-            p: ({ children }) => <p className="mt-4 leading-7">{children}</p>,
+            p: ({ children }) => (
+              <p className="mt-4 leading-relaxed text-gray-800 dark:text-gray-200 text-base font-normal">
+                {children}
+              </p>
+            ),
             blockquote: ({ children }) => {
               return <Alert className="blockquote" color="default" title={children} />
             },
 
-            table: ({ children }) => <table className="mt-6 w-full border">{children}</table>,
-            tr: ({ children }) => <tr className="even:bg-muted border-t">{children}</tr>,
+            table: ({ children }) => (
+              <table className="mt-6 w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                {children}
+              </table>
+            ),
+            tr: ({ children }) => (
+              <tr className="even:bg-gray-50 dark:even:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                {children}
+              </tr>
+            ),
             th: ({ children }) => (
-              <th className="px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
+              <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 [&[align=center]]:text-center [&[align=right]]:text-right">
                 {children}
               </th>
             ),
             td: ({ children }) => (
-              <td className="px-4 py-2 text-left align-top [&[align=center]]:text-center [&[align=right]]:text-right">
+              <td className="px-4 py-3 text-left align-top text-gray-800 dark:text-gray-200 [&[align=center]]:text-center [&[align=right]]:text-right">
                 {children}
               </td>
             ),
             ul: ({ children }) => (
-              <ul className="mt-4 list-disc [&>li]:mt-2 [&>li]:ml-0">{children}</ul>
+              <ul className="mt-4 list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
+                {children}
+              </ul>
             ),
             ol: ({ children }) => (
-              <ol className="mt-4 list-decimal [&>li]:mt-2 [&>li]:ml-0">{children}</ol>
+              <ol className="mt-4 list-decimal list-inside space-y-2 text-gray-800 dark:text-gray-200">
+                {children}
+              </ol>
             ),
             img: ({ src, alt }) => (
               <PhotoView src={src as string} key={photoIndex++}>
-                <Image
-                  height={1000}
-                  width={1000}
-                  className="my-6 rounded-md"
-                  src={src as string}
-                  alt={alt as string}
-                />
+                <Image className="my-6 rounded-md" src={src as string} alt={alt as string} />
               </PhotoView>
             ),
             a: ({ children, href }) => (
-              <a href={href as string} className="text-primary">
+              <a
+                href={href as string}
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2 transition-colors duration-200"
+              >
                 {children}
               </a>
             ),
             pre: ({ children }) => (
-              <pre className="rounded-md bg-zinc-100 dark:bg-zinc-900 !p-0 my-4 overflow-x-auto">
+              <pre className="rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 !p-0.5 my-6 overflow-x-auto text-sm">
                 {children}
               </pre>
             ),
@@ -194,7 +209,7 @@ export default function Md({ content, className }: { content: string; className?
 
               // 单行代码块
               return (
-                <code className="rounded-md bg-muted px-2 mx-1 py-0.5 text-sm text-foreground">
+                <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-1 text-sm text-gray-800 dark:text-gray-200 font-mono border border-gray-200 dark:border-gray-700">
                   {children}
                 </code>
               )

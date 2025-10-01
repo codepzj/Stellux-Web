@@ -41,17 +41,17 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
 
   if (!hasChildren) {
     return (
-      <SidebarMenuItem className={cn('rounded-md transition-all duration-200', `ml-${depth * 2}`)}>
+      <SidebarMenuItem className={cn('rounded-md transition-all duration-200')}>
         <SidebarMenuButton asChild tooltip={item.title}>
           <Link
             href={item.url}
             className={cn(
-              'hover:!bg-primary/10 hover:dark:!bg-primary/20',
+              'hover:!bg-primary/10 hover:dark:!bg-primary/20 transition-all duration-200 ease-in-out',
               pathname === item.url && 'bg-primary/10 dark:bg-primary/20'
             )}
           >
             {item.icon && <item.icon />}
-            <span>{item.title}</span>
+            <span className="transition-all duration-200">{item.title}</span>
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -62,18 +62,33 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
     <Collapsible asChild open={open} onOpenChange={setOpen}>
       <SidebarMenuItem className="ml-0">
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton tooltip={item.title}>
+          <SidebarMenuButton
+            tooltip={item.title}
+            className="transition-all duration-200 ease-in-out hover:bg-primary/5 dark:hover:bg-primary/10"
+          >
             {item.icon && <item.icon />}
-            <span>{item.title}</span>
+            <span className="transition-all duration-200">{item.title}</span>
             <ChevronRight
-              className={cn('ml-auto transition-transform duration-200', open && 'rotate-90')}
+              className={cn(
+                'ml-auto transition-all duration-300 ease-in-out transform',
+                open && 'rotate-90'
+              )}
             />
           </SidebarMenuButton>
         </CollapsibleTrigger>
-        <CollapsibleContent>
-          <SidebarMenuSub>
-            {item.items?.map((child: DocTreeItem) => (
-              <RecursiveMenuItem key={child.title} item={child} depth={depth + 1} />
+        <CollapsibleContent className="overflow-hidden transition-all duration-300 ease-in-out">
+          <SidebarMenuSub className="space-y-1">
+            {item.items?.map((child: DocTreeItem, index: number) => (
+              <div
+                key={child.title}
+                className="animate-in fade-in slide-in-from-top-2 duration-300 ease-out"
+                style={{
+                  animationDelay: `${index * 80}ms`,
+                  animationFillMode: 'both',
+                }}
+              >
+                <RecursiveMenuItem item={child} depth={depth + 1} />
+              </div>
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>

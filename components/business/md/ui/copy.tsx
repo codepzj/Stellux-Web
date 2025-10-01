@@ -1,6 +1,6 @@
 'use client'
 
-import { IconCopy, IconCheck } from '@tabler/icons-react'
+import { Clipboard, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@heroui/button'
 import { cn } from '@/lib/utils'
@@ -162,9 +162,9 @@ const CopyButton = ({ copyId, className }: { copyId: string; className?: string 
       )}
     >
       {copied ? (
-        <IconCheck className="transition-transform duration-300" size={16} />
+        <Check className="transition-transform duration-300" size={16} />
       ) : (
-        <IconCopy className="transition-transform duration-300" size={16} />
+        <Clipboard className="transition-transform duration-300" size={16} />
       )}
     </Button>
   )

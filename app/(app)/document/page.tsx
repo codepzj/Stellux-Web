@@ -3,15 +3,13 @@
 import { useEffect, useState } from 'react'
 import { getAllPublicDocument } from '@/api/document'
 import type { DocumentVO } from '@/types/document'
-import { Book, Calendar, FileText } from 'lucide-react'
+import { Book, FileText } from 'lucide-react'
 import { WikiIcon } from '@/components/basic/svg-icon'
 import { ErrorPage } from '@/components/basic/error-page'
 import { Card, Skeleton, Spacer } from '@heroui/react'
 import { CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { formatRelativeTime } from '@/utils/date'
-import { useRouter } from 'next/navigation'
 import NextLink from 'next/link'
 
 export default function DocumentPage() {
@@ -79,17 +77,13 @@ export default function DocumentPage() {
                               <Skeleton className="h-5 w-16 rounded-full" />
                             </div>
                           </div>
-                          {/* 右侧图片和时间骨架屏 */}
+                          {/* 右侧图片骨架屏 */}
                           <div className="flex flex-col items-end justify-between">
                             {/* 右侧图片骨架屏 */}
                             <div className="hidden md:block w-48 h-27 mb-3">
                               <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-md">
                                 <Skeleton className="w-full h-full rounded-md" />
                               </AspectRatio>
-                            </div>
-                            {/* 时间骨架屏 */}
-                            <div>
-                              <Skeleton className="h-5 w-16 rounded-full" />
                             </div>
                           </div>
                         </div>
@@ -148,17 +142,6 @@ export default function DocumentPage() {
                                       </div>
                                     )}
                                   </AspectRatio>
-                                </div>
-
-                                {/* 时间信息 - 与左侧标签对齐 */}
-                                <div>
-                                  <Badge
-                                    variant="outline"
-                                    className="text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
-                                  >
-                                    <Calendar className="h-3 w-3 mr-1" />
-                                    {formatRelativeTime(item.created_at)}
-                                  </Badge>
                                 </div>
                               </div>
                             </div>

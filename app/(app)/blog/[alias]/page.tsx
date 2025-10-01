@@ -6,6 +6,8 @@ import { Toc } from '@/components/business/toc'
 import { BackToTop } from '@/components/basic/tool/back-to-top'
 import { ScrollToComment } from '@/components/basic/tool/scroll-to-comment'
 import Comment from '@/components/business/comment'
+import { Calendar, Clock, BookOpen } from 'lucide-react'
+import { formatRelativeTime, formatDate, estimateReadingTime } from '@/lib/time-utils'
 
 type Props = {
   params: Promise<{ alias: string }>
@@ -24,6 +26,34 @@ export default async function BlogContent({ params }: Props) {
     <div className="relative text-default-600 flex flex-col gap-4 lg:flex-row p-2 lg:p-4">
       <div className="w-full lg:w-4/5 p-4">
         <h1 className="text-3xl text-default-900 font-medium text-center">{post.title}</h1>
+
+        {/* 文章元信息 */}
+        <div className="flex items-center justify-center gap-3 text-xs md:text-sm text-gray-600 dark:text-gray-300 my-6 px-4">
+          <div className="flex items-center gap-1">
+            <Calendar className="h-3 w-3 md:h-4 md:w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium">
+              <span className="md:hidden">{formatDate(post.created_at)}</span>
+              <span className="hidden md:inline">创建于 {formatDate(post.created_at)}</span>
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Clock className="h-3 w-3 md:h-4 md:w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium">
+              <span className="md:hidden">{formatRelativeTime(post.updated_at)}</span>
+              <span className="hidden md:inline">更新于 {formatRelativeTime(post.updated_at)}</span>
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            <BookOpen className="h-3 w-3 md:h-4 md:w-4 text-gray-500 dark:text-gray-400" />
+            <span className="font-medium">
+              <span className="md:hidden">{estimateReadingTime(post.content)}min</span>
+              <span className="hidden md:inline">
+                约 {estimateReadingTime(post.content)} 分钟阅读
+              </span>
+            </span>
+          </div>
+        </div>
+
         <Spacer y={16} />
         <Markdown className="break-words overflow-x-auto" content={post.content} />
         <Spacer y={16} />
