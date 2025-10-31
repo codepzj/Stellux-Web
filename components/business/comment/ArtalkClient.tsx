@@ -16,6 +16,11 @@ export default function ArtalkClient() {
   const pathname = usePathname()
   const { theme } = useTheme()
 
+  // 开发环境不显示
+  if (process.env.NODE_ENV === 'development') {
+    return null
+  }
+
   useEffect(() => {
     let artalk: any
     const init = async () => {

@@ -23,7 +23,7 @@ export default function FriendCard({ friend }: Props) {
 
   return (
     <Link href={friend.site_url} target="_blank" rel="noreferrer noopener" className="block">
-      <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
+      <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
         <CardContent className="p-0 transition-none">
           <div className="flex items-stretch gap-4 min-h-[120px] transition-none">
             {/* 内容区域 */}

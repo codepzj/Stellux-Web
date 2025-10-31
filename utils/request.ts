@@ -19,12 +19,9 @@ class Request {
     // 请求配置项
     const options: RequestInit = {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: data ? JSON.stringify(data) : undefined, // body携带参数
-      next: { revalidate: isCache ? cacheTime : 5 }, // 默认缓存5秒，避免动态服务器使用错误
+      headers: { 'Content-Type': 'application/json', ...headers },
+      body: data ? JSON.stringify(data) : undefined,
+      ...(isCache ? { next: { revalidate: cacheTime }} : { cache: 'no-store' })
     }
 
     try {
@@ -36,11 +33,11 @@ class Request {
     }
   }
 
-  public get<D>(url: string, data?: { params?: object }): Promise<Response<D>> {
+  public get<D>(url: string, data?: { params?: object }, isCache?: boolean, cacheTime?: number): Promise<Response<D>> {
     const queryString = data?.params
       ? `?${new URLSearchParams(data.params as Record<string, string>).toString()}`
       : ''
-    return this.request<any, D>(`${url}${queryString}`, 'GET')
+    return this.request<any, D>(`${url}${queryString}`, 'GET', undefined, undefined, isCache, cacheTime)
   }
 
   public async post<T, D>(url: string, data: T): Promise<Response<D>> {

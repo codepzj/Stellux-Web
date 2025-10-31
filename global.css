@@ -122,6 +122,28 @@
   }
   body {
     @apply bg-background text-foreground min-h-svh w-full;
+    /* 多层背景：细点网格 + 顶/底柔光（噪点改为独立固定覆盖层） */
+    background-image:
+      radial-gradient(#e5e7eb 1px, transparent 1px),
+      radial-gradient(600px 300px at 50% 0, rgba(99,102,241,0.22), transparent 60%),
+      radial-gradient(600px 300px at 50% 100%, rgba(99,102,241,0.16), transparent 60%);
+    background-size:
+      22px 22px,
+      100% 420px,
+      100% 420px;
+    background-position:
+      0 0,
+      50% -120px,
+      50% calc(100% + 120px);
+    background-repeat:
+      repeat,
+      no-repeat,
+      no-repeat;
+    background-attachment:
+      fixed,
+      fixed,
+      fixed,
+      fixed;
   }
 
   button:not(:disabled),
@@ -137,6 +159,16 @@
       font-size: 16px !important;
     }
   }
+}
+
+/* 颗粒效果已移除 */
+
+/* 深色模式下替换背景层参数 */
+.dark body {
+  background-image:
+    radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(600px 300px at 50% 0, rgba(99,102,241,0.18), transparent 60%),
+    radial-gradient(600px 300px at 50% 100%, rgba(99,102,241,0.14), transparent 60%);
 }
 
 @utility container {

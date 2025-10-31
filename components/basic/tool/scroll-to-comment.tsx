@@ -20,6 +20,7 @@ export function ScrollToComment() {
       }}
       variant="solid"
       className="fixed z-50 bottom-20 right-6 shadow-lg transition-opacity duration-300"
+      disableRipple
     >
       <MessageCircle className="w-5 h-5" />
     </Button>

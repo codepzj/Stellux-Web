@@ -17,6 +17,7 @@ export function BackToTop() {
       }}
       variant="solid"
       className="fixed z-50 bottom-6 right-6 shadow-lg transition-opacity duration-300"
+      disableRipple
     >
       <ArrowUp className="w-5 h-5" />
     </Button>

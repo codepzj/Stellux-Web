@@ -6,10 +6,9 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeHighlight from 'rehype-highlight'
 import CopyButton from './copy'
-import { Image } from '@heroui/image'
+import Image from 'next/image'
 import './md.css'
 import { cn } from '@/lib/utils'
-import { Alert } from '@heroui/alert'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
 
@@ -88,7 +87,7 @@ export default function Md({ content, className }: { content: string; className?
 
   return (
     <PhotoProvider>
-      <article className={cn('markdown-body', className)}>
+      <article className={cn('markdown-body', className)} >
         <ReactMarkdown
           rehypePlugins={[rehypeRaw, rehypeHighlight, rehypeKatex]}
           remarkPlugins={[remarkGfm, remarkMath, addHeaderIdPlugin]}
@@ -121,22 +120,18 @@ export default function Md({ content, className }: { content: string; className?
                 {children}
               </p>
             ),
-            blockquote: ({ children }) => {
-              return <Alert className="blockquote" color="default" title={children} />
-            },
-
             table: ({ children }) => (
-              <table className="mt-6 w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+              <table className="mt-6 w-full border border-gray-200/60 dark:border-gray-700/60 rounded-lg overflow-hidden">
                 {children}
               </table>
             ),
             tr: ({ children }) => (
-              <tr className="even:bg-gray-50 dark:even:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+              <tr className="even:bg-gray-50/60 dark:even:bg-gray-800/40 border-t border-gray-200/60 dark:border-gray-700/60">
                 {children}
               </tr>
             ),
             th: ({ children }) => (
-              <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 [&[align=center]]:text-center [&[align=right]]:text-right">
+              <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100 bg-gray-50/80 dark:bg-gray-800/50 [&[align=center]]:text-center [&[align=right]]:text-right">
                 {children}
               </th>
             ),
@@ -146,18 +141,18 @@ export default function Md({ content, className }: { content: string; className?
               </td>
             ),
             ul: ({ children }) => (
-              <ul className="mt-4 list-disc list-inside space-y-2 text-gray-800 dark:text-gray-200">
+              <ul className="!pl-5 mt-4 list-disc space-y-1 text-gray-800 dark:text-gray-200">
                 {children}
               </ul>
             ),
             ol: ({ children }) => (
-              <ol className="mt-4 list-decimal list-inside space-y-2 text-gray-800 dark:text-gray-200">
+              <ol className="!pl-5 mt-4 list-decimal space-y-1 text-gray-800 dark:text-gray-200">
                 {children}
               </ol>
             ),
             img: ({ src, alt }) => (
               <PhotoView src={src as string} key={photoIndex++}>
-                <Image className="my-6 rounded-md" src={src as string} alt={alt as string} />
+                <Image width={1000} height={1000} className="my-6 rounded-md" src={src as string} alt={alt as string}   />
               </PhotoView>
             ),
             a: ({ children, href }) => (
@@ -169,7 +164,7 @@ export default function Md({ content, className }: { content: string; className?
               </a>
             ),
             pre: ({ children }) => (
-              <pre className="rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 !p-0.5 my-6 overflow-x-auto text-sm">
+              <pre className="rounded-lg bg-zinc-100/70 dark:bg-zinc-900/40 border border-zinc-200/60 dark:border-zinc-700/60 !p-0.5 my-6 overflow-x-auto text-sm">
                 {children}
               </pre>
             ),
@@ -196,7 +191,7 @@ export default function Md({ content, className }: { content: string; className?
                 return (
                   <div className="not-prose relative rounded-md text-sm">
                     <div
-                      className="overflow-x-auto p-4 bg-zinc-100 dark:bg-zinc-900/50 rounded-b-md"
+                      className="overflow-x-auto p-4 bg-zinc-100/70 dark:bg-zinc-900/40 rounded-b-md"
                       id={id}
                       suppressHydrationWarning
                     >
@@ -209,7 +204,7 @@ export default function Md({ content, className }: { content: string; className?
 
               // 单行代码块
               return (
-                <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-2 py-1 text-sm text-gray-800 dark:text-gray-200 font-mono border border-gray-200 dark:border-gray-700">
+                <code className="rounded-md bg-zinc-100/70 dark:bg-zinc-800/50 mx-1.5 my-1 px-2 py-1 text-sm text-gray-800 dark:text-gray-200 font-mono border border-zinc-200/60 dark:border-zinc-700/60">
                   {children}
                 </code>
               )

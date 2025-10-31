@@ -18,6 +18,7 @@ export function SidebarToggle() {
       onPress={toggleSidebar}
       radius="full"
       variant="solid"
+      disableRipple
     >
       <PanelRightOpen className="w-5 h-5" />
     </Button>

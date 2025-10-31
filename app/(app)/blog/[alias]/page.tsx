@@ -103,3 +103,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(url),
   }
 }
+
+export const dynamic = 'force-dynamic' // 禁用缓存

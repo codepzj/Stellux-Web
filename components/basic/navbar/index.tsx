@@ -1,38 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from '@heroui/react'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { SunIcon, MoonIcon } from '@/components/basic/svg-icon'
 
-// 自定义更密集、振幅更小、颜色为淡黑色的波浪线样式
-const WAVE_UNDERLINE_STYLE = `
-.nav-link-active {
-  position: relative;
-}
-.nav-link-active::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
-  height: 4px;
-  background-repeat: repeat-x;
-  background-size: 16px 4px;
-  background-image: url("data:image/svg+xml,%3Csvg width='16' height='4' viewBox='0 0 16 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 2C2 2 2 0.5 4 0.5C6 0.5 6 3.5 8 3.5C10 3.5 10 0.5 12 0.5C14 0.5 14 2 16 2' stroke='%23909090' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
-  pointer-events: none;
+// 仅使用真实存在的路由，按 AstroPaper 导航风格取名
+const NAV_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Posts' },
+  { href: '/document', label: 'Docs' },
+  { href: '/about', label: 'About' },
+  { href: '/friends', label: 'Friends' },
+]
+
+// AstroPaper 风格的波浪下划线（active 时）
+const WAVY_UNDERLINE_STYLE = `
+.nav-link-active { 
+  text-decoration-line: underline; 
+  text-decoration-style: wavy; 
+  text-underline-offset: 6px; 
 }
 `
-
-const NAV_LINKS = [
-  { href: '/', label: '首页' },
-  { href: '/blog', label: '博客' },
-  { href: '/document', label: '文档' },
-  { href: '/friends', label: '友链' },
-  { href: '/about', label: '关于' },
-]
 
 function DesktopNav() {
   const pathname = usePathname()
@@ -40,9 +30,8 @@ function DesktopNav() {
 
   return (
     <>
-      {/* 注入波浪线样式 */}
-      <style>{WAVE_UNDERLINE_STYLE}</style>
-      <nav className="hidden w-full md:flex items-center justify-end space-x-8">
+      <style>{WAVY_UNDERLINE_STYLE}</style>
+      <nav className="hidden w-full md:flex items-center justify-end space-x-6">
         {NAV_LINKS.map((item) => {
           const isActive =
             currentPath === item.href.split('/')[1] || (currentPath === '/' && item.href === '/')
@@ -52,10 +41,9 @@ function DesktopNav() {
               href={item.href}
               className={`text-[14px] font-medium ${
                 isActive
-                  ? 'text-primary nav-link-active'
-                  : 'text-gray-800 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white'
+                  ? 'text-foreground nav-link-active'
+                  : 'text-gray-700 hover:text-foreground dark:text-gray-300'
               }`}
-              style={{ position: 'relative' }}
             >
               {item.label}
             </Link>
@@ -88,14 +76,14 @@ function ThemeToggle() {
 
 function MobileNav({ onClick }: { onClick: () => void }) {
   return (
-    <div className="fixed inset-x-0 top-14 z-30 bg-white/95 dark:bg-gray-950 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+    <div className="fixed inset-x-0 top-14 z-30 bg-white/90 dark:bg-black/70 border-b border-gray-200/60 dark:border-white/10">
       <div className="flex flex-col space-y-3 px-4 py-3">
         {NAV_LINKS.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             onClick={onClick}
-            className="px-2 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-100 hover:text-primary transition-colors"
+            className="px-2 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-100 hover:text-foreground transition-colors"
           >
             {item.label}
           </Link>
@@ -112,17 +100,16 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-20 w-full bg-white/80 dark:bg-gray-950 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 items-center justify-between px-4 max-w-7xl">
-        {/* 左侧：头像 + 品牌（移动端只显示头像） */}
-        <Link href="/" className="flex items-center gap-2">
+    <header className="sticky top-0 z-20 w-full bg-white/90 dark:bg-black/70 border-b border-gray-200/60 dark:border-white/10">
+      <div className="mx-auto flex h-14 items-center justify-between px-4 max-w-5xl">
+        <Link href="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-[120px] md:min-w-[140px]">
           <img
             src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
             alt="avatar"
-            className="w-7 h-7 rounded-full object-cover"
+            className="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover"
             loading="lazy"
           />
-          <span className="hidden md:block w-24 text-md font-bold text-primary hover:opacity-80">
+          <span className="text-[15px] font-semibold text-foreground whitespace-nowrap overflow-hidden text-ellipsis">
             浩瀚星河
           </span>
         </Link>
@@ -162,10 +149,6 @@ export default function Navbar() {
               </svg>
             )}
           </button>
-        </div>
-        {/* 主题切换按钮 */}
-        <div className="hidden md:block ml-4">
-          <ThemeToggle />
         </div>
       </div>
 

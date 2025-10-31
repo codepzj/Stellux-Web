@@ -4,7 +4,7 @@ import { Image } from '@heroui/react'
 
 export default function Footer() {
   return (
-    <footer className="max-w-3xl mx-auto w-full bg-white dark:bg-gray-950">
+    <footer className="max-w-3xl mx-auto w-full bg-transparent border-t border-gray-200/60 dark:border-white/10">
       <div className="px-4 py-6 flex flex-col items-center gap-2">
         <p className="text-gray-500 dark:text-gray-400 text-sm text-center">
           © {new Date().getFullYear()} powered by{' '}

@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
     ],
   },
   output: 'standalone',
+  experimental: {
+    turbopackFileSystemCacheForDev: true, // 开发环境文件系统缓存，提高开发效率
+  },
+  reactCompiler: true, // 启用 React 编译器，提高开发效率
 }
 
 export default withBundleAnalyzer(nextConfig)
