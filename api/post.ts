@@ -19,7 +19,7 @@ export const getPostByAliasAPI = (alias: string) => {
 
 // 获取所有发布文章
 export const getAllPublishPostAPI = () => {
-  return request.get<PostVO[]>(`/post/all`)
+  return request.get<PostVO[]>(`/post/all`, { params: undefined }, true, 3600)
 }
 
 // 搜索框获取文章列表

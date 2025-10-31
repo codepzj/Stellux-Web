@@ -87,7 +87,7 @@ export default function Md({ content, className }: { content: string; className?
 
   return (
     <PhotoProvider>
-      <article className={cn('markdown-body', className)} >
+      <article className={cn('markdown-body overflow-y-hidden', className)} >
         <ReactMarkdown
           rehypePlugins={[rehypeRaw, rehypeHighlight, rehypeKatex]}
           remarkPlugins={[remarkGfm, remarkMath, addHeaderIdPlugin]}
