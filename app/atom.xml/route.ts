@@ -44,3 +44,5 @@ export async function GET(request: NextRequest) {
     return new Response('Error generating Atom feed', { status: 500 })
   }
 }
+
+export const revalidate = 3600 // 1 hour
