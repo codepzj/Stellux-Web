@@ -39,3 +39,6 @@ next-env.d.ts
 
 # 临时文件
 tmp/
+
+# lock 
+*.lock
