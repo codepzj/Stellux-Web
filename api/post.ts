@@ -1,28 +1,30 @@
-import { PageVO, Page, PageWithTagName, PageWithCategoryName } from '@/types/page'
+import { PageVO, PageWithTagName, PageWithCategoryName } from '@/types/page'
 import { PostVO } from '@/types/post'
 import { request } from '@/utils/request'
 
 // 获取文章列表
 export const getPostListAPI = (page: PageWithTagName | PageWithCategoryName) => {
-  return request.get<PageVO<PostVO>>('/post/list', { params: page })
+  return request<PageVO<PostVO>>('/post/list', 'GET', {
+    params: page as unknown as Record<string, string>,
+  })
 }
 
 // 根据id获取文章详情
 export const getPostDetailByIdAPI = (id: string) => {
-  return request.get<PostVO>(`/post/detail/${id}`)
+  return request<PostVO>(`/post/detail/${id}`)
 }
 
 // 根据别名获取文章详情
 export const getPostByAliasAPI = (alias: string) => {
-  return request.get<PostVO>(`/post/alias/${alias}`)
+  return request<PostVO>(`/post/alias/${alias}`)
 }
 
 // 获取所有发布文章
 export const getAllPublishPostAPI = () => {
-  return request.get<PostVO[]>(`/post/all`, { params: undefined }, true, 3600)
+  return request<PostVO[]>('/post/all', 'GET', { revalidate: 3600 })
 }
 
 // 搜索框获取文章列表
 export const getPostByKeyWordAPI = (keyword: string) => {
-  return request.get<PostVO[]>(`/post/search?keyword=${keyword}`)
+  return request<PostVO[]>('/post/search', 'GET', { params: { keyword } })
 }

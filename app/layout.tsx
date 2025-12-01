@@ -14,6 +14,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           type="image/x-icon"
         />
         <link
+          rel="shortcut icon"
+          href={`${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`}
+          type="image/x-icon"
+        />{' '}
+        {/* bing图标 */}
+        <link
           rel="stylesheet"
           href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans_VF:VF:Chinese_Simplify,Latin&display=swap"
         />
@@ -29,7 +35,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           title="Atom Feed"
           href={`${process.env.NEXT_PUBLIC_SITE_URL}/atom.xml`}
         />
-        <meta name="google-site-verification" content="rQ0kTqa4G_WtJzaC27Mg1VizLHmc7R7ri7ZyNCjMQmo" />
+        <meta
+          name="google-site-verification"
+          content="rQ0kTqa4G_WtJzaC27Mg1VizLHmc7R7ri7ZyNCjMQmo"
+        />
         <meta name="msvalidate.01" content="30CD55A935E75B69A1565E31EA21513B" />
       </head>
       <body className="min-h-screen bg-background antialiased w-full font-main">

@@ -1,54 +1,191 @@
-'use client'
-
 import Navbar from '@/components/basic/navbar'
 import Footer from '@/components/basic/footer'
+import { Github, Globe, MapPin, FileText, Calendar, ArrowRight, Quote } from 'lucide-react'
+import { getAllPublishPostAPI } from '@/api/post'
+import Link from 'next/link'
+import Image from 'next/image'
+import dayjs from 'dayjs'
+import GitHubCalendar from '@/components/business/home/GitHubCalendar'
 
-export default function Page() {
+export const dynamic = 'force-dynamic'
+
+export default async function Page() {
+  const { data: posts } = await getAllPublishPostAPI()
+  const recentPosts = posts?.slice(0, 2) || []
+
+  const repositories = [
+    {
+      name: 'Stellux-Server',
+      url: 'https://github.com/codepzj/Stellux-Server',
+      desc: 'Stellux博客后端服务',
+    },
+    { name: 'hexo-graph', url: 'https://github.com/codepzj/hexo-graph', desc: 'Hexo 数据可视化' },
+    { name: 'bubble', url: 'https://github.com/codepzj/bubble', desc: 'Go Kratos练手项目' },
+    {
+      name: 'review-service',
+      url: 'https://github.com/codepzj/review-service',
+      desc: '微服务评论系统',
+    },
+  ]
+
+  const techStacks = ['Go', 'TypeScript', 'React', 'Next.js', 'Vue', 'MongoDB', 'Docker', 'Linux']
+
   return (
     <div className="relative flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-1 px-6">
-        <div className="w-full max-w-3xl mx-auto py-12 md:py-16 space-y-8">
-          <section className="space-y-3">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
-              Welcome to my blog
-            </h1>
-            <p className="text-[15px] md:text-base text-gray-800 dark:text-gray-300">
-              Hi, I'm codepzj
-            </p>
-            <p className="text-[15px] md:text-base text-gray-800 dark:text-gray-300">
-              广州 ·
-              {' '}
-              <a href="https://www.golangblog.com" target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-foreground">golangblog.com</a>
-            </p>
-            <p className="text-[15px] md:text-base leading-7 text-gray-800 dark:text-gray-300">
-              一名211大学生，爱好 Golang，喜欢探索新技术，享受解决复杂问题的过程。
-            </p>
-          </section>
-
-          <section className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Top repositories</h3>
-            <div className="flex flex-wrap gap-2">
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://github.com/codepzj/Stellux-Server" target="_blank" rel="noreferrer">Stellux-Server</a>
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://github.com/codepzj/hexo-graph" target="_blank" rel="noreferrer">hexo-graph</a>
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://github.com/codepzj/bubble" target="_blank" rel="noreferrer">bubble</a>
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://github.com/codepzj/review-service" target="_blank" rel="noreferrer">review-service</a>
+      <main className="flex-1">
+        <div className="w-full max-w-5xl mx-auto px-4 py-8 sm:py-12 space-y-8 sm:space-y-12">
+          {/* Hero Section */}
+          <section className="flex flex-col sm:flex-row items-start gap-6">
+            <Image
+              src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+              alt="avatar"
+              width={120}
+              height={120}
+              className="w-20 h-20 sm:w-28 sm:h-28 rounded-full ring-4 ring-gray-100 dark:ring-gray-800"
+              unoptimized
+            />
+            <div className="space-y-3">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
+                Hi, I'm codepzj 👋
+              </h1>
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 flex items-center gap-1.5">
+                <MapPin className="w-4 h-4" />
+                广州 · 211在读
+              </p>
+              <p className="text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-lg">
+                热爱 Golang，喜欢探索新技术，享受解决复杂问题的过程。
+                <span className="text-gray-500 dark:text-gray-400">「缓慢向上也是一种勇气」</span>
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                <a
+                  href="https://github.com/codepzj"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  GitHub
+                </a>
+                <a
+                  href="https://www.golangblog.com"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs sm:text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  Blog
+                </a>
+              </div>
             </div>
           </section>
 
-          <section className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Find me on</h3>
+          {/* Tech Stack */}
+          <section className="space-y-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+              技术栈
+            </h2>
             <div className="flex flex-wrap gap-2">
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://github.com/codepzj" target="_blank" rel="noreferrer">GitHub</a>
-              <a className="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 text-sm hover:bg-accent hover:text-accent-foreground" href="https://www.golangblog.com" target="_blank" rel="noreferrer">Blog</a>
+              {techStacks.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </section>
 
-          <section className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Motto</h3>
-            <p className="text-[15px] md:text-base text-gray-800 dark:text-gray-300">
-              低级的欲望通过放纵就可获得；高级的欲望通过自律方可获得；顶级的欲望通过煎熬才可获得。“所谓自由，不是随心所欲，而是自我主宰。”
-            </p>
+          {/* GitHub Activity */}
+          <section className="space-y-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <Calendar className="w-5 h-5" />
+              GitHub 活动
+            </h2>
+            <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 overflow-x-auto">
+              <GitHubCalendar username="codepzj" />
+            </div>
+          </section>
+
+          {/* Recent Posts */}
+          {recentPosts.length > 0 && (
+            <section className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  最新文章
+                </h2>
+                <Link
+                  href="/blog"
+                  className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center gap-1 transition-colors"
+                >
+                  查看全部 <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {recentPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.alias || post.id}`}
+                    className="group p-4 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900/50 transition-colors"
+                  >
+                    <h3 className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 line-clamp-1 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                      {post.description}
+                    </p>
+                    <div className="mt-3 flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+                      <span>{dayjs(post.created_at).format('YYYY-MM-DD')}</span>
+                      <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800">
+                        {post.category}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Open Source Projects */}
+          <section className="space-y-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <Github className="w-5 h-5" />
+              开源项目
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {repositories.map((repo) => (
+                <a
+                  key={repo.name}
+                  href={repo.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group p-4 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900/50 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Github className="w-4 h-4 text-gray-400" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                      {repo.name}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{repo.desc}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          {/* Motto */}
+          <section className="space-y-4">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <Quote className="w-5 h-5" />
+              座右铭
+            </h2>
+            <div className="p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border border-gray-200 dark:border-gray-700">
+              <p className="text-xs sm:text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                "低级的欲望通过放纵就可获得；高级的欲望通过自律方可获得；顶级的欲望通过煎熬才可获得。所谓自由，不是随心所欲，而是自我主宰。"
+              </p>
+            </div>
           </section>
         </div>
       </main>

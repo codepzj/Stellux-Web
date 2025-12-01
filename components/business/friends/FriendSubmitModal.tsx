@@ -33,15 +33,15 @@ export default function FriendSubmitModal() {
     e.preventDefault()
     setLoading(true)
     try {
-      const { code, msg } = await createFriendAPI({
+      const { code, error } = await createFriendAPI({
         name,
         description,
         site_url: siteUrl,
         avatar_url: avatarUrl,
         website_type: websiteType,
       })
-      if (code === 0) {
-        addToast({ title: '提交成功，待审核后显示。', color: 'success' })
+      if (code === 200) {
+        addToast({ title: '提交成功, 待审核后显示', color: 'success' })
         setName('')
         setDescription('')
         setSiteUrl('')
@@ -49,10 +49,10 @@ export default function FriendSubmitModal() {
         setWebsiteType(0)
         setIsOpen(false)
       } else {
-        addToast({ title: msg || '提交失败，请稍后重试', color: 'danger' })
+        addToast({ title: error || '提交失败, 请稍后重试', color: 'danger' })
       }
     } catch (err) {
-      addToast({ title: '提交异常，请稍后重试', color: 'danger' })
+      addToast({ title: '提交异常, 请稍后重试', color: 'danger' })
     } finally {
       setLoading(false)
     }
@@ -65,7 +65,16 @@ export default function FriendSubmitModal() {
       </Button>
 
       {mounted && (
-        <Modal isOpen={isOpen} onOpenChange={setIsOpen} placement="center">
+        <Modal
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+          placement="center"
+          size="md"
+          classNames={{
+            base: 'mx-4 sm:mx-0',
+            body: 'py-4',
+          }}
+        >
           <ModalContent>
             {(onClose) => (
               <>

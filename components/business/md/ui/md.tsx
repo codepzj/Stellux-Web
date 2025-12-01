@@ -12,15 +12,11 @@ import { cn } from '@/lib/utils'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
 
-// 引入mermaid
 import mermaid from 'mermaid'
-
-// 引入katex
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 
-// Mermaid渲染组件
 const Mermaid = ({ code }: { code: string }) => {
   const ref = React.useRef<HTMLDivElement>(null)
 
@@ -49,7 +45,6 @@ const Mermaid = ({ code }: { code: string }) => {
   return <div ref={ref} className="my-4 grid grid-cols-1 place-items-center overflow-x-auto" />
 }
 
-// 递归遍历AST，给所有h2/h3节点分配唯一id
 function addHeaderIds(ast: any) {
   let headerIndex = 1
   function traverse(node: any) {
@@ -72,14 +67,11 @@ function addHeaderIds(ast: any) {
 }
 
 export default function Md({ content, className }: { content: string; className?: string }) {
-  // 通过remark插件给h2/h3加唯一id
   const addHeaderIdPlugin = () => (tree: any) => {
     addHeaderIds(tree)
   }
 
-  // 类型保护函数，安全获取id
   function getHeaderId(node: any): string | undefined {
-    // rehype/remark 可能把id放在data.id 或 data.hProperties.id
     return node?.data?.id || node?.data?.hProperties?.id
   }
 
@@ -87,7 +79,7 @@ export default function Md({ content, className }: { content: string; className?
 
   return (
     <PhotoProvider>
-      <article className={cn('markdown-body overflow-y-hidden', className)} >
+      <article className={cn('markdown-body overflow-y-hidden', className)}>
         <ReactMarkdown
           rehypePlugins={[rehypeRaw, rehypeHighlight, rehypeKatex]}
           remarkPlugins={[remarkGfm, remarkMath, addHeaderIdPlugin]}
@@ -120,26 +112,6 @@ export default function Md({ content, className }: { content: string; className?
                 {children}
               </p>
             ),
-            table: ({ children }) => (
-              <table className="mt-6 w-full border border-gray-200/60 dark:border-gray-700/60 rounded-lg overflow-hidden">
-                {children}
-              </table>
-            ),
-            tr: ({ children }) => (
-              <tr className="even:bg-gray-50/60 dark:even:bg-gray-800/40 border-t border-gray-200/60 dark:border-gray-700/60">
-                {children}
-              </tr>
-            ),
-            th: ({ children }) => (
-              <th className="px-4 py-3 text-left font-semibold text-gray-900 dark:text-gray-100 bg-gray-50/80 dark:bg-gray-800/50 [&[align=center]]:text-center [&[align=right]]:text-right">
-                {children}
-              </th>
-            ),
-            td: ({ children }) => (
-              <td className="px-4 py-3 text-left align-top text-gray-800 dark:text-gray-200 [&[align=center]]:text-center [&[align=right]]:text-right">
-                {children}
-              </td>
-            ),
             ul: ({ children }) => (
               <ul className="!pl-5 mt-4 list-disc space-y-1 text-gray-800 dark:text-gray-200">
                 {children}
@@ -152,7 +124,13 @@ export default function Md({ content, className }: { content: string; className?
             ),
             img: ({ src, alt }) => (
               <PhotoView src={src as string} key={photoIndex++}>
-                <Image width={1000} height={1000} className="my-6 rounded-md" src={src as string} alt={alt as string}   />
+                <Image
+                  width={1000}
+                  height={1000}
+                  className="my-6 rounded-md"
+                  src={src as string}
+                  alt={alt as string}
+                />
               </PhotoView>
             ),
             a: ({ children, href }) => (

@@ -25,17 +25,17 @@ export default function FriendCard({ friend }: Props) {
     <Link href={friend.site_url} target="_blank" rel="noreferrer noopener" className="block">
       <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
         <CardContent className="p-0 transition-none">
-          <div className="flex items-stretch gap-4 min-h-[120px] transition-none">
+          <div className="flex items-stretch gap-3 sm:gap-4 min-h-[100px] sm:min-h-[120px] transition-none">
             {/* 内容区域 */}
             <div className="flex-1 min-w-0 flex flex-col justify-between transition-none">
               <div>
                 {/* 友链标题 */}
-                <h3 className="transition-none text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400">
+                <h3 className="transition-none text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-1 sm:mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400">
                   {friend.name}
                 </h3>
 
                 {/* 友链描述 */}
-                <p className="transition-none text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-3">
+                <p className="transition-none text-gray-700 dark:text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2 sm:mb-3">
                   {friend.description}
                 </p>
               </div>
@@ -55,8 +55,8 @@ export default function FriendCard({ friend }: Props) {
 
             {/* 右侧区域 - 头像和链接 */}
             <div className="flex flex-col items-end justify-between transition-none">
-              {/* 头像 - 1:1比例小头像 */}
-              <div className="hidden md:block w-16 h-16 mb-3 transition-none">
+              {/* 头像 - 响应式尺寸 */}
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-2 sm:mb-3 transition-none flex-shrink-0">
                 <Image
                   alt={friend.name}
                   src={friend.avatar_url || '/favicon.ico'}

@@ -27,21 +27,21 @@ export type UpdateFriendDTO = CreateFriendDTO & {
 }
 
 export const getFriendListAPI = () => {
-  return request.get<FriendShowVO[]>('/friend/list')
+  return request<FriendShowVO[]>('/friend/list')
 }
 
 export const getAllFriendsAPI = () => {
-  return request.get<FriendVO[]>('/admin-api/friend/all')
+  return request<FriendVO[]>('/admin-api/friend/all')
 }
 
 export const createFriendAPI = (data: CreateFriendDTO) => {
-  return request.post<CreateFriendDTO, Response>('/admin-api/friend/create', data)
+  return request<null>('/admin-api/friend/create', 'POST', { body: data })
 }
 
 export const updateFriendAPI = (data: UpdateFriendDTO) => {
-  return request.put<UpdateFriendDTO, any>('/admin-api/friend/update', data)
+  return request<null>('/admin-api/friend/update', 'PUT', { body: data })
 }
 
 export const deleteFriendAPI = (id: string) => {
-  return request.delete<any, any>(`/admin-api/friend/delete/${id}`, {} as any)
+  return request<null>(`/admin-api/friend/delete/${id}`, 'DELETE')
 }

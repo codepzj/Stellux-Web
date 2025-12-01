@@ -1,58 +1,41 @@
 import { Response } from '@/types/dto'
 
-type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string
 
-class Request {
-  private readonly baseUrl: string
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl
-  }
-
-  private async request<T, D>(
-    url: string,
-    method: RequestMethod,
-    data?: T,
-    headers?: Record<string, string>,
-    isCache?: boolean,
-    cacheTime?: number
-  ): Promise<Response<D>> {
-    // 请求配置项
-    const options: RequestInit = {
-      method,
-      headers: { 'Content-Type': 'application/json', ...headers },
-      body: data ? JSON.stringify(data) : undefined,
-      ...(isCache ? { next: { revalidate: cacheTime }} : { cache: 'no-store' })
-    }
-
-    try {
-      const res = await fetch(`${this.baseUrl}${url}`, options)
-      return await res?.json()
-    } catch (err: any) {
-      console.error('捕获到异常：', err, '请检查后端服务是否正常')
-      return {} as Response<D>
-    }
-  }
-
-  public get<D>(url: string, data?: { params?: object }, isCache?: boolean, cacheTime?: number): Promise<Response<D>> {
-    const queryString = data?.params
-      ? `?${new URLSearchParams(data.params as Record<string, string>).toString()}`
-      : ''
-    return this.request<any, D>(`${url}${queryString}`, 'GET', undefined, undefined, isCache, cacheTime)
-  }
-
-  public async post<T, D>(url: string, data: T): Promise<Response<D>> {
-    return this.request<T, D>(url, 'POST', data)
-  }
-
-  public async put<T, D>(url: string, data: T): Promise<Response<D>> {
-    return this.request<T, D>(url, 'PUT', data)
-  }
-
-  public async delete<T, D>(url: string, data: T): Promise<Response<D>> {
-    const respData = this.request<T, D>(url, 'DELETE', data)
-    return respData
-  }
+interface RequestOptions {
+  params?: Record<string, string>
+  body?: unknown
+  cache?: RequestCache
+  revalidate?: number
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string
-export const request = new Request(baseUrl)
+export async function request<T>(
+  url: string,
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+  options: RequestOptions = {}
+): Promise<Response<T>> {
+  const { params, body, cache, revalidate } = options
+
+  // 构建 URL
+  let fullUrl = `${baseUrl}${url}`
+  if (params) {
+    const query = new URLSearchParams(params).toString()
+    fullUrl += `?${query}`
+  }
+
+  // 请求配置
+  const fetchOptions: RequestInit & { next?: { revalidate: number } } = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+    ...(revalidate ? { next: { revalidate } } : { cache: cache ?? 'no-store' }),
+  }
+
+  try {
+    const res = await fetch(fullUrl, fetchOptions)
+    return await res.json()
+  } catch (err) {
+    console.error('请求异常:', err)
+    return { code: 500, error: '网络错误' } as Response<T>
+  }
+}

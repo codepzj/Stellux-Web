@@ -28,6 +28,59 @@ export default async function FriendsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="mt-8">
+        <Card className="border border-border/20 bg-card/10 shadow-sm transition-none">
+          <CardContent className="p-6">
+            <div className="flex flex-col sm:flex-row gap-6">
+              {/* 左侧：头像和基本信息 */}
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20 hidden md:block">
+                  <Image
+                    src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+                    alt="头像"
+                    width={56}
+                    height={56}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="space-y-2 sm:space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Crown className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">名称：</span>
+                      <span className="text-gray-900 dark:text-white font-semibold truncate">
+                        浩瀚星河
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">描述：</span>
+                      <span className="text-gray-900 dark:text-white truncate">
+                        缓慢向上也是一种勇气。
+                      </span>
+                    </div>
+                    <div className="flex items-start sm:items-center gap-2">
+                      <Globe className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">网站：</span>
+                      <span className="text-gray-900 dark:text-white font-mono text-xs break-all sm:truncate">
+                        https://www.golangblog.com
+                      </span>
+                    </div>
+                    <div className="flex items-start sm:items-center gap-2">
+                      <User className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">头像：</span>
+                      <span className="text-gray-900 dark:text-white font-mono text-xs break-all sm:truncate">
+                        https://cdn.codepzj.cn/image/20250529174726187.jpeg
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
       {[0, 1, 2, 3].map((t) =>
         groups[t] && groups[t]!.length > 0 ? (
           <section key={t} className="mb-8">
@@ -40,9 +93,6 @@ export default async function FriendsPage() {
           </section>
         ) : null
       )}
-      <div className="mt-8 text-sm">
-        <FriendSubmitModal />
-      </div>
       <div className="my-6 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-4">
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-gray-600 dark:text-gray-300 mt-0.5" />
@@ -54,54 +104,8 @@ export default async function FriendsPage() {
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <Card className="border border-border/20 bg-card/10 shadow-sm transition-none">
-          <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row gap-6">
-              {/* 左侧：头像和基本信息 */}
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20">
-                  <Image
-                    src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
-                    alt="头像"
-                    width={56}
-                    height={56}
-                    className="w-full h-full object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="space-y-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Crown className="w-4 h-4 text-gray-500" />
-                      <span className="text-gray-800 dark:text-gray-200">名称：</span>
-                      <span className="text-gray-900 dark:text-white font-semibold">浩瀚星河</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MessageCircle className="w-4 h-4 text-gray-500" />
-                      <span className="text-gray-800 dark:text-gray-200">描述：</span>
-                      <span className="text-gray-900 dark:text-white">缓慢向上也是一种勇气。</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Globe className="w-4 h-4 text-gray-500" />
-                      <span className="text-gray-800 dark:text-gray-200">网站：</span>
-                      <span className="text-gray-900 dark:text-white font-mono text-xs">
-                        https://www.golangblog.com
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-gray-500" />
-                      <span className="text-gray-800 dark:text-gray-200">头像：</span>
-                      <span className="text-gray-900 dark:text-white font-mono text-xs">
-                        https://cdn.codepzj.cn/image/20250529174726187.jpeg
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="mt-8 text-sm">
+        <FriendSubmitModal />
       </div>
       <Spacer y={16} />
       <Comment />

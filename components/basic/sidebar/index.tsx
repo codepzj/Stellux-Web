@@ -47,9 +47,12 @@ export async function DocSidebar({
         <NavMain doctree={doctree} />
       </SidebarContent>
       <SidebarFooter>
-        <div className="flex items-center justify-center">
-          <ThemeSwitcher />
-        </div>
+        {/* 开发环境显示主题切换器 */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="flex items-center justify-center">
+            <ThemeSwitcher />
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   )

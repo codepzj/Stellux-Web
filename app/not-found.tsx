@@ -1,33 +1,38 @@
 'use client'
 
-import { Button } from '@heroui/button'
 import { useRouter } from 'next/navigation'
-import { IconAlertCircle } from '@tabler/icons-react'
+import { Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center">
-          <div className="inline-flex items-center justify-center rounded-full bg-blue-100 p-4 dark:bg-blue-900/20 mb-6">
-            <IconAlertCircle className="h-12 w-12 text-blue-600 dark:text-blue-400" />
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-3">
-            页面不存在
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
-            很抱歉，您访问的页面不存在。请检查网址是否正确，或点击下方按钮返回首页。
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button onClick={() => router.push('/')} color="primary">
-              返回首页
-            </Button>
-            <Button variant="flat" onClick={() => router.back()}>
-              返回上一页
-            </Button>
-          </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center p-4">
+      <div className="text-center">
+        <div className="text-[120px] sm:text-[180px] font-bold leading-none text-gray-200 dark:text-gray-800 select-none">
+          404
+        </div>
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100 -mt-4 mb-2">
+          页面未找到
+        </h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-8 max-w-xs mx-auto">
+          抱歉，您访问的页面不存在或已被移除
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            返回
+          </button>
+          <button
+            onClick={() => router.push('/')}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 rounded-lg hover:opacity-90 transition-opacity"
+          >
+            <Home className="w-4 h-4" />
+            首页
+          </button>
         </div>
       </div>
     </div>

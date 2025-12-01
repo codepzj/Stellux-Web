@@ -138,43 +138,28 @@ export default function BlogList() {
                   </div>
 
                   {(tagName || categoryName) && (
-                    <div className="bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            当前筛选：
+                    <div className="flex items-center gap-3 text-sm">
+                      <span className="text-gray-500 dark:text-gray-400">筛选</span>
+                      <div className="flex items-center gap-2">
+                        {categoryName && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                            <FolderOpen className="h-3.5 w-3.5" />
+                            {categoryName}
                           </span>
-                          <div className="flex items-center gap-2">
-                            {categoryName && (
-                              <Badge
-                                variant="secondary"
-                                className="text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                              >
-                                <FolderOpen className="h-4 w-4 mr-1" />
-                                {categoryName}
-                              </Badge>
-                            )}
-                            {tagName && (
-                              <Badge
-                                variant="outline"
-                                className="text-sm text-gray-700 dark:text-gray-300"
-                              >
-                                <Tag className="h-4 w-4 mr-1" />
-                                {tagName}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (!tagName && !categoryName) return
-                            navigateToPage(1)
-                          }}
-                          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200 font-medium"
-                        >
-                          清除筛选
-                        </button>
+                        )}
+                        {tagName && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                            <Tag className="h-3.5 w-3.5" />
+                            {tagName}
+                          </span>
+                        )}
                       </div>
+                      <button
+                        onClick={() => navigateToPage(1)}
+                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                      >
+                        ✕
+                      </button>
                     </div>
                   )}
                   <div className="flex flex-col gap-4 min-h-[600px]">
@@ -216,7 +201,7 @@ export default function BlogList() {
                       posts.map((post) => (
                         <Card
                           key={post.id}
-                      className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
                           onClick={() => router.push(`/blog/${post.alias}`)}
                         >
                           <CardContent className="p-0">

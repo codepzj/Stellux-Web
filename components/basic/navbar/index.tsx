@@ -89,7 +89,8 @@ function MobileNav({ onClick }: { onClick: () => void }) {
           </Link>
         ))}
         <div className="px-2 py-1.5">
-          <ThemeToggle />
+          {/* 开发环境显示主题切换器 */}
+          {process.env.NODE_ENV === 'development' && <ThemeToggle />}
         </div>
       </div>
     </div>
@@ -102,7 +103,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-20 w-full bg-white/90 dark:bg-black/70 border-b border-gray-200/60 dark:border-white/10">
       <div className="mx-auto flex h-14 items-center justify-between px-4 max-w-5xl">
-        <Link href="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-[120px] md:min-w-[140px]">
+        <Link
+          href="/"
+          className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-[120px] md:min-w-[140px]"
+        >
           <img
             src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
             alt="avatar"
