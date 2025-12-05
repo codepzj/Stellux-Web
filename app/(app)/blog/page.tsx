@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 
-import { Calendar, Tag, Book, FolderOpen, Heart } from 'lucide-react'
+import { Calendar, Tag, Book, FolderOpen } from 'lucide-react'
 import { getPostListAPI } from '@/api/post'
 import { formatRelativeTime } from '@/utils/date'
 import type { PostVO } from '@/types/post'
@@ -33,8 +33,6 @@ export default function BlogList() {
   const pageSize = 10
 
   const [posts, setPosts] = useState<PostVO[]>([])
-  const [favoritePosts, setFavoritePosts] = useState<Set<string>>(new Set())
-  const [animatingPostId, setAnimatingPostId] = useState<string | null>(null)
   const [pagination, setPagination] = useState<{
     total_page: number
     page_no: number
@@ -122,21 +120,6 @@ export default function BlogList() {
     navigateToPage(1, undefined, category)
   }
 
-  const handleToggleFavorite = (postId: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    setAnimatingPostId(postId)
-    setTimeout(() => setAnimatingPostId(null), 300)
-
-    setFavoritePosts(prev => {
-      const newSet = new Set(prev)
-      if (newSet.has(postId)) {
-        newSet.delete(postId)
-      } else {
-        newSet.add(postId)
-      }
-      return newSet
-    })
-  }
 
   const skeletonCount = posts.length > 0 ? posts.length : pageSize
 
@@ -227,22 +210,6 @@ export default function BlogList() {
                           className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg relative"
                           onClick={() => router.push(`/blog/${post.alias}`)}
                         >
-                          <button
-                            onClick={(e) => handleToggleFavorite(post.id, e)}
-                            className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
-                              favoritePosts.has(post.id)
-                                ? 'opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800'
-                                : 'opacity-0 group-hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800'
-                            } ${animatingPostId === post.id ? 'animate-pulse' : ''}`}
-                          >
-                            <Heart
-                              className={`w-4 h-4 ${
-                                favoritePosts.has(post.id)
-                                  ? 'fill-red-500 text-red-500'
-                                  : 'text-gray-400 hover:text-red-500'
-                              } transition-colors`}
-                            />
-                          </button>
                           <CardContent className="p-0">
                             <div className="flex items-stretch gap-4 min-h-[120px]">
                               <div className="flex-1 min-w-0 flex flex-col justify-between">

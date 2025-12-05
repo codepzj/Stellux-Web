@@ -82,7 +82,7 @@ export default async function FriendsPage() {
       </div>
       {[0, 1, 2, 3].map((t) =>
         groups[t] && groups[t]!.length > 0 ? (
-          <section key={t} className="mb-8">
+          <section key={t} className={`mb-8 ${t === 0 ? 'mt-12' : ''}`}>
             <h2 className="text-xl font-semibold mb-4">{typeLabels[t]}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {groups[t]!.map((f) => (

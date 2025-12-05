@@ -2,9 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { FriendShowVO } from '@/api/friend'
-import { CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink, Globe } from 'lucide-react'
 
@@ -24,62 +23,36 @@ export default function FriendCard({ friend }: Props) {
 
   return (
     <Link href={friend.site_url} target="_blank" rel="noreferrer noopener" className="block">
-      <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
-        <CardContent className="p-0 transition-none">
-          <div className="flex items-stretch gap-3 sm:gap-4 min-h-[100px] sm:min-h-[120px] transition-none">
-            {/* 内容区域 */}
-            <div className="flex-1 min-w-0 flex flex-col justify-between transition-none">
-              <div>
-                {/* 友链标题 */}
-                <h3 className="transition-none text-base sm:text-lg font-medium text-gray-900 dark:text-gray-100 mt-1 mb-1 sm:mb-2 line-clamp-2 group-hover:text-gray-700 dark:group-hover:text-gray-400">
-                  {friend.name}
-                </h3>
-
-                {/* 友链描述 */}
-                <p className="transition-none text-gray-700 dark:text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2 sm:mb-3">
-                  {friend.description}
-                </p>
-              </div>
-
-              {/* 类型标签 - 固定在卡片最底部 */}
-              <div className="flex items-center gap-2 flex-wrap transition-none">
-                {/* 显示友链类型 */}
-                <Badge
-                  variant="secondary"
-                  className="transition-none text-xs bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 cursor-pointer"
-                >
-                  <Globe className="h-3 w-3 mr-1" />
-                  {typeLabel}
-                </Badge>
-              </div>
-            </div>
-
-            {/* 右侧区域 - 头像和链接 */}
-            <div className="flex flex-col items-end justify-between transition-none">
-              {/* 头像 - 响应式尺寸 */}
-              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-2 sm:mb-3 transition-none flex-shrink-0">
-                <Image
-                  alt={friend.name}
-                  src={friend.avatar_url || '/favicon.ico'}
-                  width={64}
-                  height={64}
-                  className="object-cover ring-2 ring-gray-200/80 dark:ring-gray-800/80 w-full h-full rounded-full"
-                />
-              </div>
-
-              {/* 网站信息 - 与左侧标签对齐 */}
-              <div className="transition-none">
-                <Badge
-                  variant="outline"
-                  className="transition-none text-xs text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800"
-                >
-                  <ExternalLink className="h-3 w-3 mr-1" />
-                  {typeLabel}
-                </Badge>
-              </div>
-            </div>
+      <Card className="transition-none border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg">
+        <CardHeader className="flex flex-row items-start gap-3 pb-2">
+          <div className="flex-shrink-0">
+            <Image
+              alt={friend.name}
+              src={friend.avatar_url || '/favicon.ico'}
+              width={48}
+              height={48}
+              className="object-cover ring-2 ring-gray-200/80 dark:ring-gray-800/80 w-12 h-12 rounded-full"
+            />
           </div>
-        </CardContent>
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-base font-medium text-gray-900 dark:text-gray-100 group-hover:text-gray-700 dark:group-hover:text-gray-400 line-clamp-2">
+              {friend.name}
+            </CardTitle>
+            <CardDescription className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed line-clamp-2">
+              {friend.description}
+            </CardDescription>
+          </div>
+        </CardHeader>
+        <CardFooter className="flex items-center gap-2 pt-2">
+          <Badge variant="secondary" className="text-xs">
+            <Globe className="h-3 w-3 mr-1" />
+            {typeLabel}
+          </Badge>
+          <Badge variant="outline" className="text-xs">
+            <ExternalLink className="h-3 w-3 mr-1" />
+            访问
+          </Badge>
+        </CardFooter>
       </Card>
     </Link>
   )

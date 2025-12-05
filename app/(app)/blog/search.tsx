@@ -46,10 +46,6 @@ export const Search = ({ className, placeholder = '搜索博客', children, ...p
           ? children.replace(/ctrl\s*\+?\s*k/gi, '').trim() || placeholder
           : children || placeholder}
       </span>
-      <kbd className="pointer-events-none hidden md:inline-flex shrink-0 items-center gap-[2px] rounded border bg-muted px-1.5 py-[4px] text-[10px] leading-none text-foreground shadow-xs">
-        Ctrl
-        <span className="text-xs">K</span>
-      </kbd>
     </button>
   )
 }

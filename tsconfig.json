@@ -29,7 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "postcss.config.mjs",
-    "hero.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
