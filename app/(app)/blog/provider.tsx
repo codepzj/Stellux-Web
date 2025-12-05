@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { PostVO } from '@/types/post'
 import { getPostByKeyWordAPI } from '@/api/post'
 import { SearchModal } from './modal'
@@ -10,6 +10,7 @@ interface SearchContextType {
   keyword: string
   results: PostVO[]
   loading: boolean
+  hasSearched: boolean
   openSearch: () => void
   closeSearch: () => void
   setKeyword: (value: string) => void
@@ -28,30 +29,44 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
   const [keyword, setKeyword] = useState('')
   const [results, setResults] = useState<PostVO[]>([])
   const [loading, setLoading] = useState(false)
+  const [hasSearched, setHasSearched] = useState(false)
 
+  const searchPosts = useCallback(async (searchKeyword: string) => {
+    if (!searchKeyword.trim()) {
+      setResults([])
+      setHasSearched(false)
+      return
+    }
+    setLoading(true)
+    try {
+      const res = await getPostByKeyWordAPI(searchKeyword)
+      setResults(res.data || [])
+      setHasSearched(true)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  // 防抖搜索，延迟800ms，至少2个字符才搜索
   useEffect(() => {
-    const handler = setTimeout(async () => {
-      if (!keyword.trim()) {
+    const debounceTimer = setTimeout(() => {
+      if (keyword.trim().length >= 2) {
+        searchPosts(keyword)
+      } else {
         setResults([])
-        setLoading(false)
-        return
+        setHasSearched(false)
       }
-      setLoading(true)
-      try {
-        const res = await getPostByKeyWordAPI(keyword)
-        setResults(res.data || [])
-      } finally {
-        setLoading(false)
-      }
-    }, 300)
-    return () => clearTimeout(handler)
-  }, [keyword])
+    }, 800)
+
+    return () => clearTimeout(debounceTimer)
+  }, [keyword, searchPosts])
 
   const openSearch = () => setIsOpen(true)
   const closeSearch = () => {
     setIsOpen(false)
     setKeyword('')
     setResults([])
+    setHasSearched(false)
   }
 
   return (
@@ -61,6 +76,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
         keyword,
         results,
         loading,
+        hasSearched,
         openSearch,
         closeSearch,
         setKeyword,
