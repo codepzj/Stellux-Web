@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
 
     // 确保 posts.data 存在且为数组，同时检查 API 返回状态
-    const postsData = posts?.code === 0 && posts?.data ? posts.data : []
+    const postsData = posts?.code === 200 && posts?.data ? posts.data : []
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

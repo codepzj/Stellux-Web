@@ -1,9 +1,9 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
 import FriendCard from '@/components/business/friends/FriendCard'
 import FriendSubmitModal from '@/components/business/friends/FriendSubmitModal'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import Comment from '@/components/business/comment'
-import { User, Globe, MessageCircle, Crown, Info } from 'lucide-react'
+import { Globe, Crown, Info } from 'lucide-react'
 import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
@@ -29,55 +29,40 @@ export default async function FriendsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mt-8">
         <Card className="border border-border/20 bg-card/10 shadow-sm transition-none">
-          <CardContent className="p-6">
-            <div className="flex flex-col sm:flex-row gap-6">
-              {/* 左侧：头像和基本信息 */}
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20 hidden md:block">
-                  <Image
-                    src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
-                    alt="头像"
-                    width={56}
-                    height={56}
-                    className="w-full h-full object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="space-y-2 sm:space-y-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Crown className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">名称：</span>
-                      <span className="text-gray-900 dark:text-white font-semibold truncate">
-                        浩瀚星河
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MessageCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">描述：</span>
-                      <span className="text-gray-900 dark:text-white truncate">
-                        缓慢向上也是一种勇气。
-                      </span>
-                    </div>
-                    <div className="flex items-start sm:items-center gap-2">
-                      <Globe className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">网站：</span>
-                      <span className="text-gray-900 dark:text-white font-mono text-xs break-all sm:truncate">
-                        https://www.golangblog.com
-                      </span>
-                    </div>
-                    <div className="flex items-start sm:items-center gap-2">
-                      <User className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                      <span className="text-gray-800 dark:text-gray-200 flex-shrink-0">头像：</span>
-                      <span className="text-gray-900 dark:text-white font-mono text-xs break-all sm:truncate">
-                        https://cdn.codepzj.cn/image/20250529174726187.jpeg
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <CardHeader className="flex flex-row items-start gap-4 pb-2">
+            <div className="w-16 h-16 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20">
+              <Image
+                src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+                alt="头像"
+                width={64}
+                height={64}
+                className="w-full h-full object-cover"
+                unoptimized
+              />
             </div>
-          </CardContent>
+            <div className="flex-1 min-w-0">
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Crown className="w-5 h-5" />
+                浩瀚星河
+              </CardTitle>
+              <CardDescription className="mt-1 text-base">
+                缓慢向上也是一种勇气。
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardFooter className="pt-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Globe className="w-4 h-4" />
+              <a
+                href="https://www.golangblog.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="hover:text-foreground transition-colors font-mono text-xs"
+              >
+                https://www.golangblog.com
+              </a>
+            </div>
+          </CardFooter>
         </Card>
       </div>
       {[0, 1, 2, 3].map((t) =>

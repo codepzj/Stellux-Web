@@ -6,6 +6,9 @@ export async function GET(request: NextRequest) {
     const posts = await getAllPublishPostAPI()
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
 
+    // 确保 posts.data 存在且为数组，同时检查 API 返回状态
+    const postsData = posts?.code === 200 && posts?.data ? posts.data : []
+
     const atom = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Gopher</title>
@@ -17,7 +20,7 @@ export async function GET(request: NextRequest) {
     <name>Gopher</name>
   </author>
   <subtitle>Gopher的个人技术博客,记录Golang学习与开发实践。</subtitle>
-  ${posts.data
+  ${postsData
     .map(
       (post) => `
   <entry>

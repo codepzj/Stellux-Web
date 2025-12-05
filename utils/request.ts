@@ -1,6 +1,6 @@
 import { Response } from '@/types/dto'
 
-const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API as string
+const baseUrl = process.env.NEXT_PUBLIC_PROJECT_API || 'http://localhost:9001'
 
 interface RequestOptions {
   params?: Record<string, string>

@@ -6,8 +6,8 @@ export async function GET(request: NextRequest) {
     const posts = await getAllPublishPostAPI()
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
 
-    // 确保 posts.data 存在且为数组，同时检查 API 返回状态
-    const postsData = posts?.code === 0 && posts?.data ? posts.data : []
+    // 确保 posts.data 存在且为数组
+    const postsData = posts?.data ? posts.data : []
 
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
