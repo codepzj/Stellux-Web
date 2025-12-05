@@ -2,7 +2,7 @@
 
 import { Clipboard, Check } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@heroui/button'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const CopyButton = ({ copyId, className }: { copyId: string; className?: string }) => {
@@ -104,15 +104,11 @@ const CopyButton = ({ copyId, className }: { copyId: string; className?: string 
 
   return (
     <Button
-      onPress={onCopy}
-      isIconOnly
+      onClick={onCopy}
       aria-label="Copy"
-      variant="light"
-      className={cn(
-        'p-0 w-8 h-8 min-w-8 min-h-8 rounded-md cursor-pointer hover:bg-default-100 dark:hover:bg-default-500/10',
-        className
-      )}
-      disableRipple
+      size="icon"
+      variant="ghost"
+      className={cn('w-8 h-8 p-0 rounded-md', className)}
     >
       {copied ? (
         <Check className="transition-transform duration-300" size={16} />

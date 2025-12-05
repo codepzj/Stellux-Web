@@ -1,12 +1,15 @@
 'use client'
 
-import { Input, InputProps } from '@heroui/input'
 import { SearchLinearIcon } from '@/components/basic/svg-icon'
-import { Kbd } from '@heroui/kbd'
 import { useEffect } from 'react'
 import { useSearch } from './provider'
+import { cn } from '@/lib/utils'
 
-export const Search = ({ ...props }: InputProps) => {
+type SearchProps = React.HTMLAttributes<HTMLButtonElement> & {
+  placeholder?: string
+}
+
+export const Search = ({ className, placeholder = '搜索博客', children, ...props }: SearchProps) => {
   const { openSearch } = useSearch()
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -21,26 +24,32 @@ export const Search = ({ ...props }: InputProps) => {
     return () => window.removeEventListener('keydown', handler)
   }, [])
   return (
-    <>
-      <Input
-        {...props}
-        readOnly
-        disableAnimation
-        classNames={{
-          input: 'cursor-pointer',
-          inputWrapper: 'cursor-pointer',
-        }}
-        onMouseDown={() => {
+    <button
+      type="button"
+      {...props}
+      onClick={(event) => {
+        props.onClick?.(event)
+        if (!event.defaultPrevented) {
           openSearch()
-        }}
-        placeholder="搜索博客"
-        startContent={<SearchLinearIcon size={20} className="text-default-500" />}
-        endContent={
-          <Kbd className="inline-block text-xs shadow-none rounded-sm" keys={['ctrl']}>
-            K
-          </Kbd>
         }
-      />
-    </>
+      }}
+      className={cn(
+        'relative flex h-10 w-full items-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm text-muted-foreground shadow-xs transition-colors',
+        'hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        className
+      )}
+    >
+      <SearchLinearIcon size={18} className="text-muted-foreground shrink-0" />
+      <span className="min-w-0 flex-1 truncate text-left">
+        {typeof children === 'string'
+          ? children.replace(/ctrl\s*\+?\s*k/gi, '').trim() || placeholder
+          : children || placeholder}
+      </span>
+      <kbd className="pointer-events-none hidden md:inline-flex shrink-0 items-center gap-[2px] rounded border bg-muted px-1.5 py-[4px] text-[10px] leading-none text-foreground shadow-xs">
+        Ctrl
+        <span className="text-xs">K</span>
+      </kbd>
+    </button>
   )
 }

@@ -2,9 +2,8 @@
 
 import type { ThemeProviderProps } from 'next-themes'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
-import { HeroUIProvider } from '@heroui/react'
-import { ToastProvider } from '@heroui/toast'
 import { useEffect } from 'react'
+import { Toaster } from '@/components/ui/sonner'
 
 export interface ProvidersProps {
   children: React.ReactNode
@@ -17,20 +16,8 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   }, [])
   return (
     <NextThemesProvider {...themeProps}>
-      <HeroUIProvider>
-        <ToastProvider
-          placement="top-right"
-          toastProps={{
-            color: 'primary',
-            variant: 'flat',
-            timeout: 1500,
-            classNames: {
-              base: 'top-2',
-            },
-          }}
-        />
-        {children}
-      </HeroUIProvider>
+      {children}
+      <Toaster position="top-right" richColors closeButton />
     </NextThemesProvider>
   )
 }

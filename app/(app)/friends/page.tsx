@@ -3,7 +3,6 @@ import FriendCard from '@/components/business/friends/FriendCard'
 import FriendSubmitModal from '@/components/business/friends/FriendSubmitModal'
 import { Card, CardContent } from '@/components/ui/card'
 import Comment from '@/components/business/comment'
-import { Spacer } from '@heroui/spacer'
 import { User, Globe, MessageCircle, Crown, Info } from 'lucide-react'
 import Image from 'next/image'
 
@@ -107,7 +106,7 @@ export default async function FriendsPage() {
       <div className="mt-8 text-sm">
         <FriendSubmitModal />
       </div>
-      <Spacer y={16} />
+      <div className="h-10" />
       <Comment />
     </div>
   )

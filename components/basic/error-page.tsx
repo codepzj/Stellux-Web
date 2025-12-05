@@ -1,4 +1,4 @@
-import { Button } from '@heroui/react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
 interface ErrorPageProps {
@@ -26,13 +26,9 @@ export function ErrorPage({
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h1>
         {message ? <p className="text-gray-600 dark:text-gray-400">{message}</p> : null}
         <div className="flex justify-center gap-3">
-          {showHomeButton && (
-            <Button color="primary" onPress={() => router.push('/')}>
-              返回首页
-            </Button>
-          )}
+          {showHomeButton && <Button onClick={() => router.push('/')}>返回首页</Button>}
           {showBackButton && (
-            <Button variant="light" onPress={() => router.back()}>
+            <Button variant="outline" onClick={() => router.back()}>
               返回上页
             </Button>
           )}

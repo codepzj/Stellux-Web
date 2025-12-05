@@ -1,11 +1,16 @@
 'use client'
 
-import { Modal, ModalContent } from '@heroui/modal'
-import { Input } from '@heroui/input'
-import { Code } from '@heroui/code'
+import { Input } from '@/components/ui/input'
 import NextLink from 'next/link'
 import { SearchLinearIcon } from '@/components/basic/svg-icon'
 import { useSearch } from '@/app/(app)/blog/provider'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 
 export function SearchModal() {
   const { isOpen, closeSearch, keyword, setKeyword, results, loading } = useSearch()
@@ -24,44 +29,42 @@ export function SearchModal() {
   }
 
   return (
-    <Modal
-      className="cursor-pointer"
-      isOpen={isOpen}
-      onOpenChange={closeSearch}
-      size="xl"
-      placement="top"
-      shouldBlockScroll={false}
-    >
-      <ModalContent>
-        <div className="px-4 pt-10 pb-4 space-y-6 bg-transparent rounded-xl">
-          <Code color="secondary" className="text-[10px] absolute top-2 left-2">
-            ESC
-          </Code>
-          <Input
-            placeholder="输入关键词搜索..."
-            startContent={<SearchLinearIcon size={18} />}
-            size="lg"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            classNames={{
-              inputWrapper:
-                'bg-default-100 dark:bg-default-500/10 !ring-0 !ring-transparent !ring-offset-0',
-              input: 'text-base',
-            }}
-            autoFocus
-          />
-          <div className="max-h-[400px] overflow-y-auto">
+    <Dialog open={isOpen} onOpenChange={closeSearch}>
+      <DialogContent className="w-full max-w-md sm:max-w-lg md:max-w-xl p-0 overflow-hidden max-h-[80vh]">
+        <DialogHeader className="sr-only">
+          <DialogTitle>搜索</DialogTitle>
+          <DialogDescription>输入关键词搜索博客</DialogDescription>
+        </DialogHeader>
+
+        <div className="flex flex-col">
+          <div className="sticky top-0 z-10 border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/75 sm:px-6">
+            <div className="flex items-center gap-3 rounded-md border bg-muted/40 px-3 py-2 shadow-inner">
+              <SearchLinearIcon size={18} className="text-muted-foreground shrink-0" />
+              <Input
+                placeholder="输入关键词搜索..."
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                className="h-10 flex-1 border-0 bg-transparent px-0 text-base shadow-none focus-visible:ring-0"
+                autoFocus
+              />
+              <code className="pointer-events-none shrink-0 rounded bg-muted px-2 py-1 text-[10px] text-foreground">
+                ESC
+              </code>
+            </div>
+          </div>
+
+          <div className="max-h-[60vh] overflow-y-auto px-4 pb-4 pt-3 sm:px-6 sm:pb-6 space-y-2">
             {loading ? (
-              <div className="text-center text-default-500">加载中...</div>
+              <div className="text-center text-muted-foreground">加载中...</div>
             ) : results.length > 0 ? (
               results.map((post) => (
                 <NextLink key={post.id} href={`/blog/${post.alias}`} onClick={closeSearch}>
-                  <div className="p-3 mb-2 rounded-lg bg-default-100/70 dark:bg-default-500/10 hover:bg-default-200 dark:hover:bg-white/10 transition cursor-pointer border border-transparent hover:border-default-300 dark:hover:border-zinc-800">
-                    <div className="font-medium text-base text-foreground line-clamp-2">
+                  <div className="cursor-pointer rounded-lg border border-transparent bg-muted/50 p-3 transition hover:border-border hover:bg-muted">
+                    <div className="line-clamp-2 text-base font-medium text-foreground">
                       {highlight(post.title, keyword)}
                     </div>
                     {post.description && (
-                      <div className="text-sm text-default-500 line-clamp-2 mt-1">
+                      <div className="mt-1 line-clamp-2 text-sm text-muted-foreground">
                         {highlight(post.description, keyword)}
                       </div>
                     )}
@@ -69,11 +72,11 @@ export function SearchModal() {
                 </NextLink>
               ))
             ) : (
-              keyword && <div className="text-center text-default-500">暂无结果 🕵️‍♂️</div>
+              keyword && <div className="text-center text-muted-foreground">暂无结果 🕵️‍♂️</div>
             )}
           </div>
         </div>
-      </ModalContent>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   )
 }

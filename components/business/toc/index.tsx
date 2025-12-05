@@ -6,7 +6,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { getTableOfContents, TableOfContents } from './content'
 import { cn } from '@/lib/utils'
 import { ChevronDown } from 'lucide-react'
-import { ScrollShadow } from '@heroui/scroll-shadow'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 interface TocProps {
   content: string
@@ -76,16 +76,14 @@ export function Toc({ content, className }: TocProps) {
           />
         </button>
       </div>
-      <ScrollShadow
+      <ScrollArea
         className={cn(
-          'transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden',
+          'transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden pr-2',
           collapsed ? 'max-h-0 opacity-0' : 'max-h-[500px] opacity-100'
         )}
-        size={20}
-        offset={10}
       >
         <Tree tree={toc} activeItem={activeId} />
-      </ScrollShadow>
+      </ScrollArea>
     </nav>
   )
 }

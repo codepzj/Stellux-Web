@@ -1,10 +1,11 @@
 'use client'
 
-import { Card, CardBody, Image, Link, Tooltip } from '@heroui/react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Card } from '@/components/ui/card'
 import { FriendShowVO } from '@/api/friend'
 import { CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { ExternalLink, Globe } from 'lucide-react'
 
 type Props = {
@@ -62,8 +63,7 @@ export default function FriendCard({ friend }: Props) {
                   src={friend.avatar_url || '/favicon.ico'}
                   width={64}
                   height={64}
-                  radius="full"
-                  className="object-cover ring-2 ring-gray-200/80 dark:ring-gray-800/80 w-full h-full"
+                  className="object-cover ring-2 ring-gray-200/80 dark:ring-gray-800/80 w-full h-full rounded-full"
                 />
               </div>
 
