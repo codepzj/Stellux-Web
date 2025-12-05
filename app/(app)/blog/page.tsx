@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 
-import { Calendar, Tag, Book, FolderOpen } from 'lucide-react'
+import { Calendar, Tag, Book, FolderOpen, Heart } from 'lucide-react'
 import { getPostListAPI } from '@/api/post'
 import { formatRelativeTime } from '@/utils/date'
 import type { PostVO } from '@/types/post'
@@ -33,6 +33,8 @@ export default function BlogList() {
   const pageSize = 10
 
   const [posts, setPosts] = useState<PostVO[]>([])
+  const [favoritePosts, setFavoritePosts] = useState<Set<string>>(new Set())
+  const [animatingPostId, setAnimatingPostId] = useState<string | null>(null)
   const [pagination, setPagination] = useState<{
     total_page: number
     page_no: number
@@ -120,6 +122,22 @@ export default function BlogList() {
     navigateToPage(1, undefined, category)
   }
 
+  const handleToggleFavorite = (postId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setAnimatingPostId(postId)
+    setTimeout(() => setAnimatingPostId(null), 300)
+
+    setFavoritePosts(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(postId)) {
+        newSet.delete(postId)
+      } else {
+        newSet.add(postId)
+      }
+      return newSet
+    })
+  }
+
   const skeletonCount = posts.length > 0 ? posts.length : pageSize
 
   if (!loading && posts.length === 0) {
@@ -146,28 +164,24 @@ export default function BlogList() {
                   </div>
 
                   {(tagName || categoryName) && (
-                    <div className="flex flex-wrap items-center gap-2 text-sm rounded-lg border border-border/60 bg-muted/40 px-3 py-2">
-                      <span className="text-gray-500 dark:text-gray-400">筛选</span>
-                      <div className="flex flex-wrap items-center gap-2">
-                        {categoryName && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
-                            <FolderOpen className="h-3.5 w-3.5" />
-                            {categoryName}
-                          </span>
-                        )}
-                        {tagName && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
-                            <Tag className="h-3.5 w-3.5" />
-                            {tagName}
-                          </span>
-                        )}
-                      </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {categoryName && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
+                          <FolderOpen className="h-3.5 w-3.5" />
+                          {categoryName}
+                        </span>
+                      )}
+                      {tagName && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
+                          <Tag className="h-3.5 w-3.5" />
+                          {tagName}
+                        </span>
+                      )}
                       <button
                         onClick={() => navigateToPage(1)}
-                        className="ml-auto inline-flex h-7 items-center gap-1 rounded-md border border-transparent px-2 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
+                        className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-transparent text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
                       >
                         ✕
-                        <span className="hidden sm:inline">清除</span>
                       </button>
                     </div>
                   )}
@@ -210,9 +224,25 @@ export default function BlogList() {
                       posts.map((post) => (
                         <Card
                           key={post.id}
-                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg relative"
                           onClick={() => router.push(`/blog/${post.alias}`)}
                         >
+                          <button
+                            onClick={(e) => handleToggleFavorite(post.id, e)}
+                            className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
+                              favoritePosts.has(post.id)
+                                ? 'opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800'
+                                : 'opacity-0 group-hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800'
+                            } ${animatingPostId === post.id ? 'animate-pulse' : ''}`}
+                          >
+                            <Heart
+                              className={`w-4 h-4 ${
+                                favoritePosts.has(post.id)
+                                  ? 'fill-red-500 text-red-500'
+                                  : 'text-gray-400 hover:text-red-500'
+                              } transition-colors`}
+                            />
+                          </button>
                           <CardContent className="p-0">
                             <div className="flex items-stretch gap-4 min-h-[120px]">
                               <div className="flex-1 min-w-0 flex flex-col justify-between">
