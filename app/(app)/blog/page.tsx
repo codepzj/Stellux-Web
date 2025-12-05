@@ -164,22 +164,22 @@ export default function BlogList() {
                   </div>
 
                   {(tagName || categoryName) && (
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
                       {categoryName && (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
-                          <FolderOpen className="h-3.5 w-3.5" />
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-background text-foreground shadow-xs border border-border/60 text-sm">
+                          <FolderOpen className="h-3 w-3" />
                           {categoryName}
                         </span>
                       )}
                       {tagName && (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background text-foreground shadow-xs border border-border/60">
-                          <Tag className="h-3.5 w-3.5" />
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-background text-foreground shadow-xs border border-border/60 text-sm">
+                          <Tag className="h-3 w-3" />
                           {tagName}
                         </span>
                       )}
                       <button
                         onClick={() => navigateToPage(1)}
-                        className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-transparent text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
+                        className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-transparent text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground ml-1"
                       >
                         ✕
                       </button>
