@@ -21,7 +21,7 @@ export const getPostByAliasAPI = (alias: string) => {
 
 // 获取所有发布文章
 export const getAllPublishPostAPI = () => {
-  return request<PostVO[]>('/post/all', 'GET', { revalidate: 3600 })
+  return request<PostVO[]>('/post/all', 'GET', { revalidate: 60 })
 }
 
 // 搜索框获取文章列表

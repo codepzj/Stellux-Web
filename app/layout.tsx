@@ -2,9 +2,13 @@ import '@/global.css'
 
 import { Providers } from './providers'
 import { Metadata } from 'next'
+import { generatePageMetadata, getSEOConfig } from '@/utils/seo'
 
 // 布局组件
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // 获取SEO配置以设置author meta标签
+  const seoConfig = await getSEOConfig()
+
   return (
     <html suppressHydrationWarning lang="zh-CN">
       <head>
@@ -17,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           rel="shortcut icon"
           href={`${process.env.NEXT_PUBLIC_SITE_URL}/favicon.ico`}
           type="image/x-icon"
-        />{' '}
+        />
         {/* bing图标 */}
         <link
           rel="stylesheet"
@@ -40,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           content="rQ0kTqa4G_WtJzaC27Mg1VizLHmc7R7ri7ZyNCjMQmo"
         />
         <meta name="msvalidate.01" content="30CD55A935E75B69A1565E31EA21513B" />
+        <meta name="author" content={seoConfig.author} />
       </head>
       <body className="min-h-screen bg-background antialiased w-full font-main">
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>{children}</Providers>
@@ -49,25 +54,5 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: `Gopher`,
-    description: 'Gopher的个人技术博客,记录Golang学习与开发实践。',
-    keywords: 'Go,Gin,GoZero,Kratos,Echo,Redis,Mysql,Pgsql,Mongodb,K8S',
-    openGraph: {
-      title: `Gopher`,
-      description: 'Gopher的个人技术博客,记录Golang学习与开发实践。',
-      url: process.env.NEXT_PUBLIC_SITE_URL,
-      siteName: 'Gopher',
-      images: [
-        {
-          url: `https://cdn.codepzj.cn/image/20250825180716208.png`,
-          width: 200,
-          height: 200,
-          alt: 'Gopher',
-        },
-      ],
-      locale: 'zh-CN',
-      type: 'website',
-    },
-  }
+  return generatePageMetadata()
 }

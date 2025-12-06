@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
-import { SystemIcon, SunIcon, MoonIcon } from '@/components/basic/svg-icon'
+import { SystemIcon, SunIcon, MoonIcon } from '@/components/SvgIcon'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 

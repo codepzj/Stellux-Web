@@ -1,6 +1,6 @@
 'use client'
 
-import { SearchLinearIcon } from '@/components/basic/svg-icon'
+import { SearchLinearIcon } from '@/components/SvgIcon'
 import { useEffect } from 'react'
 import { useSearch } from './provider'
 import { cn } from '@/lib/utils'

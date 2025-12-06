@@ -12,7 +12,7 @@ import { DocTreeItem } from '@/utils/document-tree'
 import { Button } from '@/components/ui/button'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
-import { ThemeSwitcher } from '@/components/basic/theme-switcher'
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 
 export async function DocSidebar({
   docTitle,

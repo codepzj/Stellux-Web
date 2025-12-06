@@ -1,14 +1,19 @@
 import { GraduationCap, Briefcase, Heart, Code2 } from 'lucide-react'
+import { PageContent } from '@/types/page'
 
-export default function AboutContent() {
-  const skills = [
+interface AboutContentProps {
+  config?: PageContent
+}
+
+export default function AboutContent({ config }: AboutContentProps) {
+  const skills = config?.skills || [
     { category: '后端', items: ['Go', 'Gin', 'Kratos', 'gRPC'] },
     { category: '前端', items: ['React', 'Next.js', 'Vue', 'TypeScript'] },
     { category: '数据库', items: ['MongoDB', 'MySQL', 'Redis'] },
     { category: '工具', items: ['Docker', 'Git', 'Linux', 'Nginx'] },
   ]
 
-  const timeline = [
+  const timeline = config?.timeline || [
     {
       year: '2025-09 ~ 2025-12',
       title: '技术探索',
@@ -22,7 +27,7 @@ export default function AboutContent() {
     { year: '2024-01 ~ 2024-12', title: '编程启蒙', desc: '开始系统学习编程，接触 Web 开发' },
   ]
 
-  const interests = ['开源', '技术写作', '极简设计', '效率工具']
+  const interests = config?.interests || ['开源', '技术写作', '极简设计', '效率工具']
 
   return (
     <div className="max-w-5xl mx-auto space-y-10 sm:space-y-14">
@@ -111,18 +116,12 @@ export default function AboutContent() {
         </h2>
         <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-            <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-1">•</span>
-              Golang 服务端实践与工具沉淀
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-1">•</span>
-              维护个人博客与文档体系（Stellux）
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-gray-400 mt-1">•</span>
-              探索微服务架构与云原生技术
-            </li>
+            {(config?.focus_items || ['Golang 服务端实践与工具沉淀', '维护个人博客与文档体系（Stellux）', '探索微服务架构与云原生技术']).map((item, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="text-gray-400 mt-1">•</span>
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
       </section>

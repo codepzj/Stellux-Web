@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
-import { SunIcon, MoonIcon } from '@/components/basic/svg-icon'
+import { SunIcon, MoonIcon } from '@/components/SvgIcon'
+import { getActivePageConfigAPI } from '@/api/page'
+import { PageContent } from '@/types/page'
 
 // 仅使用真实存在的路由，按 AstroPaper 导航风格取名
 const NAV_LINKS = [
@@ -99,22 +101,40 @@ function MobileNav({ onClick }: { onClick: () => void }) {
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [pageConfig, setPageConfig] = useState<PageContent | null>(null)
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const response = await getActivePageConfigAPI('home')
+        if (response.data?.content) {
+          setPageConfig(response.data.content)
+        }
+      } catch (error) {
+        console.error('获取主页配置失败:', error)
+      }
+    }
+
+    fetchConfig()
+  }, [])
 
   return (
     <header className="sticky top-0 z-20 w-full bg-white/90 dark:bg-black/70 border-b border-gray-200/60 dark:border-white/10">
       <div className="mx-auto flex h-14 items-center justify-between px-4 max-w-5xl">
         <Link
           href="/"
-          className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-[120px] md:min-w-[140px]"
+          className="flex items-center gap-2 md:gap-3 shrink-0 min-w-[120px] md:min-w-[140px]"
         >
-          <img
-            src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
-            alt="avatar"
-            className="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover"
-            loading="lazy"
-          />
+          {pageConfig?.avatar && (
+            <img
+              src={pageConfig.avatar}
+              alt="avatar"
+              className="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover"
+              loading="lazy"
+            />
+          )}
           <span className="text-[15px] font-semibold text-foreground whitespace-nowrap overflow-hidden text-ellipsis">
-            浩瀚星河
+            {pageConfig?.name || 'Stellux'}
           </span>
         </Link>
 

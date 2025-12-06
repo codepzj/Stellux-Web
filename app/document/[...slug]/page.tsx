@@ -1,14 +1,14 @@
 import { getDocumentByAlias } from '@/api/document'
 import { getAllDocumentContentByDocumentId } from '@/api/document-content'
-import { Markdown } from '@/components/business/md'
-import { ScrollToc } from '@/components/business/toc'
+import { Markdown } from '@/components/Md'
+import { ScrollToc } from '@/components/Toc'
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
-import { DocSidebar } from '@/components/basic/sidebar'
+import { DocSidebar } from '@/components/Sidebar'
 import { convertToDocumentTreeData } from '@/utils/document-tree'
 import { DocumentContentVO } from '@/types/document-content'
 import { Metadata } from 'next'
-import { SidebarToggle } from '@/components/basic/tool/sidebar-toggle'
-import { BackToTop } from '@/components/basic/tool/back-to-top'
+import { SidebarToggle } from '@/components/Tool/sidebar-toggle'
+import { BackToTop } from '@/components/Tool/back-to-top'
 import { Calendar, Clock, BookOpen } from 'lucide-react'
 import { formatRelativeTime, formatDate, estimateReadingTime } from '@/lib/time-utils'
 
@@ -109,7 +109,7 @@ export default async function DocPage({ params }: DocPageProps) {
             )}
 
             <Markdown
-              className="pl-2 break-words overflow-x-auto"
+              className="pl-2 wrap-break-word overflow-x-auto"
               content={isRoot ? document?.description || '' : documentContent?.content || ''}
             />
           </div>

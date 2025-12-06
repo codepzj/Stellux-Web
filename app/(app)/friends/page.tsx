@@ -1,8 +1,8 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
-import FriendCard from '@/components/business/friends/FriendCard'
-import FriendSubmitModal from '@/components/business/friends/FriendSubmitModal'
+import FriendCard from '@/components/Friends/FriendCard'
+import FriendSubmitModal from '@/components/Friends/FriendSubmitModal'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
-import Comment from '@/components/business/comment'
+import Comment from '@/components/Comment'
 import { Globe, Crown, Info } from 'lucide-react'
 import Image from 'next/image'
 
@@ -30,7 +30,7 @@ export default async function FriendsPage() {
       <div className="mt-8">
         <Card className="border border-border/20 bg-card/10 shadow-sm transition-none">
           <CardHeader className="flex flex-row items-start gap-4 pb-2">
-            <div className="w-16 h-16 rounded-full overflow-hidden bg-muted flex-shrink-0 ring-2 ring-primary/20">
+            <div className="w-16 h-16 rounded-full overflow-hidden bg-muted shrink-0 ring-2 ring-primary/20">
               <Image
                 src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
                 alt="头像"

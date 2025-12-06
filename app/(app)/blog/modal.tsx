@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import NextLink from 'next/link'
-import { SearchLinearIcon } from '@/components/basic/svg-icon'
+import { SearchLinearIcon } from '@/components/SvgIcon'
 import { useSearch } from '@/app/(app)/blog/provider'
 import {
   Dialog,

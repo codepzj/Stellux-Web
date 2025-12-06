@@ -46,7 +46,7 @@ function RecursiveMenuItem({ item, depth = 0 }: { item: DocTreeItem; depth?: num
           <Link
             href={item.url}
             className={cn(
-              'hover:!bg-primary/10 hover:dark:!bg-primary/20 transition-all duration-200 ease-in-out',
+              'hover:bg-primary/10! hover:dark:bg-primary/20! transition-all duration-200 ease-in-out',
               pathname === item.url && 'bg-primary/10 dark:bg-primary/20'
             )}
           >
