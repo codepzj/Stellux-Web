@@ -6,15 +6,23 @@ import { Calendar, Tag, Book, FolderOpen } from 'lucide-react'
 import { getPostListAPI } from '@/api/post'
 import { formatRelativeTime } from '@/utils/date'
 import type { PostVO } from '@/types/post'
-import { Pagination, Spacer, Skeleton } from '@heroui/react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import { ErrorPage } from '@/components/basic/error-page'
+import { ErrorPage } from '@/components/Error/ErrorPage'
 import { Search } from './search'
 import { Provider } from './provider'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Skeleton } from '@/components/ui/skeleton'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 
 export default function BlogList() {
   const searchParams = useSearchParams()
@@ -112,6 +120,7 @@ export default function BlogList() {
     navigateToPage(1, undefined, category)
   }
 
+
   const skeletonCount = posts.length > 0 ? posts.length : pageSize
 
   if (!loading && posts.length === 0) {
@@ -138,25 +147,22 @@ export default function BlogList() {
                   </div>
 
                   {(tagName || categoryName) && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <span className="text-gray-500 dark:text-gray-400">筛选</span>
-                      <div className="flex items-center gap-2">
-                        {categoryName && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                            <FolderOpen className="h-3.5 w-3.5" />
-                            {categoryName}
-                          </span>
-                        )}
-                        {tagName && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                            <Tag className="h-3.5 w-3.5" />
-                            {tagName}
-                          </span>
-                        )}
-                      </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {categoryName && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-background text-foreground shadow-xs border border-border/60 text-sm">
+                          <FolderOpen className="h-3 w-3" />
+                          {categoryName}
+                        </span>
+                      )}
+                      {tagName && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-background text-foreground shadow-xs border border-border/60 text-sm">
+                          <Tag className="h-3 w-3" />
+                          {tagName}
+                        </span>
+                      )}
                       <button
                         onClick={() => navigateToPage(1)}
-                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-transparent text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground ml-1"
                       >
                         ✕
                       </button>
@@ -201,7 +207,7 @@ export default function BlogList() {
                       posts.map((post) => (
                         <Card
                           key={post.id}
-                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg"
+                          className="border border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-none bg-white/90 dark:bg-gray-900/70 p-4 hover:bg-gray-50 dark:hover:bg-gray-900/65 cursor-pointer group rounded-lg relative"
                           onClick={() => router.push(`/blog/${post.alias}`)}
                         >
                           <CardContent className="p-0">
@@ -285,15 +291,32 @@ export default function BlogList() {
                       ))
                     )}
                   </div>
-                  <Spacer y={8} />
+                  <div className="h-8" />
                   {pagination.total_page > 1 && (
                     <div className="flex justify-end">
-                      <Pagination
-                        total={loading ? pagination.total_page : pagination.total_page}
-                        page={loading ? pagination.page_no : pagination.page_no}
-                        onChange={handlePageChange}
-                        isDisabled={loading}
-                      />
+                      <Pagination className="justify-end">
+                        <PaginationContent>
+                          {Array.from({ length: pagination.total_page }, (_, idx) => idx + 1)
+                            .slice(
+                              Math.max(0, pagination.page_no - 3),
+                              Math.min(pagination.total_page, pagination.page_no + 2)
+                            )
+                            .map((page) => (
+                              <PaginationItem key={page}>
+                                <PaginationLink
+                                  href="#"
+                                  isActive={page === pagination.page_no}
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    handlePageChange(page)
+                                  }}
+                                >
+                                  {page}
+                                </PaginationLink>
+                              </PaginationItem>
+                            ))}
+                        </PaginationContent>
+                      </Pagination>
                     </div>
                   )}
                 </section>

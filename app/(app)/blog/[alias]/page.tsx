@@ -1,11 +1,10 @@
 import { getPostByAliasAPI } from '@/api/post'
-import { Markdown } from '@/components/business/md'
+import { Markdown } from '@/components/Md'
 import { Metadata } from 'next'
-import { Spacer } from '@heroui/spacer'
-import { Toc } from '@/components/business/toc'
-import { BackToTop } from '@/components/basic/tool/back-to-top'
-import { ScrollToComment } from '@/components/basic/tool/scroll-to-comment'
-import Comment from '@/components/business/comment'
+import { Toc } from '@/components/Toc'
+import { BackToTop } from '@/components/Tool/back-to-top'
+import { ScrollToComment } from '@/components/Tool/scroll-to-comment'
+import Comment from '@/components/Comment'
 import { Calendar, Clock, BookOpen } from 'lucide-react'
 import { formatRelativeTime, formatDate, estimateReadingTime } from '@/lib/time-utils'
 
@@ -54,9 +53,9 @@ export default async function BlogContent({ params }: Props) {
           </div>
         </div>
 
-        <Spacer y={16} />
-        <Markdown className="break-words overflow-x-auto" content={post.content} />
-        <Spacer y={16} />
+        <div className="h-10" />
+        <Markdown className="wrap-break-word overflow-x-auto" content={post.content} />
+        <div className="h-10" />
         <Comment />
       </div>
       {hasHeadings && (

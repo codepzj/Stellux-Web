@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import Navbar from '@/components/basic/navbar'
+import Navbar from '@/components/Navbar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

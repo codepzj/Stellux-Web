@@ -1,19 +1,30 @@
-import Navbar from '@/components/basic/navbar'
-import Footer from '@/components/basic/footer'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import { Github, Globe, MapPin, FileText, Calendar, ArrowRight, Quote } from 'lucide-react'
 import { getAllPublishPostAPI } from '@/api/post'
+import { getActivePageConfigAPI } from '@/api/page'
+import { PageContent } from '@/types/page'
 import Link from 'next/link'
 import Image from 'next/image'
 import dayjs from 'dayjs'
-import GitHubCalendar from '@/components/business/home/GitHubCalendar'
+import GitHubCalendar from '@/components/Home/GitHubCalendar'
 
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
-  const { data: posts } = await getAllPublishPostAPI()
-  const recentPosts = posts?.slice(0, 2) || []
+  const [postsResult, pageConfigResult] = await Promise.allSettled([
+    getAllPublishPostAPI(),
+    getActivePageConfigAPI('home')
+  ])
 
-  const repositories = [
+  const posts = postsResult.status === 'fulfilled' ? postsResult.value.data : null
+  const pageConfig = pageConfigResult.status === 'fulfilled' ? pageConfigResult.value.data : null
+
+  const recentPosts = posts?.slice(0, (pageConfig?.content?.show_recent_posts !== false ? (pageConfig?.content?.recent_posts_count || 2) : 0)) || []
+  const config: PageContent | undefined = pageConfig?.content
+
+  // 使用配置数据，如果没有配置则使用默认值
+  const repositories = config?.repositories || [
     {
       name: 'Stellux-Server',
       url: 'https://github.com/codepzj/Stellux-Server',
@@ -28,7 +39,7 @@ export default async function Page() {
     },
   ]
 
-  const techStacks = ['Go', 'TypeScript', 'React', 'Next.js', 'Vue', 'MongoDB', 'Docker', 'Linux']
+  const techStacks = config?.tech_stacks || ['Go', 'TypeScript', 'React', 'Next.js', 'Vue', 'MongoDB', 'Docker', 'Linux']
 
   return (
     <div className="relative flex flex-col min-h-screen">
@@ -38,7 +49,7 @@ export default async function Page() {
           {/* Hero Section */}
           <section className="flex flex-col sm:flex-row items-start gap-6">
             <Image
-              src="https://cdn.codepzj.cn/image/20250529174726187.jpeg"
+              src={config?.avatar || "https://cdn.codepzj.cn/image/20250529174726187.jpeg"}
               alt="avatar"
               width={120}
               height={120}
@@ -47,35 +58,39 @@ export default async function Page() {
             />
             <div className="space-y-3">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-                Hi, I'm codepzj 👋
+                Hi, I'm {config?.name || 'codepzj'} 👋
               </h1>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 flex items-center gap-1.5">
                 <MapPin className="w-4 h-4" />
-                广州 · 211在读
+                {config?.location || '广州'}
               </p>
               <p className="text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-lg">
-                热爱 Golang，喜欢探索新技术，享受解决复杂问题的过程。
-                <span className="text-gray-500 dark:text-gray-400">「缓慢向上也是一种勇气」</span>
+                {config?.bio || '热爱 Golang,喜欢探索新技术,享受解决复杂问题的过程。'}
+                {config?.quote && <span className="text-gray-500 dark:text-gray-400">「{config.quote}」</span>}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
-                <a
-                  href="https://github.com/codepzj"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
-                >
-                  <Github className="w-3.5 h-3.5" />
-                  GitHub
-                </a>
-                <a
-                  href="https://www.golangblog.com"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs sm:text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Globe className="w-3.5 h-3.5" />
-                  Blog
-                </a>
+                {config?.github && (
+                  <a
+                    href={config.github}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    GitHub
+                  </a>
+                )}
+                {config?.blog && (
+                  <a
+                    href={config.blog}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs sm:text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    Blog
+                  </a>
+                )}
               </div>
             </div>
           </section>
@@ -176,17 +191,19 @@ export default async function Page() {
           </section>
 
           {/* Motto */}
-          <section className="space-y-4">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-              <Quote className="w-5 h-5" />
-              座右铭
-            </h2>
-            <div className="p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border border-gray-200 dark:border-gray-700">
-              <p className="text-xs sm:text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                "低级的欲望通过放纵就可获得；高级的欲望通过自律方可获得；顶级的欲望通过煎熬才可获得。所谓自由，不是随心所欲，而是自我主宰。"
-              </p>
-            </div>
-          </section>
+          {config?.motto && (
+            <section className="space-y-4">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                <Quote className="w-5 h-5" />
+                座右铭
+              </h2>
+              <div className="p-4 rounded-xl bg-linear-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border border-gray-200 dark:border-gray-700">
+                <p className="text-xs sm:text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                  "{config.motto}"
+                </p>
+              </div>
+            </section>
+          )}
         </div>
       </main>
       <Footer />

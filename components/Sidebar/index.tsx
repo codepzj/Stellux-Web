@@ -9,10 +9,10 @@ import {
 } from '@/components/ui/sidebar'
 import { DocTitle } from './title'
 import { DocTreeItem } from '@/utils/document-tree'
-import { Button } from '@heroui/button'
+import { Button } from '@/components/ui/button'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
-import { ThemeSwitcher } from '@/components/basic/theme-switcher'
+import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 
 export async function DocSidebar({
   docTitle,
@@ -29,7 +29,7 @@ export async function DocSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <Link href="/document">
-              <Button variant="light" size="sm" className="w-full justify-start px-2 my-2">
+              <Button variant="ghost" size="sm" className="w-full justify-start px-2 my-2">
                 <ArrowLeftIcon className="w-4 h-4" />
                 返回文档列表
               </Button>

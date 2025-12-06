@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import { getAllPublicDocument } from '@/api/document'
 import type { DocumentVO } from '@/types/document'
 import { Book, FileText } from 'lucide-react'
-import { WikiIcon } from '@/components/basic/svg-icon'
-import { ErrorPage } from '@/components/basic/error-page'
-import { Card, Skeleton, Spacer } from '@heroui/react'
-import { CardContent } from '@/components/ui/card'
+import { WikiIcon } from '@/components/SvgIcon'
+import { ErrorPage } from '@/components/Error/ErrorPage'
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import NextLink from 'next/link'
@@ -53,7 +53,7 @@ export default function DocumentPage() {
                   <span className="text-gray-500 text-sm ml-2">{docList.length} 篇</span>
                 </div>
               </div>
-              <Spacer y={4} />
+              <div className="h-4" />
               <div className="flex flex-col gap-4 min-h-[600px]">
                 {loading
                   ? Array.from({ length: skeletonCount }).map((_, idx) => (

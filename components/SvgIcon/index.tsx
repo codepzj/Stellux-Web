@@ -8,7 +8,6 @@ import { WikiIcon } from './icon/wiki'
 import { CategoryIcon } from './icon/category'
 import { TagIcon } from './icon/tag'
 import { SystemIcon } from './icon/system'
-import { CalendarIcon } from './icon/calendar'
 import { BackToTopIcon } from './icon/back-to-top'
 import { AboutIcon } from './icon/about'
 
@@ -23,7 +22,6 @@ export {
   CategoryIcon,
   TagIcon,
   SystemIcon,
-  CalendarIcon,
   BackToTopIcon,
   AboutIcon,
 }
