@@ -1,10 +1,12 @@
 import { NextRequest } from 'next/server'
 import { getAllPublishPostAPI } from '@/api/post'
+import { getSEOConfig } from '@/utils/seo'
 
 export async function GET(request: NextRequest) {
   try {
     const posts = await getAllPublishPostAPI()
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    const seoConfig = await getSEOConfig()
 
     // 确保 posts.data 存在且为数组
     const postsData = posts?.data ? posts.data : []
@@ -12,9 +14,9 @@ export async function GET(request: NextRequest) {
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Gopher</title>
+    <title>${seoConfig.title}</title>
     <link>${siteUrl}</link>
-    <description>Gopher的个人技术博客,记录Golang学习与开发实践。</description>
+    <description>${seoConfig.description}</description>
     <language>zh-CN</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml" />

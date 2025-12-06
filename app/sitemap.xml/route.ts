@@ -4,7 +4,7 @@ import { getAllPublishPostAPI } from '@/api/post'
 export async function GET(request: NextRequest) {
   try {
     const posts = await getAllPublishPostAPI()
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 
     // 确保 posts.data 存在且为数组，同时检查 API 返回状态
     const postsData = posts?.code === 200 && posts?.data ? posts.data : []
@@ -83,5 +83,3 @@ export async function GET(request: NextRequest) {
     })
   }
 }
-
-export const revalidate = 3600 // 1 hour
