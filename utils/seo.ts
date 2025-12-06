@@ -25,15 +25,24 @@ export async function getSEOConfig(): Promise<SEOConfig> {
     const data = response.data
     return {
       title: data.content.seo_title || '浩瀚星河 - 个人技术博客',
-      description: data.content.seo_description || '浩瀚星河的个人技术博客,记录Golang学习与开发实践。',
-      keywords: data.content.seo_keywords?.join(',') || 'Go,GoZero,Kratos,Echo,Redis,Mysql,Pgsql,Mongodb,K8S',
+      description:
+        data.content.seo_description || '浩瀚星河的个人技术博客,记录Golang学习与开发实践。',
+      keywords:
+        data.content.seo_keywords?.join(',') ||
+        'Go,GoZero,Kratos,Echo,Redis,Mysql,Pgsql,Mongodb,K8S',
       author: data.content.seo_author || '浩瀚星河',
       ogTitle: data.content.og_title || data.content.seo_title || '浩瀚星河 - 个人技术博客',
-      ogDescription: data.content.og_description || data.content.seo_description || '浩瀚星河的个人技术博客,记录Golang学习与开发实践。',
+      ogDescription:
+        data.content.og_description ||
+        data.content.seo_description ||
+        '浩瀚星河的个人技术博客,记录Golang学习与开发实践。',
       ogImage: data.content.og_image || 'https://cdn.codepzj.cn/image/20250825180716208.png',
-      canonicalUrl: data.content.canonical_url || process.env.NEXT_PUBLIC_SITE_URL || 'https://www.golangblog.com',
+      canonicalUrl:
+        data.content.canonical_url ||
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        'https://www.golangblog.com',
       robotsMeta: data.content.robots_meta || 'index,follow',
-      twitterCard: data.content.twitter_card || 'summary_large_image'
+      twitterCard: data.content.twitter_card || 'summary_large_image',
     }
   } catch (error) {
     console.error('获取SEO配置失败,使用默认配置:', error)
@@ -48,7 +57,7 @@ export async function getSEOConfig(): Promise<SEOConfig> {
       ogImage: 'https://cdn.codepzj.cn/image/20250825180716208.png',
       canonicalUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.golangblog.com',
       robotsMeta: 'index,follow',
-      twitterCard: 'summary_large_image'
+      twitterCard: 'summary_large_image',
     }
   }
 }

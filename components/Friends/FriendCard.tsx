@@ -2,7 +2,14 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/card'
 import { FriendShowVO } from '@/api/friend'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink, Globe } from 'lucide-react'

@@ -1,7 +1,14 @@
 import { FriendShowVO, getFriendListAPI } from '@/api/friend'
 import FriendCard from '@/components/Friends/FriendCard'
 import FriendSubmitModal from '@/components/Friends/FriendSubmitModal'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/card'
 import Comment from '@/components/Comment'
 import { Globe, Crown, Info } from 'lucide-react'
 import Image from 'next/image'
@@ -45,9 +52,7 @@ export default async function FriendsPage() {
                 <Crown className="w-5 h-5" />
                 浩瀚星河
               </CardTitle>
-              <CardDescription className="mt-1 text-base">
-                缓慢向上也是一种勇气。
-              </CardDescription>
+              <CardDescription className="mt-1 text-base">缓慢向上也是一种勇气。</CardDescription>
             </div>
           </CardHeader>
           <CardFooter className="pt-2">

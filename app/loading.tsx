@@ -38,7 +38,10 @@ export default function PostLoading() {
             <div className="h-6 bg-gray-200 dark:bg-gray-800 rounded animate-pulse w-24" />
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="h-16 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse" />
+                <div
+                  key={i}
+                  className="h-16 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse"
+                />
               ))}
             </div>
           </section>
@@ -48,7 +51,10 @@ export default function PostLoading() {
             <div className="h-6 bg-gray-200 dark:bg-gray-800 rounded animate-pulse w-32" />
             <div className="space-y-3">
               {Array.from({ length: 2 }).map((_, i) => (
-                <div key={i} className="p-4 border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900/50">
+                <div
+                  key={i}
+                  className="p-4 border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900/50"
+                >
                   <div className="space-y-2">
                     <div className="h-5 bg-gray-200 dark:bg-gray-800 rounded animate-pulse w-3/4" />
                     <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded animate-pulse w-full" />

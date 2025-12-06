@@ -120,7 +120,6 @@ export default function BlogList() {
     navigateToPage(1, undefined, category)
   }
 
-
   const skeletonCount = posts.length > 0 ? posts.length : pageSize
 
   if (!loading && posts.length === 0) {

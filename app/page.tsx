@@ -14,13 +14,19 @@ export const dynamic = 'force-dynamic'
 export default async function Page() {
   const [postsResult, pageConfigResult] = await Promise.allSettled([
     getAllPublishPostAPI(),
-    getActivePageConfigAPI('home')
+    getActivePageConfigAPI('home'),
   ])
 
   const posts = postsResult.status === 'fulfilled' ? postsResult.value.data : null
   const pageConfig = pageConfigResult.status === 'fulfilled' ? pageConfigResult.value.data : null
 
-  const recentPosts = posts?.slice(0, (pageConfig?.content?.show_recent_posts !== false ? (pageConfig?.content?.recent_posts_count || 2) : 0)) || []
+  const recentPosts =
+    posts?.slice(
+      0,
+      pageConfig?.content?.show_recent_posts !== false
+        ? pageConfig?.content?.recent_posts_count || 2
+        : 0
+    ) || []
   const config: PageContent | undefined = pageConfig?.content
 
   // 使用配置数据，如果没有配置则使用默认值
@@ -39,7 +45,16 @@ export default async function Page() {
     },
   ]
 
-  const techStacks = config?.tech_stacks || ['Go', 'TypeScript', 'React', 'Next.js', 'Vue', 'MongoDB', 'Docker', 'Linux']
+  const techStacks = config?.tech_stacks || [
+    'Go',
+    'TypeScript',
+    'React',
+    'Next.js',
+    'Vue',
+    'MongoDB',
+    'Docker',
+    'Linux',
+  ]
 
   return (
     <div className="relative flex flex-col min-h-screen">
@@ -49,7 +64,7 @@ export default async function Page() {
           {/* Hero Section */}
           <section className="flex flex-col sm:flex-row items-start gap-6">
             <Image
-              src={config?.avatar || "https://cdn.codepzj.cn/image/20250529174726187.jpeg"}
+              src={config?.avatar || 'https://cdn.codepzj.cn/image/20250529174726187.jpeg'}
               alt="avatar"
               width={120}
               height={120}
@@ -66,7 +81,9 @@ export default async function Page() {
               </p>
               <p className="text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300 max-w-lg">
                 {config?.bio || '热爱 Golang,喜欢探索新技术,享受解决复杂问题的过程。'}
-                {config?.quote && <span className="text-gray-500 dark:text-gray-400">「{config.quote}」</span>}
+                {config?.quote && (
+                  <span className="text-gray-500 dark:text-gray-400">「{config.quote}」</span>
+                )}
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {config?.github && (

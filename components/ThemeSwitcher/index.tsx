@@ -26,10 +26,7 @@ export const ThemeSwitcher = () => {
           size="icon"
           variant={theme === item.key ? 'default' : 'ghost'}
           aria-label={item.label}
-          className={cn(
-            'h-8 w-8 rounded-full',
-            !mounted && 'pointer-events-none opacity-60'
-          )}
+          className={cn('h-8 w-8 rounded-full', !mounted && 'pointer-events-none opacity-60')}
           onClick={() => setTheme(item.key)}
         >
           {item.icon}

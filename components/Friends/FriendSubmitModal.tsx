@@ -70,7 +70,11 @@ export default function FriendSubmitModal() {
               <DialogTitle>友链自助提交</DialogTitle>
               <DialogDescription>请填写完整信息，审核后会展示在友链列表。</DialogDescription>
             </DialogHeader>
-            <form className="w-full flex flex-col gap-3" onSubmit={handleSubmit} id="friend-submit-form">
+            <form
+              className="w-full flex flex-col gap-3"
+              onSubmit={handleSubmit}
+              id="friend-submit-form"
+            >
               <div className="space-y-1">
                 <label className="text-sm font-medium text-foreground">网站名称</label>
                 <Input

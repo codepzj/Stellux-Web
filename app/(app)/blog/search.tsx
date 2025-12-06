@@ -9,7 +9,12 @@ type SearchProps = React.HTMLAttributes<HTMLButtonElement> & {
   placeholder?: string
 }
 
-export const Search = ({ className, placeholder = '搜索博客', children, ...props }: SearchProps) => {
+export const Search = ({
+  className,
+  placeholder = '搜索博客',
+  children,
+  ...props
+}: SearchProps) => {
   const { openSearch } = useSearch()
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

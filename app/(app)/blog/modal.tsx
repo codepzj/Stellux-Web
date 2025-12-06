@@ -58,7 +58,10 @@ export function SearchModal() {
             {loading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="my-2 rounded-lg border border-transparent bg-muted/40 p-4">
+                  <div
+                    key={i}
+                    className="my-2 rounded-lg border border-transparent bg-muted/40 p-4"
+                  >
                     <Skeleton className="h-5 w-3/4 mb-2" />
                     <Skeleton className="h-4 w-full" />
                     <Skeleton className="h-4 w-2/3 mt-1" />
@@ -81,7 +84,12 @@ export function SearchModal() {
                 </NextLink>
               ))
             ) : (
-              hasSearched && keyword.trim() && !loading && results.length === 0 && <div className="text-center py-8 text-muted-foreground text-sm">暂无搜索结果</div>
+              hasSearched &&
+              keyword.trim() &&
+              !loading &&
+              results.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground text-sm">暂无搜索结果</div>
+              )
             )}
           </div>
         </div>

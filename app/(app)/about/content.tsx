@@ -116,7 +116,13 @@ export default function AboutContent({ config }: AboutContentProps) {
         </h2>
         <div className="p-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-            {(config?.focus_items || ['Golang 服务端实践与工具沉淀', '维护个人博客与文档体系（Stellux）', '探索微服务架构与云原生技术']).map((item, index) => (
+            {(
+              config?.focus_items || [
+                'Golang 服务端实践与工具沉淀',
+                '维护个人博客与文档体系（Stellux）',
+                '探索微服务架构与云原生技术',
+              ]
+            ).map((item, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="text-gray-400 mt-1">•</span>
                 {item}
