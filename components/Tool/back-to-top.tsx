@@ -8,8 +8,8 @@ export function BackToTop() {
     <Button
       aria-label="回到顶部"
       size="icon"
-      variant="default"
-      className="fixed z-50 bottom-6 right-6 shadow-lg rounded-full"
+      variant="outline"
+      className="fixed z-50 bottom-6 right-6 shadow-lg rounded-full bg-white"
       onClick={() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }}

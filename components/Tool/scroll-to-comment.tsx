@@ -8,8 +8,8 @@ export function ScrollToComment() {
     <Button
       aria-label="跳转到评论"
       size="icon"
-      variant="default"
-      className="fixed z-50 bottom-20 right-6 shadow-lg rounded-full"
+      variant="outline"
+      className="fixed z-50 bottom-20 right-6 shadow-lg rounded-full bg-white"
       onClick={() => {
         const comment = document.getElementById('comment')
         if (comment) {
